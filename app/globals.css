@@ -33,7 +33,7 @@ header h1 {
 
 .subtitle {
   font-size: 0.72rem;
-  color: #7a9b7c;
+  color: #5c5248;
   letter-spacing: 0.1em;
   margin-bottom: 1.2rem;
 }
@@ -60,12 +60,12 @@ header h1 {
 
 .step-label {
   font-size: 0.68rem;
-  color: #5c5248;
+  color: #3a2e28;
   letter-spacing: 0.08em;
 }
 
 .step-arrow {
-  color: #a09488;
+  color: #6b5c52;
   font-size: 0.9rem;
   margin-bottom: 1rem;
 }
