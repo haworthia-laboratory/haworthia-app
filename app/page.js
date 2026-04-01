@@ -181,11 +181,29 @@ export default function Home() {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImage(reader.result);
-      const [header, base64] = reader.result.split(",");
-      const mimeType = header.match(/:(.*?);/)[1];
-      setImageData({ data: base64, mimeType });
-      setResult(null);
+      const img = new Image();
+      img.onload = () => {
+        const maxSize = 1024;
+        let { width, height } = img;
+        if (width > maxSize || height > maxSize) {
+          if (width > height) {
+            height = Math.round(height * maxSize / width);
+            width = maxSize;
+          } else {
+            width = Math.round(width * maxSize / height);
+            height = maxSize;
+          }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+        const resized = canvas.toDataURL("image/jpeg", 0.85);
+        setImage(resized);
+        setImageData({ data: resized.split(",")[1], mimeType: "image/jpeg" });
+        setResult(null);
+      };
+      img.src = reader.result;
     };
     reader.readAsDataURL(file);
   };
