@@ -357,3 +357,222 @@ header h1 {
   color: #6b5c52;
   letter-spacing: 0.05em;
 }
+
+/* 図鑑リンク */
+.zukan-link {
+  display: block;
+  text-align: center;
+  margin-top: 1.2rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 14px;
+  color: #4a5a4b;
+  font-size: 0.88rem;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.zukan-link:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* 戻るリンク */
+.back-link {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: #7a9b7c;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.2rem;
+}
+
+.back-link:hover {
+  color: #4a7a4c;
+}
+
+/* 図鑑グリッド */
+.zukan-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.zukan-card {
+  display: flex;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(44, 74, 45, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+  transition: all 0.25s ease;
+}
+
+.zukan-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(44, 74, 45, 0.1), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.zukan-card-accent {
+  width: 6px;
+  flex-shrink: 0;
+  background: var(--accent, #c8dfc8);
+}
+
+.zukan-card-body {
+  padding: 1rem 1.1rem;
+}
+
+.zukan-type-badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: #7a9b7c;
+  border: 1px solid rgba(90, 138, 92, 0.3);
+  border-radius: 100px;
+  padding: 0.15rem 0.55rem;
+  margin-bottom: 0.4rem;
+}
+
+.zukan-name {
+  font-size: 1.15rem;
+  color: #2c4a2d;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.2rem;
+}
+
+.zukan-scientific {
+  font-size: 0.72rem;
+  color: #9ab89c;
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+
+/* 品種詳細ページ */
+.detail-header {
+  margin: 1.2rem 0 1rem;
+  display: flex;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(44, 74, 45, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.detail-accent-bar {
+  width: 8px;
+  flex-shrink: 0;
+  background: var(--accent, #c8dfc8);
+}
+
+.detail-title-wrap {
+  padding: 1.2rem 1.3rem;
+}
+
+.detail-name {
+  font-size: 1.7rem;
+  color: #2c4a2d;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  margin: 0.4rem 0 0.25rem;
+}
+
+.detail-scientific {
+  font-size: 0.8rem;
+  color: #7a9b7c;
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+
+.detail-section-title {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: #9ab89c;
+  text-transform: uppercase;
+  margin: 1.3rem 0 0.5rem;
+}
+
+.detail-card {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  padding: 1.1rem 1.2rem;
+  box-shadow: 0 4px 18px rgba(44, 74, 45, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.detail-description {
+  font-size: 0.88rem;
+  color: #4a5a4b;
+  line-height: 1.85;
+}
+
+.care-row {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+}
+
+.care-label {
+  font-size: 0.7rem;
+  color: #9ab89c;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  padding-top: 0.1rem;
+  min-width: 4em;
+}
+
+.care-value {
+  font-size: 0.85rem;
+  color: #4a5a4b;
+  line-height: 1.75;
+}
+
+.care-divider {
+  height: 1px;
+  background: rgba(90, 138, 92, 0.08);
+  margin: 0.7rem 0;
+}
+
+.detail-empty {
+  color: #b0c8b2;
+}
+
+/* ギャラリー */
+.gallery-wrap {
+  margin-bottom: 2rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+}
+
+.gallery-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(44, 74, 45, 0.08);
+}
+
+.gallery-empty {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px dashed rgba(90, 138, 92, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  color: #b0c8b2;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+}
