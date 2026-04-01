@@ -1,8 +1,8 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'ハオルチア雑録',
-  description: '透明窓と薬草と植物たち',
+  title: 'ハオルチア研究室',
+  description: '撮影→鑑定→記録　あなただけの育成記録',
 }
 
 export default function RootLayout({ children }) {
