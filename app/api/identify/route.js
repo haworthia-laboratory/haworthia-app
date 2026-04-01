@@ -52,14 +52,14 @@ const PROMPT = `あなたはハオルチアの専門家です。以下の4品種
 
 export async function POST(request) {
   try {
-    const { image } = await request.json();
+    const { image, mimeType } = await request.json();
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const imagePart = {
       inlineData: {
         data: image,
-        mimeType: "image/jpeg",
+        mimeType: mimeType || "image/jpeg",
       },
     };
 
