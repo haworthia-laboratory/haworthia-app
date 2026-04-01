@@ -171,7 +171,9 @@ export default function Home() {
   const [imageData, setImageData] = useState(null);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [lightResult, setLightResult] = useState(null);
   const fileInputRef = useRef(null);
+  const lightInputRef = useRef(null);
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -209,6 +211,37 @@ export default function Home() {
     setImage(null);
     setImageData(null);
     setResult(null);
+  };
+
+  const measureLight = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = 100;
+        canvas.height = 100;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, 100, 100);
+        const data = ctx.getImageData(0, 0, 100, 100).data;
+        let sum = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          sum += 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+        }
+        const brightness = sum / 10000;
+        let level;
+        if (brightness > 200) level = { label: "非常に良い", desc: "ハオルチアに最適な明るさです", bar: 100 };
+        else if (brightness > 140) level = { label: "良い", desc: "十分な光量があります", bar: 75 };
+        else if (brightness > 80) level = { label: "普通", desc: "もう少し明るい場所が理想的です", bar: 50 };
+        else level = { label: "足りない", desc: "光が不足しています。窓辺に移動しましょう", bar: 25 };
+        setLightResult(level);
+        e.target.value = "";
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -298,6 +331,30 @@ export default function Home() {
             </button>
           </>
         )}
+        <div className="light-meter">
+          <div className="light-meter-title">照度チェック</div>
+          <p className="light-meter-sub">植物の置いている場所を撮影して明るさを確認</p>
+          <button className="light-btn" onClick={() => lightInputRef.current.click()}>
+            写真で測る
+          </button>
+          <input
+            ref={lightInputRef}
+            type="file"
+            accept="image/*"
+            onChange={measureLight}
+            style={{ display: "none" }}
+          />
+          {lightResult && (
+            <div className="light-result">
+              <div className="light-result-label">{lightResult.label}</div>
+              <div className="light-bar-wrap">
+                <div className="light-bar" style={{ width: `${lightResult.bar}%` }} />
+              </div>
+              <div className="light-desc">{lightResult.desc}</div>
+            </div>
+          )}
+        </div>
+
       </div>
     </main>
   );
