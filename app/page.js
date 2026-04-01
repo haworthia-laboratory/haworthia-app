@@ -182,8 +182,9 @@ export default function Home() {
     const reader = new FileReader();
     reader.onloadend = () => {
       setImage(reader.result);
-      const base64 = reader.result.split(",")[1];
-      setImageData(base64);
+      const [header, base64] = reader.result.split(",");
+      const mimeType = header.match(/:(.*?);/)[1];
+      setImageData({ data: base64, mimeType });
       setResult(null);
     };
     reader.readAsDataURL(file);
@@ -196,7 +197,7 @@ export default function Home() {
       const response = await fetch("/api/identify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: imageData }),
+        body: JSON.stringify({ image: imageData.data, mimeType: imageData.mimeType }),
       });
       const data = await response.json();
       setResult(data);
