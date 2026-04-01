@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Link from "next/link";
 
 function CameraIcon() {
   return (
@@ -10,21 +11,15 @@ function CameraIcon() {
           <feGaussianBlur stdDeviation="0.6" />
         </filter>
       </defs>
-      {/* ボディ */}
       <path d="M8 22 Q7 21 9 20 L55 20 Q57 20 56 22 L56 52 Q56 54 54 54 L10 54 Q8 54 8 52 Z"
         fill="rgba(160,148,136,0.2)" stroke="#b0a498" strokeWidth="1.8" strokeLinejoin="round" filter="url(#f1)" />
       <path d="M8 22 Q7 21 9 20 L55 20 Q57 20 56 22 L56 52 Q56 54 54 54 L10 54 Q8 54 8 52 Z"
         fill="none" stroke="#887870" strokeWidth="1.2" strokeLinejoin="round" strokeDasharray="1,0" opacity="0.7"/>
-      {/* ファインダー */}
       <path d="M22 20 Q22 13 26 13 L38 13 Q42 13 42 20"
         fill="rgba(160,148,136,0.15)" stroke="#b0a498" strokeWidth="1.6" strokeLinejoin="round" />
-      {/* レンズ外側 */}
       <circle cx="32" cy="37" r="11" fill="rgba(210,200,195,0.25)" stroke="#b0a498" strokeWidth="1.8" filter="url(#f1)" />
-      {/* レンズ内側 */}
       <circle cx="32" cy="37" r="7" fill="rgba(220,210,205,0.35)" stroke="#887870" strokeWidth="1.2" />
-      {/* レンズ光沢 */}
       <circle cx="29" cy="34" r="2.5" fill="rgba(255,255,255,0.55)" />
-      {/* シャッター */}
       <circle cx="48" cy="26" r="3" fill="rgba(160,148,136,0.25)" stroke="#b0a498" strokeWidth="1.2" />
     </svg>
   );
@@ -38,14 +33,10 @@ function MagnifyIcon() {
           <feGaussianBlur stdDeviation="0.6" />
         </filter>
       </defs>
-      {/* レンズ */}
       <circle cx="26" cy="26" r="17" fill="rgba(210,200,195,0.2)" stroke="#b0a498" strokeWidth="1.8" filter="url(#f2)" />
       <circle cx="26" cy="26" r="17" fill="none" stroke="#887870" strokeWidth="1.2" opacity="0.8" />
-      {/* 内側 */}
       <circle cx="26" cy="26" r="12" fill="rgba(220,212,208,0.18)" stroke="#c4b8b0" strokeWidth="0.8" />
-      {/* 光沢 */}
       <path d="M18 18 Q20 15 24 16" fill="none" stroke="rgba(255,255,255,0.75)" strokeWidth="2.5" strokeLinecap="round" />
-      {/* グリップ */}
       <path d="M38 38 Q41 41 48 50 Q50 53 48 54 Q46 56 44 53 Q36 45 33 41"
         fill="rgba(160,148,136,0.18)" stroke="#b0a498" strokeWidth="3.5" strokeLinecap="round" filter="url(#f2)" />
       <path d="M38 38 Q41 41 48 50 Q50 53 48 54 Q46 56 44 53 Q36 45 33 41"
@@ -62,22 +53,18 @@ function NoteIcon() {
           <feGaussianBlur stdDeviation="0.6" />
         </filter>
       </defs>
-      {/* ノート本体 */}
       <path d="M14 10 Q13 9 15 9 L49 9 Q51 9 51 11 L51 55 Q51 56 49 56 L15 56 Q13 56 14 54 Z"
         fill="rgba(160,148,136,0.18)" stroke="#b0a498" strokeWidth="1.8" strokeLinejoin="round" filter="url(#f3)" />
       <path d="M14 10 Q13 9 15 9 L49 9 Q51 9 51 11 L51 55 Q51 56 49 56 L15 56 Q13 56 14 54 Z"
         fill="none" stroke="#887870" strokeWidth="1.2" strokeLinejoin="round" opacity="0.8" />
-      {/* スパイラル */}
       {[14, 22, 30, 38, 46].map((y, i) => (
         <path key={i} d={`M11 ${y} Q9 ${y+2} 11 ${y+4} Q13 ${y+6} 11 ${y+8}`}
           fill="none" stroke="#c4b8b0" strokeWidth="1.4" strokeLinecap="round" />
       ))}
-      {/* 罫線 */}
       <line x1="20" y1="22" x2="45" y2="22" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
       <line x1="20" y1="30" x2="45" y2="30" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
       <line x1="20" y1="38" x2="45" y2="38" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
       <line x1="20" y1="46" x2="38" y2="46" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
-      {/* 小さな葉っぱ */}
       <path d="M39 44 Q44 40 46 44 Q44 48 39 44Z" fill="rgba(160,148,136,0.45)" stroke="#b0a498" strokeWidth="0.8" />
     </svg>
   );
@@ -108,7 +95,6 @@ function HaworthiaIcon() {
         </radialGradient>
       </defs>
       <g filter="url(#wc)">
-        {/* 外側8枚 */}
         {[0,45,90,135,180,225,270,315].map((angle, i) => (
           <g key={i} transform={`rotate(${angle} 80 80)`}>
             <path d="M80,73 C71,65 65,47 68,27 Q74,17 80,15 Q86,17 92,27 C95,47 89,65 80,73Z"
@@ -122,7 +108,6 @@ function HaworthiaIcon() {
             </>}
           </g>
         ))}
-        {/* 中間5枚 */}
         {[22,94,166,238,310].map((angle, i) => (
           <g key={i} transform={`rotate(${angle} 80 80)`}>
             <path d="M80,75 C73,68 69,53 71,38 Q77,29 80,27 Q83,29 89,38 C91,53 87,68 80,75Z"
@@ -132,7 +117,6 @@ function HaworthiaIcon() {
             {i%2===0 && <line x1="80" y1="28" x2="80" y2="23" stroke="rgba(255,255,255,0.9)" strokeWidth="1" strokeLinecap="round"/>}
           </g>
         ))}
-        {/* 内側4枚 */}
         {[45,135,225,315].map((angle, i) => (
           <g key={i} transform={`rotate(${angle} 80 80)`}>
             <path d="M80,77 C75,71 72,60 74,49 Q78,42 80,40 Q82,42 86,49 C88,60 85,71 80,77Z"
@@ -146,7 +130,6 @@ function HaworthiaIcon() {
             </>}
           </g>
         ))}
-        {/* 中心：ロゼット型の小葉5枚 */}
         {[0,72,144,216,288].map((angle, i) => (
           <g key={i} transform={`rotate(${angle} 80 80)`}>
             <path d="M80,80 C74,79 71,74 73,68 Q76,63 80,62 Q84,63 87,68 C89,74 86,79 80,80Z"
@@ -350,6 +333,9 @@ export default function Home() {
             </button>
           </>
         )}
+
+        <Link href="/zukan" className="zukan-link">図鑑を見る</Link>
+
         <div className="light-meter">
           <div className="light-meter-title">照度チェック</div>
           <p className="light-meter-sub">植物の置いている場所を撮影して明るさを確認</p>
