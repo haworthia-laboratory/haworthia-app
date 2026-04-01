@@ -326,7 +326,7 @@ export default function Home() {
           <>
             <div className="result-card">
               {result.error ? (
-                <p className="not-found">エラーが発生しました。<br />もう一度お試しください。</p>
+                <p className="not-found">エラーが発生しました。<br />{result.detail}</p>
               ) : result.is_haworthia ? (
                 <>
                   <div className="result-label">鑑定結果</div>
