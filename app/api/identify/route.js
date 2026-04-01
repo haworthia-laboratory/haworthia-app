@@ -75,7 +75,7 @@ export async function POST(request) {
     const data = JSON.parse(jsonMatch[0]);
     return Response.json(data);
   } catch (error) {
-    console.error(error);
-    return Response.json({ error: "識別に失敗しました" }, { status: 500 });
+    console.error("詳細エラー:", error.message);
+    return Response.json({ error: "識別に失敗しました", detail: error.message }, { status: 500 });
   }
 }
