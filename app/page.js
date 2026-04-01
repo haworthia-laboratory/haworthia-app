@@ -12,20 +12,20 @@ function CameraIcon() {
       </defs>
       {/* ボディ */}
       <path d="M8 22 Q7 21 9 20 L55 20 Q57 20 56 22 L56 52 Q56 54 54 54 L10 54 Q8 54 8 52 Z"
-        fill="rgba(122,155,124,0.25)" stroke="#7a9b7c" strokeWidth="1.8" strokeLinejoin="round" filter="url(#f1)" />
+        fill="rgba(160,148,136,0.2)" stroke="#b0a498" strokeWidth="1.8" strokeLinejoin="round" filter="url(#f1)" />
       <path d="M8 22 Q7 21 9 20 L55 20 Q57 20 56 22 L56 52 Q56 54 54 54 L10 54 Q8 54 8 52 Z"
-        fill="none" stroke="#5a8a5c" strokeWidth="1.2" strokeLinejoin="round" strokeDasharray="1,0" opacity="0.7"/>
+        fill="none" stroke="#887870" strokeWidth="1.2" strokeLinejoin="round" strokeDasharray="1,0" opacity="0.7"/>
       {/* ファインダー */}
       <path d="M22 20 Q22 13 26 13 L38 13 Q42 13 42 20"
-        fill="rgba(122,155,124,0.2)" stroke="#7a9b7c" strokeWidth="1.6" strokeLinejoin="round" />
+        fill="rgba(160,148,136,0.15)" stroke="#b0a498" strokeWidth="1.6" strokeLinejoin="round" />
       {/* レンズ外側 */}
-      <circle cx="32" cy="37" r="11" fill="rgba(200,225,200,0.3)" stroke="#7a9b7c" strokeWidth="1.8" filter="url(#f1)" />
+      <circle cx="32" cy="37" r="11" fill="rgba(210,200,195,0.25)" stroke="#b0a498" strokeWidth="1.8" filter="url(#f1)" />
       {/* レンズ内側 */}
-      <circle cx="32" cy="37" r="7" fill="rgba(180,215,195,0.4)" stroke="#5a8a5c" strokeWidth="1.2" />
+      <circle cx="32" cy="37" r="7" fill="rgba(220,210,205,0.35)" stroke="#887870" strokeWidth="1.2" />
       {/* レンズ光沢 */}
-      <circle cx="29" cy="34" r="2.5" fill="rgba(255,255,255,0.5)" />
+      <circle cx="29" cy="34" r="2.5" fill="rgba(255,255,255,0.55)" />
       {/* シャッター */}
-      <circle cx="48" cy="26" r="3" fill="rgba(122,155,124,0.3)" stroke="#7a9b7c" strokeWidth="1.2" />
+      <circle cx="48" cy="26" r="3" fill="rgba(160,148,136,0.25)" stroke="#b0a498" strokeWidth="1.2" />
     </svg>
   );
 }
@@ -39,17 +39,17 @@ function MagnifyIcon() {
         </filter>
       </defs>
       {/* レンズ */}
-      <circle cx="26" cy="26" r="17" fill="rgba(180,215,195,0.25)" stroke="#7a9b7c" strokeWidth="1.8" filter="url(#f2)" />
-      <circle cx="26" cy="26" r="17" fill="none" stroke="#5a8a5c" strokeWidth="1.2" opacity="0.8" />
+      <circle cx="26" cy="26" r="17" fill="rgba(210,200,195,0.2)" stroke="#b0a498" strokeWidth="1.8" filter="url(#f2)" />
+      <circle cx="26" cy="26" r="17" fill="none" stroke="#887870" strokeWidth="1.2" opacity="0.8" />
       {/* 内側 */}
-      <circle cx="26" cy="26" r="12" fill="rgba(200,235,210,0.2)" stroke="#9ab89c" strokeWidth="0.8" />
+      <circle cx="26" cy="26" r="12" fill="rgba(220,212,208,0.18)" stroke="#c4b8b0" strokeWidth="0.8" />
       {/* 光沢 */}
-      <path d="M18 18 Q20 15 24 16" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M18 18 Q20 15 24 16" fill="none" stroke="rgba(255,255,255,0.75)" strokeWidth="2.5" strokeLinecap="round" />
       {/* グリップ */}
       <path d="M38 38 Q41 41 48 50 Q50 53 48 54 Q46 56 44 53 Q36 45 33 41"
-        fill="rgba(122,155,124,0.2)" stroke="#7a9b7c" strokeWidth="3.5" strokeLinecap="round" filter="url(#f2)" />
+        fill="rgba(160,148,136,0.18)" stroke="#b0a498" strokeWidth="3.5" strokeLinecap="round" filter="url(#f2)" />
       <path d="M38 38 Q41 41 48 50 Q50 53 48 54 Q46 56 44 53 Q36 45 33 41"
-        fill="none" stroke="#5a8a5c" strokeWidth="2.5" strokeLinecap="round" opacity="0.8" />
+        fill="none" stroke="#887870" strokeWidth="2.5" strokeLinecap="round" opacity="0.8" />
     </svg>
   );
 }
@@ -64,21 +64,21 @@ function NoteIcon() {
       </defs>
       {/* ノート本体 */}
       <path d="M14 10 Q13 9 15 9 L49 9 Q51 9 51 11 L51 55 Q51 56 49 56 L15 56 Q13 56 14 54 Z"
-        fill="rgba(122,155,124,0.2)" stroke="#7a9b7c" strokeWidth="1.8" strokeLinejoin="round" filter="url(#f3)" />
+        fill="rgba(160,148,136,0.18)" stroke="#b0a498" strokeWidth="1.8" strokeLinejoin="round" filter="url(#f3)" />
       <path d="M14 10 Q13 9 15 9 L49 9 Q51 9 51 11 L51 55 Q51 56 49 56 L15 56 Q13 56 14 54 Z"
-        fill="none" stroke="#5a8a5c" strokeWidth="1.2" strokeLinejoin="round" opacity="0.8" />
+        fill="none" stroke="#887870" strokeWidth="1.2" strokeLinejoin="round" opacity="0.8" />
       {/* スパイラル */}
       {[14, 22, 30, 38, 46].map((y, i) => (
         <path key={i} d={`M11 ${y} Q9 ${y+2} 11 ${y+4} Q13 ${y+6} 11 ${y+8}`}
-          fill="none" stroke="#9ab89c" strokeWidth="1.4" strokeLinecap="round" />
+          fill="none" stroke="#c4b8b0" strokeWidth="1.4" strokeLinecap="round" />
       ))}
       {/* 罫線 */}
-      <line x1="20" y1="22" x2="45" y2="22" stroke="#9ab89c" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
-      <line x1="20" y1="30" x2="45" y2="30" stroke="#9ab89c" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
-      <line x1="20" y1="38" x2="45" y2="38" stroke="#9ab89c" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
-      <line x1="20" y1="46" x2="38" y2="46" stroke="#9ab89c" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
+      <line x1="20" y1="22" x2="45" y2="22" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+      <line x1="20" y1="30" x2="45" y2="30" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+      <line x1="20" y1="38" x2="45" y2="38" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+      <line x1="20" y1="46" x2="38" y2="46" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
       {/* 小さな葉っぱ */}
-      <path d="M39 44 Q44 40 46 44 Q44 48 39 44Z" fill="rgba(122,155,124,0.5)" stroke="#7a9b7c" strokeWidth="0.8" />
+      <path d="M39 44 Q44 40 46 44 Q44 48 39 44Z" fill="rgba(160,148,136,0.45)" stroke="#b0a498" strokeWidth="0.8" />
     </svg>
   );
 }
