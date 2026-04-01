@@ -280,3 +280,80 @@ header h1 {
 .retry-btn:hover {
   background: rgba(90, 138, 92, 0.05);
 }
+
+/* 照度チェック */
+.light-meter {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 22px;
+  padding: 1.5rem;
+  margin-top: 1.2rem;
+  box-shadow: 0 4px 28px rgba(44, 74, 45, 0.07), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.light-meter-title {
+  font-size: 0.8rem;
+  color: #3a2e28;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.4rem;
+}
+
+.light-meter-sub {
+  font-size: 0.72rem;
+  color: #a09488;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.light-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: transparent;
+  color: #5c5248;
+  border: 1px solid rgba(92, 82, 72, 0.3);
+  border-radius: 14px;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.light-btn:hover {
+  background: rgba(92, 82, 72, 0.05);
+}
+
+.light-result {
+  margin-top: 1rem;
+  animation: fadeIn 0.4s ease;
+}
+
+.light-result-label {
+  font-size: 1.2rem;
+  color: #3a2e28;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.light-bar-wrap {
+  background: rgba(92, 82, 72, 0.1);
+  border-radius: 100px;
+  height: 5px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.light-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #b0a498, #6b5c52);
+  border-radius: 100px;
+  transition: width 1s ease;
+}
+
+.light-desc {
+  font-size: 0.78rem;
+  color: #6b5c52;
+  letter-spacing: 0.05em;
+}
