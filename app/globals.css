@@ -485,8 +485,9 @@ header h1 {
   flex-shrink: 0;
   margin: 0.6rem 0.6rem 0.6rem 0;
   border-radius: 10px;
+  mix-blend-mode: multiply; 
 }
-
+  
 .detail-name {
   font-size: 1.7rem;
   color: #2c4a2d;
