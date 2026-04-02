@@ -31,7 +31,8 @@ export const species = [
     lightBar: 85,
     lightDesc: "明るい間接光〜弱い直射（3000〜8000lux）",
     breeding: null,
-    gallery: [],
+    gallery: [  "/images/seiun-no-mai-top.png",
+  "/images/seiun-no-mai-side.png",],
   },
   {
     id: "cymbiformis",
