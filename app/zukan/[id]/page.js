@@ -1,87 +1,578 @@
-import Link from "next/link";
-import { species } from "../data";
-import { notFound } from "next/navigation";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-export default function SpeciesPage({ params }) {
-  const s = species.find((sp) => sp.id === params.id);
-  if (!s) notFound();
+body {
+  min-height: 100vh;
+  background: linear-gradient(160deg, #eef3ee 0%, #f7f9f4 50%, #e6ede7 100%);
+  font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+}
 
-  return (
-    <main>
-      <div className="container">
-        <Link href="/zukan" className="back-link">← 図鑑に戻る</Link>
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  min-height: 100vh;
+}
 
-        <div className="detail-header" style={{ "--accent": s.accent }}>
-          <div className="detail-accent-bar" />
-          <div className="detail-title-wrap">
-            <span className="zukan-type-badge">{s.type}</span>
-            <h1 className="detail-name">{s.name}</h1>
-            <p className="detail-scientific">{s.scientific}</p>
-          </div>
-        </div>
+/* ヘッダー */
+header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
 
-        <div className="detail-card">
-          <p className="detail-description">{s.description}</p>
-        </div>
+header h1 {
+  font-size: 1.5rem;
+  color: #2c4a2d;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+}
 
-        <div className="detail-section-title">育て方</div>
+.subtitle {
+  font-size: 0.72rem;
+  color: #3a2e28;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.2rem;
+}
 
-        <div className="detail-card">
-          <div className="care-row">
-            <span className="care-label">水やり</span>
-            <span className="care-value">{s.water}</span>
-          </div>
-          <div className="care-divider" />
-          <div className="care-row">
-            <span className="care-label">温度</span>
-            <span className="care-value">{s.temperature}</span>
-          </div>
-          <div className="care-divider" />
-          <div className="care-row">
-            <span className="care-label">置き場所</span>
-            <span className="care-value">{s.placement}</span>
-          </div>
-        </div>
+/* ステップ */
+.steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
 
-        <div className="detail-section-title">おすすめ培養土</div>
-        <div className="detail-card">
-          <p className="care-value">{s.soil}</p>
-        </div>
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
 
-        <div className="detail-section-title">光量</div>
-        <div className="detail-card">
-          <div className="light-result-label" style={{ marginBottom: "0.5rem" }}>{s.light}</div>
-          <div className="light-bar-wrap">
-            <div className="light-bar" style={{ width: `${s.lightBar}%` }} />
-          </div>
-          <div className="light-desc" style={{ marginTop: "0.4rem" }}>{s.lightDesc}</div>
-        </div>
+.step-icon {
+  font-size: 1.4rem;
+}
 
-        <div className="detail-section-title">交配情報</div>
-        <div className="detail-card">
-          {s.breeding ? (
-            <p className="care-value">{s.breeding}</p>
-          ) : (
-            <p className="care-value detail-empty">記録なし（随時更新予定）</p>
-          )}
-        </div>
+.step-label {
+  font-size: 0.68rem;
+  color: #3a2e28;
+  letter-spacing: 0.08em;
+}
 
-        <div className="detail-section-title">ギャラリー</div>
-        <div className="gallery-wrap">
-          {s.gallery && s.gallery.length > 0 ? (
-            <div className="gallery-grid">
-              {s.gallery.map((src, i) => (
-                <img key={i} src={src} alt={`${s.name} ${i + 1}`} className="gallery-img" />
-              ))}
-            </div>
-          ) : (
-            <div className="gallery-empty">
-              <p>写真はまだありません</p>
-            </div>
-          )}
-        </div>
+.step-arrow {
+  color: #6b5c52;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
 
-      </div>
-    </main>
-  );
+/* アップロードエリア */
+.upload-card {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 22px;
+  min-height: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 4px 28px rgba(44, 74, 45, 0.07), inset 0 1px 0 rgba(255,255,255,0.9);
+  transition: all 0.3s ease;
+}
+
+.upload-card:hover {
+  box-shadow: 0 8px 36px rgba(44, 74, 45, 0.12), inset 0 1px 0 rgba(255,255,255,0.9);
+  transform: translateY(-1px);
+}
+
+.upload-placeholder {
+  text-align: center;
+  padding: 2rem;
+}
+
+.upload-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+  opacity: 0.75;
+}
+
+.upload-placeholder p {
+  font-size: 0.95rem;
+  color: #4a7a4c;
+  margin-bottom: 0.4rem;
+}
+
+.upload-placeholder .sub {
+  font-size: 0.72rem;
+  color: #9ab89c;
+  letter-spacing: 0.05em;
+}
+
+.preview {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+}
+
+/* 識別ボタン */
+.identify-btn {
+  width: 100%;
+  margin-top: 1.2rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #3a6b3c, #568f58);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 18px rgba(44, 74, 45, 0.28);
+}
+
+.identify-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(44, 74, 45, 0.36);
+}
+
+.identify-btn:active {
+  transform: translateY(0);
+}
+
+/* ローディング */
+.loading {
+  text-align: center;
+  margin-top: 2.5rem;
+  color: #5a8a5c;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 2.5px solid rgba(90, 138, 92, 0.2);
+  border-top-color: #5a8a5c;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading p {
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: #7a9b7c;
+}
+
+/* 結果カード */
+.result-card {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 22px;
+  padding: 1.8rem;
+  margin-top: 1.2rem;
+  box-shadow: 0 4px 28px rgba(44, 74, 45, 0.07), inset 0 1px 0 rgba(255,255,255,0.9);
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.result-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: #9ab89c;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.species-name {
+  font-size: 1.6rem;
+  color: #2c4a2d;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+}
+
+.scientific-name {
+  font-size: 0.78rem;
+  color: #7a9b7c;
+  font-style: italic;
+  margin-bottom: 1.4rem;
+  letter-spacing: 0.04em;
+}
+
+.confidence-wrap {
+  margin-bottom: 1.4rem;
+}
+
+.confidence-bar {
+  background: rgba(90, 138, 92, 0.1);
+  border-radius: 100px;
+  height: 5px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  background: linear-gradient(90deg, #568f58, #7ab57c);
+  border-radius: 100px;
+  transition: width 1.2s ease;
+}
+
+.confidence-text {
+  font-size: 0.72rem;
+  color: #9ab89c;
+  letter-spacing: 0.08em;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(90, 138, 92, 0.1);
+  margin-bottom: 1.2rem;
+}
+
+.description {
+  font-size: 0.88rem;
+  color: #4a5a4b;
+  line-height: 1.8;
+}
+
+.not-found {
+  text-align: center;
+  color: #7a9b7c;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+/* もう一度ボタン */
+.retry-btn {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: transparent;
+  color: #7a9b7c;
+  border: 1px solid rgba(90, 138, 92, 0.3);
+  border-radius: 14px;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.retry-btn:hover {
+  background: rgba(90, 138, 92, 0.05);
+}
+
+/* 照度チェック */
+.light-meter {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 22px;
+  padding: 1.5rem;
+  margin-top: 1.2rem;
+  box-shadow: 0 4px 28px rgba(44, 74, 45, 0.07), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.light-meter-title {
+  font-size: 0.8rem;
+  color: #3a2e28;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.4rem;
+}
+
+.light-meter-sub {
+  font-size: 0.72rem;
+  color: #a09488;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.light-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: transparent;
+  color: #5c5248;
+  border: 1px solid rgba(92, 82, 72, 0.3);
+  border-radius: 14px;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.light-btn:hover {
+  background: rgba(92, 82, 72, 0.05);
+}
+
+.light-result {
+  margin-top: 1rem;
+  animation: fadeIn 0.4s ease;
+}
+
+.light-result-label {
+  font-size: 1.2rem;
+  color: #3a2e28;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.light-bar-wrap {
+  background: rgba(92, 82, 72, 0.1);
+  border-radius: 100px;
+  height: 5px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.light-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #b0a498, #6b5c52);
+  border-radius: 100px;
+  transition: width 1s ease;
+}
+
+.light-desc {
+  font-size: 0.78rem;
+  color: #6b5c52;
+  letter-spacing: 0.05em;
+}
+
+/* 図鑑リンク */
+.zukan-link {
+  display: block;
+  text-align: center;
+  margin-top: 1.2rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 14px;
+  color: #4a5a4b;
+  font-size: 0.88rem;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.zukan-link:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* 戻るリンク */
+.back-link {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: #7a9b7c;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.2rem;
+}
+
+.back-link:hover {
+  color: #4a7a4c;
+}
+
+/* 図鑑グリッド */
+.zukan-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.zukan-card {
+  display: flex;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(44, 74, 45, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+  transition: all 0.25s ease;
+}
+
+.zukan-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(44, 74, 45, 0.1), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.zukan-card-accent {
+  width: 6px;
+  flex-shrink: 0;
+  background: var(--accent, #c8dfc8);
+}
+
+.zukan-card-body {
+  padding: 1rem 1.1rem;
+}
+
+.zukan-type-badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  color: #7a9b7c;
+  border: 1px solid rgba(90, 138, 92, 0.3);
+  border-radius: 100px;
+  padding: 0.15rem 0.55rem;
+  margin-bottom: 0.4rem;
+}
+
+.zukan-name {
+  font-size: 1.15rem;
+  color: #2c4a2d;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.2rem;
+}
+
+.zukan-scientific {
+  font-size: 0.72rem;
+  color: #9ab89c;
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+
+/* 品種詳細ページ */
+.detail-header {
+  margin: 1.2rem 0 1rem;
+  display: flex;
+  gap: 0;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(44, 74, 45, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.detail-accent-bar {
+  width: 8px;
+  flex-shrink: 0;
+  background: var(--accent, #c8dfc8);
+}
+
+.detail-title-wrap {
+  padding: 1.2rem 1.3rem;
+}
+
+.detail-name {
+  font-size: 1.7rem;
+  color: #2c4a2d;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  margin: 0.4rem 0 0.25rem;
+}
+
+.detail-scientific {
+  font-size: 0.8rem;
+  color: #7a9b7c;
+  font-style: italic;
+  letter-spacing: 0.03em;
+}
+
+.detail-section-title {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: #9ab89c;
+  text-transform: uppercase;
+  margin: 1.3rem 0 0.5rem;
+}
+
+.detail-card {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  padding: 1.1rem 1.2rem;
+  box-shadow: 0 4px 18px rgba(44, 74, 45, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.detail-description {
+  font-size: 0.88rem;
+  color: #4a5a4b;
+  line-height: 1.85;
+}
+
+.care-row {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+}
+
+.care-label {
+  font-size: 0.7rem;
+  color: #9ab89c;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  padding-top: 0.1rem;
+  min-width: 4em;
+}
+
+.care-value {
+  font-size: 0.85rem;
+  color: #4a5a4b;
+  line-height: 1.75;
+}
+
+.care-divider {
+  height: 1px;
+  background: rgba(90, 138, 92, 0.08);
+  margin: 0.7rem 0;
+}
+
+.detail-empty {
+  color: #b0c8b2;
+}
+
+/* ギャラリー */
+.gallery-wrap {
+  margin-bottom: 2rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+}
+
+.gallery-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(44, 74, 45, 0.08);
+}
+
+.gallery-empty {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px dashed rgba(90, 138, 92, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  color: #b0c8b2;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
 }
