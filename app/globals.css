@@ -394,6 +394,61 @@ header h1 {
   color: #4a7a4c;
 }
 
+/* 検索バー */
+.zukan-search {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  margin-bottom: 0.6rem;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(90, 138, 92, 0.2);
+  border-radius: 100px;
+  font-size: 0.85rem;
+  color: #4a5a4b;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.zukan-search::placeholder {
+  color: #b0c8b2;
+}
+
+.zukan-search:focus {
+  border-color: rgba(90, 138, 92, 0.4);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* ソートバー */
+.sort-bar {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.sort-btn {
+  flex: 1;
+  padding: 0.4rem 0;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(90, 138, 92, 0.2);
+  border-radius: 100px;
+  font-size: 0.7rem;
+  color: #7a9b7c;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.sort-btn:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.sort-btn.active {
+  background: rgba(90, 138, 92, 0.12);
+  border-color: rgba(90, 138, 92, 0.4);
+  color: #3a6b3c;
+}
+
 /* 図鑑グリッド */
 .zukan-grid {
   display: flex;
