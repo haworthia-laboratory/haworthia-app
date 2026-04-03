@@ -633,6 +633,7 @@ header h1 {
   text-decoration: none;
   box-shadow: 0 4px 18px rgba(44, 74, 45, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
   transition: all 0.25s ease;
+  position: relative;
 }
 
 .zukan-card:hover {
@@ -650,10 +651,10 @@ header h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 0.3rem;
-  padding: 0.6rem 0.8rem 0.6rem 0;
-  flex-shrink: 0;
+  gap: 0.2rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.6rem;
 }
 
 .mark-btn {
