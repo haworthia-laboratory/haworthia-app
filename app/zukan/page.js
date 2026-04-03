@@ -178,7 +178,7 @@ export default function ZukanPage() {
                     title="持っている"
                   >{owned.has(s.id) ? "☑" : "☐"}</button>
                   <button
-                    className={`mark-btn${wishlist.has(s.id) ? " active-star" : ""}`}
+                    className={`mark-btn mark-btn-star${wishlist.has(s.id) ? " active-star" : ""}`}
                     onClick={(e) => toggleWishlist(e, s.id)}
                     title="欲しい"
                   >☆</button>
@@ -211,7 +211,7 @@ export default function ZukanPage() {
                     title="持っている"
                   >{owned.has(s.id) ? "☑" : "☐"}</button>
                   <button
-                    className={`mark-btn${wishlist.has(s.id) ? " active-star" : ""}`}
+                    className={`mark-btn mark-btn-star${wishlist.has(s.id) ? " active-star" : ""}`}
                     onClick={(e) => toggleWishlist(e, s.id)}
                     title="欲しい"
                   >☆</button>
