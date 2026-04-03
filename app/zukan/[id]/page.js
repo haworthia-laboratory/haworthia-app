@@ -1,10 +1,22 @@
+"use client";
+
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { species } from "../data";
 import { notFound } from "next/navigation";
 
 export default function SpeciesPage({ params }) {
   const s = species.find((sp) => sp.id === params.id);
+  const [userGallery, setUserGallery] = useState([]);
+
+  useEffect(() => {
+    const imgs = JSON.parse(localStorage.getItem(`gallery_${params.id}`) || "[]");
+    setUserGallery(imgs);
+  }, [params.id]);
+
   if (!s) notFound();
+
+  const allGallery = [...(s.gallery || []).slice(1), ...userGallery];
 
   return (
     <main>
@@ -74,9 +86,9 @@ export default function SpeciesPage({ params }) {
 
         <div className="detail-section-title">ギャラリー</div>
         <div className="gallery-wrap">
-          {s.gallery && s.gallery.slice(1).length > 0 ? (
+          {allGallery.length > 0 ? (
             <div className="gallery-grid">
-              {s.gallery.slice(1).map((src, i) => (
+              {allGallery.map((src, i) => (
                 <img key={i} src={src} alt={`${s.name} ${i + 1}`} className="gallery-img" />
               ))}
             </div>
@@ -86,6 +98,10 @@ export default function SpeciesPage({ params }) {
             </div>
           )}
         </div>
+
+        <Link href="/diary" className="zukan-link" style={{ marginBottom: "2rem" }}>
+          成長日記を記録する
+        </Link>
 
       </div>
     </main>

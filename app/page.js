@@ -335,6 +335,7 @@ export default function Home() {
         )}
 
         <Link href="/zukan" className="zukan-link">図鑑を見る</Link>
+        <Link href="/diary" className="zukan-link">成長日記</Link>
 
         <div className="light-meter">
           <div className="light-meter-title">照度チェック</div>
