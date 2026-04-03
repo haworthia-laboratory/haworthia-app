@@ -49,7 +49,7 @@ export const species = [
     lightBar: 55,
     lightDesc: "半日陰〜明るい間接光（2000〜5000lux）",
     breeding: null,
-    gallery: [],
+    gallery: ["/images/cymbiformis-top.jpg", "/images/cymbiformis-side.jpg"],
   },
   {
     id: "umbraticola",
@@ -66,7 +66,7 @@ export const species = [
     lightBar: 35,
     lightDesc: "半日陰（1000〜3000lux）",
     breeding: null,
-    gallery: [],
+    gallery: ["/images/umbraticola-top.jpg", "/images/umbraticola-side.jpg"],
   },
   {
     id: "milky-cloud",
