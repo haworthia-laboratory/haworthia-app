@@ -337,6 +337,15 @@ header h1 {
   margin-bottom: 0.5rem;
 }
 
+.light-bar-axis {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: #b0c8b2;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.2rem;
+}
+
 .light-bar-wrap {
   background: rgba(92, 82, 72, 0.1);
   border-radius: 100px;

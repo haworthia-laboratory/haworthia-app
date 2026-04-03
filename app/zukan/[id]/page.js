@@ -54,6 +54,9 @@ export default function SpeciesPage({ params }) {
         <div className="detail-section-title">光量</div>
         <div className="detail-card">
           <div className="light-result-label" style={{ marginBottom: "0.5rem" }}>{s.light}</div>
+          <div className="light-bar-axis">
+            <span>明</span><span>暗</span>
+          </div>
           <div className="light-bar-wrap">
             <div className="light-bar" style={{ width: `${s.lightBar}%` }} />
           </div>
