@@ -428,10 +428,167 @@ header h1 {
 }
 
 /* ソートバー */
-.sort-bar {
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.65rem;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(90, 138, 92, 0.2);
+  border-radius: 100px;
+  font-size: 0.68rem;
+  color: #7a9b7c;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.filter-btn:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.filter-btn.active {
+  background: rgba(90, 138, 92, 0.12);
+  border-color: rgba(90, 138, 92, 0.4);
+  color: #3a6b3c;
+}
+
+.filter-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.card-color-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.sort-view-bar {
   display: flex;
   gap: 0.4rem;
   margin-bottom: 1rem;
+  align-items: center;
+}
+
+.view-btn {
+  padding: 0.4rem 0.6rem;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(90, 138, 92, 0.2);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  color: #9ab89c;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.view-btn.active {
+  background: rgba(90, 138, 92, 0.12);
+  border-color: rgba(90, 138, 92, 0.4);
+  color: #3a6b3c;
+}
+
+.sort-bar {
+  display: flex;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+/* グリッドビュー */
+.zukan-grid-view {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.7rem;
+}
+
+.zukan-grid-card {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(44, 74, 45, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.zukan-grid-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(44, 74, 45, 0.1), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.zukan-grid-img-wrap {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f0f5f0, #e6ede6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.zukan-grid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+}
+
+.zukan-grid-placeholder {
+  width: 60%;
+  height: 60%;
+  opacity: 0.15;
+}
+
+.zukan-grid-body {
+  padding: 0.6rem 0.7rem 0.7rem;
+  border-top: 3px solid var(--accent, #c8dfc8);
+}
+
+.zukan-grid-name {
+  font-size: 0.88rem;
+  color: #2c4a2d;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.15rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.zukan-grid-scientific {
+  font-size: 0.62rem;
+  color: #9ab89c;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.zukan-grid-marks {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  display: flex;
+  gap: 0.1rem;
 }
 
 .sort-btn {
@@ -487,6 +644,41 @@ header h1 {
   width: 6px;
   flex-shrink: 0;
   background: var(--accent, #c8dfc8);
+}
+
+.zukan-card-marks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.6rem 0.8rem 0.6rem 0;
+  flex-shrink: 0;
+}
+
+.mark-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #c0d4c0;
+  padding: 0.15rem;
+  line-height: 1;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.mark-btn:hover {
+  transform: scale(1.2);
+}
+
+.mark-btn.active-check {
+  color: #3a6b3c;
+  font-size: 1.1rem;
+}
+
+.mark-btn.active-star {
+  color: #c8a84a;
 }
 
 .zukan-card-body {
