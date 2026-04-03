@@ -40,10 +40,18 @@ export default function ZukanPage() {
         />
 
         <div className="sort-bar">
-          <button className={`sort-btn${sort === "name-asc" ? " active" : ""}`} onClick={() => setSort("name-asc")}>和名 ↑</button>
-          <button className={`sort-btn${sort === "name-desc" ? " active" : ""}`} onClick={() => setSort("name-desc")}>和名 ↓</button>
-          <button className={`sort-btn${sort === "sci-asc" ? " active" : ""}`} onClick={() => setSort("sci-asc")}>学名 ↑</button>
-          <button className={`sort-btn${sort === "sci-desc" ? " active" : ""}`} onClick={() => setSort("sci-desc")}>学名 ↓</button>
+          <button
+            className={`sort-btn${sort.startsWith("name") ? " active" : ""}`}
+            onClick={() => setSort(sort === "name-asc" ? "name-desc" : "name-asc")}
+          >
+            和名 {sort === "name-asc" ? "↑" : sort === "name-desc" ? "↓" : ""}
+          </button>
+          <button
+            className={`sort-btn${sort.startsWith("sci") ? " active" : ""}`}
+            onClick={() => setSort(sort === "sci-asc" ? "sci-desc" : "sci-asc")}
+          >
+            学名 {sort === "sci-asc" ? "↑" : sort === "sci-desc" ? "↓" : ""}
+          </button>
         </div>
 
         <div className="zukan-grid">

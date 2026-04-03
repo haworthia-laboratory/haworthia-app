@@ -622,6 +622,25 @@ header h1 {
   color: #b0c8b2;
 }
 
+.detail-illustration {
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+  flex-shrink: 0;
+  align-self: center;
+  margin: 0.5rem 0.8rem 0.5rem 0;
+  mix-blend-mode: multiply;
+}
+
+.light-bar-axis {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: #9ab89c;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+}
+
 /* ギャラリー */
 .gallery-wrap {
   margin-bottom: 2rem;
