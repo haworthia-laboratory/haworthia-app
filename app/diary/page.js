@@ -21,7 +21,7 @@ function today() {
 export default function DiaryPage() {
   const [entries, setEntries] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ date: today(), speciesId: "", note: "", photo: null });
+  const [form, setForm] = useState({ date: today(), speciesId: "", note: "", photos: [] });
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -29,49 +29,57 @@ export default function DiaryPage() {
   }, []);
 
   const handlePhoto = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const img = new Image();
-      img.onload = () => {
-        const maxSize = 800;
-        let { width, height } = img;
-        if (width > maxSize || height > maxSize) {
-          if (width > height) { height = Math.round(height * maxSize / width); width = maxSize; }
-          else { width = Math.round(width * maxSize / height); height = maxSize; }
-        }
-        const canvas = document.createElement("canvas");
-        canvas.width = width; canvas.height = height;
-        canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-        setForm(f => ({ ...f, photo: canvas.toDataURL("image/jpeg", 0.8) }));
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const img = new Image();
+        img.onload = () => {
+          const maxSize = 800;
+          let { width, height } = img;
+          if (width > maxSize || height > maxSize) {
+            if (width > height) { height = Math.round(height * maxSize / width); width = maxSize; }
+            else { width = Math.round(width * maxSize / height); height = maxSize; }
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width; canvas.height = height;
+          canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+          setForm(f => ({ ...f, photos: [...f.photos, dataUrl] }));
+        };
+        img.src = reader.result;
       };
-      img.src = reader.result;
-    };
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
+    });
+    e.target.value = "";
+  };
+
+  const removePhoto = (index) => {
+    setForm(f => ({ ...f, photos: f.photos.filter((_, i) => i !== index) }));
   };
 
   const save = () => {
-    if (!form.note && !form.photo) return;
+    if (!form.note && form.photos.length === 0) return;
     const speciesObj = species.find(s => s.id === form.speciesId);
     const entry = {
       id: Date.now().toString(),
       date: form.date,
       speciesId: form.speciesId || null,
       speciesName: speciesObj ? speciesObj.name : null,
-      photo: form.photo,
+      photos: form.photos,
       note: form.note,
     };
     const updated = [entry, ...entries];
     setEntries(updated);
     saveEntries(updated);
     // 品種ギャラリーにも追加
-    if (form.photo && form.speciesId) {
+    if (form.photos.length > 0 && form.speciesId) {
       const key = `gallery_${form.speciesId}`;
       const existing = JSON.parse(localStorage.getItem(key) || "[]");
-      localStorage.setItem(key, JSON.stringify([...existing, form.photo]));
+      localStorage.setItem(key, JSON.stringify([...existing, ...form.photos]));
     }
-    setForm({ date: today(), speciesId: "", note: "", photo: null });
+    setForm({ date: today(), speciesId: "", note: "", photos: [] });
     setShowForm(false);
   };
 
@@ -122,10 +130,19 @@ export default function DiaryPage() {
               <label className="diary-form-label">写真</label>
               <div>
                 <button className="diary-photo-btn" onClick={() => fileInputRef.current.click()}>
-                  {form.photo ? "写真を変更" : "写真を選ぶ"}
+                  ＋ 写真を追加
                 </button>
-                <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhoto} style={{ display: "none" }} />
-                {form.photo && <img src={form.photo} alt="preview" className="diary-photo-preview" />}
+                <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handlePhoto} style={{ display: "none" }} />
+                {form.photos.length > 0 && (
+                  <div className="diary-photo-grid">
+                    {form.photos.map((src, i) => (
+                      <div key={i} className="diary-photo-thumb-wrap">
+                        <img src={src} alt={`preview ${i}`} className="diary-photo-thumb" />
+                        <button className="diary-photo-remove" onClick={() => removePhoto(i)}>×</button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
             <div className="diary-form-row">
@@ -160,7 +177,15 @@ export default function DiaryPage() {
                 </div>
                 <button className="diary-delete-btn" onClick={() => deleteEntry(entry.id)}>×</button>
               </div>
-              {entry.photo && <img src={entry.photo} alt="記録写真" className="diary-entry-photo" />}
+              {entry.photos && entry.photos.length > 0 && (
+                entry.photos.length === 1
+                  ? <img src={entry.photos[0]} alt="記録写真" className="diary-entry-photo" />
+                  : <div className="diary-entry-photo-grid">
+                      {entry.photos.map((src, i) => (
+                        <img key={i} src={src} alt={`記録写真 ${i+1}`} className="diary-entry-photo-thumb" />
+                      ))}
+                    </div>
+              )}
               {entry.note && <p className="diary-entry-note">{entry.note}</p>}
             </div>
           ))}
