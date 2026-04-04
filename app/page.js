@@ -320,7 +320,14 @@ export default function Home() {
           </div>
         </header>
 
-        <label className="upload-card" style={{ cursor: image ? "default" : "pointer" }}>
+        <label className="upload-card" style={{ cursor: "pointer" }}>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            style={{ display: "none" }}
+          />
           {image ? (
             <img src={image} alt="選択した画像" className="preview" />
           ) : (
@@ -329,15 +336,6 @@ export default function Home() {
               <p>写真をタップして選択</p>
               <p className="sub">カメラまたはアルバムから</p>
             </div>
-          )}
-          {!image && (
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              style={{ display: "none" }}
-            />
           )}
         </label>
 
