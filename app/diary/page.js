@@ -588,6 +588,51 @@ export default function DiaryPage() {
           </div>
         )}
 
+        {/* 光量マップ */}
+        {plants.length > 0 && (() => {
+          const plantsWithLight = plants
+            .map(p => ({ ...p, lightBar: species.find(s => s.id === p.species_id)?.lightBar }))
+            .filter(p => p.lightBar != null)
+            .sort((a, b) => b.lightBar - a.lightBar);
+
+          if (plantsWithLight.length === 0) return null;
+
+          return (
+            <div style={{ marginTop: "2rem", marginBottom: "1.4rem" }}>
+              <div className="diary-section-title">光量マップ</div>
+              <div className="light-map-card">
+                <div className="light-map-axis">
+                  <span>☀️ 明るい</span>
+                  <span>🌿 暗め</span>
+                </div>
+                <div className="light-map-track">
+                  <div className="light-map-gradient" />
+                  {plantsWithLight.map(p => (
+                    <div
+                      key={p.id}
+                      className="light-map-dot-wrap"
+                      style={{ left: `${p.lightBar}%` }}
+                    >
+                      <div className="light-map-dot" />
+                      <div className="light-map-label">
+                        <div className="light-map-plant-name">{p.name}</div>
+                        {p.species_name && p.species_name !== p.name && (
+                          <div className="light-map-species-name">{p.species_name}</div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="light-map-zones">
+                  <div className="light-map-zone" style={{ width: "40%" }}>直射日光・窓際最前列</div>
+                  <div className="light-map-zone" style={{ width: "30%" }}>明るい日陰・前列</div>
+                  <div className="light-map-zone" style={{ width: "30%" }}>半日陰・後列</div>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+
         <div className="diary-list">
           {!loading && visibleEntries.length === 0 && (
             <div className="gallery-empty"><p>まだ記録がありません</p></div>

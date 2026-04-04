@@ -1352,6 +1352,99 @@ header h1 {
   padding-left: 0.6rem;
 }
 
+.light-map-card {
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 18px;
+  padding: 1.2rem 1.4rem 1rem;
+  box-shadow: 0 4px 18px rgba(44, 74, 45, 0.06);
+}
+
+.light-map-axis {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: #9ab89c;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+}
+
+.light-map-track {
+  position: relative;
+  height: 100px;
+  margin-bottom: 0.6rem;
+}
+
+.light-map-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right, #f5e97a, #c8e6a0, #7ab89c, #4a7a6c);
+}
+
+.light-map-dot-wrap {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.light-map-dot {
+  width: 10px;
+  height: 10px;
+  background: #3a6b3c;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 1px 4px rgba(44, 74, 45, 0.3);
+  margin-top: -2px;
+}
+
+.light-map-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.light-map-plant-name {
+  font-size: 0.7rem;
+  color: #2c4a2d;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.light-map-species-name {
+  font-size: 0.62rem;
+  color: #9ab89c;
+  white-space: nowrap;
+}
+
+.light-map-zones {
+  display: flex;
+  border-top: 1px solid rgba(90, 138, 92, 0.1);
+  padding-top: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.light-map-zone {
+  font-size: 0.62rem;
+  color: #b0c4b1;
+  text-align: center;
+  letter-spacing: 0.04em;
+  border-right: 1px dashed rgba(90, 138, 92, 0.15);
+  padding: 0 0.3rem;
+}
+
+.light-map-zone:last-child {
+  border-right: none;
+}
+
 .plant-sort-group {
   display: flex;
   gap: 0.3rem;
