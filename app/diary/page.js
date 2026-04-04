@@ -42,6 +42,10 @@ export default function DiaryPage() {
   const [filterPlantId, setFilterPlantId] = useState(null);
   const [plantSort, setPlantSort] = useState("species");
 
+  // エラー
+  const [entryError, setEntryError] = useState("");
+  const [plantError, setPlantError] = useState("");
+
   useEffect(() => { fetchAll(); }, []);
 
   const fetchAll = async () => {
@@ -84,6 +88,7 @@ export default function DiaryPage() {
   };
 
   const savePlant = async () => {
+    setPlantError("");
     const speciesObj = species.find(s => s.id === plantForm.speciesId);
     const defaultName = speciesObj ? speciesObj.name : "名前なし";
     const payload = {
@@ -97,11 +102,13 @@ export default function DiaryPage() {
 
     if (supabase) {
       if (editingPlantId) {
-        await supabase.from("plants").update(payload).eq("id", editingPlantId);
+        const { error } = await supabase.from("plants").update(payload).eq("id", editingPlantId);
+        if (error) { setPlantError(`保存に失敗しました：${error.message}`); return; }
       } else {
-        const { data: newPlant } = await supabase.from("plants").insert(payload).select().single();
+        const { data: newPlant, error: plantErr } = await supabase.from("plants").insert(payload).select().single();
+        if (plantErr) { setPlantError(`登録に失敗しました：${plantErr.message}`); return; }
         if (newPlant && plantForm.photos.length > 0) {
-          await supabase.from("diary_entries").insert({
+          const { error: entryErr } = await supabase.from("diary_entries").insert({
             date: plantForm.acquiredDate || today(),
             plant_id: newPlant.id,
             plant_name: newPlant.name,
@@ -110,6 +117,7 @@ export default function DiaryPage() {
             note: "",
             photos: plantForm.photos,
           });
+          if (entryErr) { setPlantError("株は登録できましたが写真の保存に失敗しました。写真のサイズが大きすぎる可能性があります"); return; }
         }
       }
       await fetchAll();
@@ -247,7 +255,11 @@ export default function DiaryPage() {
   };
 
   const saveEntry = async () => {
-    if (!entryForm.note.trim() && entryForm.photos.length === 0) return;
+    setEntryError("");
+    if (!entryForm.note.trim() && entryForm.photos.length === 0) {
+      setEntryError("メモか写真のどちらかを入力してください");
+      return;
+    }
     const plant = plants.find(p => p.id === entryForm.plantId);
     const payload = {
       date: entryForm.date,
@@ -260,10 +272,16 @@ export default function DiaryPage() {
     };
 
     if (supabase) {
-      if (editingEntryId) {
-        await supabase.from("diary_entries").update(payload).eq("id", editingEntryId);
-      } else {
-        await supabase.from("diary_entries").insert(payload);
+      const { error } = editingEntryId
+        ? await supabase.from("diary_entries").update(payload).eq("id", editingEntryId)
+        : await supabase.from("diary_entries").insert(payload);
+      if (error) {
+        if (error.message?.includes("too large") || error.code === "54000") {
+          setEntryError("写真のサイズが大きすぎます。枚数を減らすか、1枚ずつ試してみてください");
+        } else {
+          setEntryError(`保存に失敗しました：${error.message}`);
+        }
+        return;
       }
       await fetchAll();
     } else {
@@ -473,11 +491,12 @@ export default function DiaryPage() {
                 </div>
               </div>
             )}
+            {plantError && <div className="diary-error">{plantError}</div>}
             <div style={{ display: "flex", gap: "0.6rem" }}>
               <button className="diary-save-btn" style={{ flex: 1 }} onClick={savePlant}>
                 {editingPlantId ? "変更を保存" : "登録する"}
               </button>
-              <button className="diary-cancel-btn" onClick={() => { setShowPlantForm(false); setEditingPlantId(null); }}>
+              <button className="diary-cancel-btn" onClick={() => { setShowPlantForm(false); setEditingPlantId(null); setPlantError(""); }}>
                 キャンセル
               </button>
             </div>
@@ -596,6 +615,7 @@ export default function DiaryPage() {
                 onChange={e => setEntryForm(f => ({ ...f, note: e.target.value }))}
               />
             </div>
+            {entryError && <div className="diary-error">{entryError}</div>}
             <button className="diary-save-btn" onClick={saveEntry}>
               {editingEntryId ? "変更を保存" : "保存する"}
             </button>
