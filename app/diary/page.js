@@ -14,7 +14,10 @@ export default function DiaryPage() {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(emptyForm());
+  const [speciesQuery, setSpeciesQuery] = useState("");
+  const [showSpeciesList, setShowSpeciesList] = useState(false);
   const fileInputRef = useRef(null);
+  const speciesInputRef = useRef(null);
 
   useEffect(() => { fetchEntries(); }, []);
 
@@ -35,17 +38,20 @@ export default function DiaryPage() {
   const openNew = () => {
     setEditingId(null);
     setForm(emptyForm());
+    setSpeciesQuery("");
     setShowForm(true);
   };
 
   const openEdit = (entry) => {
     setEditingId(entry.id);
+    const sp = species.find(s => s.id === entry.species_id);
     setForm({
       date: entry.date,
       speciesId: entry.species_id || "",
       note: entry.note || "",
       photos: entry.photos || [],
     });
+    setSpeciesQuery(sp ? sp.name : "");
     setShowForm(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -54,7 +60,16 @@ export default function DiaryPage() {
     setShowForm(false);
     setEditingId(null);
     setForm(emptyForm());
+    setSpeciesQuery("");
+    setShowSpeciesList(false);
   };
+
+  const filteredSpecies = speciesQuery
+    ? species.filter(s =>
+        s.name.includes(speciesQuery) ||
+        s.scientific.toLowerCase().includes(speciesQuery.toLowerCase())
+      ).slice(0, 8)
+    : [];
 
   const handlePhoto = (e) => {
     const files = Array.from(e.target.files);
@@ -155,16 +170,47 @@ export default function DiaryPage() {
             </div>
             <div className="diary-form-row">
               <label className="diary-form-label">品種</label>
-              <select
-                className="diary-select"
-                value={form.speciesId}
-                onChange={e => setForm(f => ({ ...f, speciesId: e.target.value }))}
-              >
-                <option value="">選択しない</option>
-                {species.map(s => (
-                  <option key={s.id} value={s.id}>{s.name}</option>
-                ))}
-              </select>
+              <div className="species-search-wrap">
+                <input
+                  ref={speciesInputRef}
+                  type="text"
+                  className="diary-date-input"
+                  placeholder="品種名で検索..."
+                  value={speciesQuery}
+                  onChange={e => {
+                    setSpeciesQuery(e.target.value);
+                    setForm(f => ({ ...f, speciesId: "" }));
+                    setShowSpeciesList(true);
+                  }}
+                  onFocus={() => setShowSpeciesList(true)}
+                  onBlur={() => setTimeout(() => setShowSpeciesList(false), 150)}
+                />
+                {form.speciesId && (
+                  <button className="species-clear-btn" onClick={() => {
+                    setForm(f => ({ ...f, speciesId: "" }));
+                    setSpeciesQuery("");
+                    speciesInputRef.current?.focus();
+                  }}>×</button>
+                )}
+                {showSpeciesList && filteredSpecies.length > 0 && (
+                  <div className="species-dropdown">
+                    {filteredSpecies.map(s => (
+                      <div
+                        key={s.id}
+                        className="species-dropdown-item"
+                        onMouseDown={() => {
+                          setForm(f => ({ ...f, speciesId: s.id }));
+                          setSpeciesQuery(s.name);
+                          setShowSpeciesList(false);
+                        }}
+                      >
+                        <span className="species-dropdown-name">{s.name}</span>
+                        <span className="species-dropdown-sci">{s.scientific}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
             <div className="diary-form-row">
               <label className="diary-form-label">写真</label>
