@@ -23,6 +23,7 @@ const TYPE_GROUPS = [
   { id: "原種", label: "原種" },
   { id: "園芸種", label: "園芸種" },
   { id: "交配種", label: "交配種" },
+  { id: "選抜種", label: "選抜種" },
 ];
 
 function getColorGroup(s) {
