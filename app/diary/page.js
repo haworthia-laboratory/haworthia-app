@@ -83,10 +83,10 @@ export default function DiaryPage() {
   };
 
   const savePlant = async () => {
-    if (!plantForm.name.trim()) return;
     const speciesObj = species.find(s => s.id === plantForm.speciesId);
+    const defaultName = speciesObj ? speciesObj.name : "名前なし";
     const payload = {
-      name: plantForm.name,
+      name: plantForm.name.trim() || defaultName,
       species_id: plantForm.speciesId || null,
       species_name: speciesObj ? speciesObj.name : null,
       acquired_date: plantForm.acquiredDate || null,
