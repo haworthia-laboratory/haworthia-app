@@ -558,7 +558,7 @@ export default function DiaryPage() {
             )}
             {plantError && <div className="diary-error">{plantError}</div>}
             <div style={{ display: "flex", gap: "0.6rem" }}>
-              <button className="diary-save-btn" style={{ flex: 1 }} onClick={savePlant}>
+              <button className="diary-save-btn" style={{ flex: 1, background: "linear-gradient(135deg, #8a9e8b, #9aae9b)" }} onClick={savePlant}>
                 {editingPlantId ? "変更を保存" : "登録する"}
               </button>
               <button className="diary-cancel-btn" onClick={() => { setShowPlantForm(false); setEditingPlantId(null); setPlantError(""); }}>
