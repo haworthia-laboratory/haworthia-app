@@ -8,7 +8,7 @@ import { supabase } from "../../lib/supabase";
 function today() { return new Date().toISOString().slice(0, 10); }
 
 const emptyEntryForm = () => ({ date: today(), plantId: "", note: "", photos: [] });
-const emptyPlantForm = () => ({ name: "", speciesId: "", acquiredDate: today(), acquiredType: "purchase", memo: "" });
+const emptyPlantForm = () => ({ name: "", speciesId: "", acquiredDate: today(), acquiredType: "purchase", memo: "", photos: [] });
 
 const ACQUIRED_TYPES = [
   { id: "purchase", label: "購入" },
@@ -28,6 +28,7 @@ export default function DiaryPage() {
   const [editingEntryId, setEditingEntryId] = useState(null);
   const [entryForm, setEntryForm] = useState(emptyEntryForm());
   const fileInputRef = useRef(null);
+  const plantFileInputRef = useRef(null);
 
   // 株フォーム
   const [showPlantForm, setShowPlantForm] = useState(false);
@@ -75,6 +76,7 @@ export default function DiaryPage() {
       acquiredDate: plant.acquired_date || today(),
       acquiredType: plant.acquired_type || "purchase",
       memo: plant.memo || "",
+      photos: [],
     });
     setPlantSpeciesQuery(sp ? sp.name : "");
     setShowPlantForm(true);
@@ -96,21 +98,75 @@ export default function DiaryPage() {
       if (editingPlantId) {
         await supabase.from("plants").update(payload).eq("id", editingPlantId);
       } else {
-        await supabase.from("plants").insert(payload);
+        const { data: newPlant } = await supabase.from("plants").insert(payload).select().single();
+        if (newPlant && plantForm.photos.length > 0) {
+          await supabase.from("diary_entries").insert({
+            date: plantForm.acquiredDate || today(),
+            plant_id: newPlant.id,
+            plant_name: newPlant.name,
+            species_id: newPlant.species_id,
+            species_name: newPlant.species_name,
+            note: "",
+            photos: plantForm.photos,
+          });
+        }
       }
       await fetchAll();
     } else {
-      let updated;
+      const newId = Date.now().toString();
+      let updatedPlants;
       if (editingPlantId) {
-        updated = plants.map(p => p.id === editingPlantId ? { ...p, ...payload } : p);
+        updatedPlants = plants.map(p => p.id === editingPlantId ? { ...p, ...payload } : p);
       } else {
-        updated = [...plants, { id: Date.now().toString(), created_at: new Date().toISOString(), ...payload }];
+        updatedPlants = [...plants, { id: newId, created_at: new Date().toISOString(), ...payload }];
+        if (plantForm.photos.length > 0) {
+          const newEntry = {
+            id: (Date.now() + 1).toString(),
+            created_at: new Date().toISOString(),
+            date: plantForm.acquiredDate || today(),
+            plant_id: newId,
+            plant_name: plantForm.name,
+            species_id: payload.species_id,
+            species_name: payload.species_name,
+            note: "",
+            photos: plantForm.photos,
+          };
+          const updatedEntries = [newEntry, ...entries];
+          setEntries(updatedEntries);
+          localStorage.setItem("diary", JSON.stringify(updatedEntries));
+        }
       }
-      setPlants(updated);
-      localStorage.setItem("plants", JSON.stringify(updated));
+      setPlants(updatedPlants);
+      localStorage.setItem("plants", JSON.stringify(updatedPlants));
     }
     setShowPlantForm(false);
     setEditingPlantId(null);
+  };
+
+  const handlePlantPhoto = (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const img = new Image();
+        img.onload = () => {
+          const maxSize = 800;
+          let { width, height } = img;
+          if (width > maxSize || height > maxSize) {
+            if (width > height) { height = Math.round(height * maxSize / width); width = maxSize; }
+            else { width = Math.round(width * maxSize / height); height = maxSize; }
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width; canvas.height = height;
+          canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+          setPlantForm(f => ({ ...f, photos: [...f.photos, canvas.toDataURL("image/jpeg", 0.8)] }));
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
+    e.target.value = "";
   };
 
   const deletePlant = async (id) => {
@@ -371,6 +427,27 @@ export default function DiaryPage() {
                 onChange={e => setPlantForm(f => ({ ...f, memo: e.target.value }))}
               />
             </div>
+            {!editingPlantId && (
+              <div className="diary-form-row">
+                <label className="diary-form-label">写真（入手時）</label>
+                <div>
+                  <button className="diary-photo-btn" onClick={() => plantFileInputRef.current.click()}>
+                    ＋ 写真を追加
+                  </button>
+                  <input ref={plantFileInputRef} type="file" accept="image/*" multiple onChange={handlePlantPhoto} style={{ display: "none" }} />
+                  {plantForm.photos.length > 0 && (
+                    <div className="diary-photo-grid">
+                      {plantForm.photos.map((src, i) => (
+                        <div key={i} className="diary-photo-thumb-wrap">
+                          <img src={src} alt={`preview ${i}`} className="diary-photo-thumb" />
+                          <button className="diary-photo-remove" onClick={() => setPlantForm(f => ({ ...f, photos: f.photos.filter((_, j) => j !== i) }))}>×</button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
             <div style={{ display: "flex", gap: "0.6rem" }}>
               <button className="diary-save-btn" style={{ flex: 1 }} onClick={savePlant}>
                 {editingPlantId ? "変更を保存" : "登録する"}
