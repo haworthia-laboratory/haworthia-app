@@ -350,6 +350,72 @@ export default function DiaryPage() {
           <p className="subtitle">{loading ? "読み込み中..." : `${entries.length}件の記録`}</p>
         </header>
 
+        {/* 記録追加ボタン・フォーム（常に上部固定） */}
+        <button className="identify-btn" onClick={showEntryForm ? cancelEntry : () => openNewEntry(filterPlantId)}>
+          {showEntryForm ? "キャンセル" : "＋ 記録を追加"}
+        </button>
+
+        {showEntryForm && (
+          <div className="diary-form-card">
+            <div className="diary-form-row">
+              <label className="diary-form-label">日付</label>
+              <input
+                type="date"
+                className="diary-date-input"
+                value={entryForm.date}
+                onChange={e => setEntryForm(f => ({ ...f, date: e.target.value }))}
+              />
+            </div>
+            <div className="diary-form-row">
+              <label className="diary-form-label">株</label>
+              <select
+                className="diary-select"
+                value={entryForm.plantId}
+                onChange={e => setEntryForm(f => ({ ...f, plantId: e.target.value }))}
+              >
+                <option value="">選択しない</option>
+                {plants.map(p => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}{p.species_name ? `（${p.species_name}）` : ""}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="diary-form-row">
+              <label className="diary-form-label">写真</label>
+              <div>
+                <button className="diary-photo-btn" onClick={() => fileInputRef.current.click()}>
+                  ＋ 写真を追加
+                </button>
+                <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handlePhoto} style={{ display: "none" }} />
+                {entryForm.photos.length > 0 && (
+                  <div className="diary-photo-grid">
+                    {entryForm.photos.map((src, i) => (
+                      <div key={i} className="diary-photo-thumb-wrap">
+                        <img src={src} alt={`preview ${i}`} className="diary-photo-thumb" />
+                        <button className="diary-photo-remove" onClick={() => removePhoto(i)}>×</button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="diary-form-row">
+              <label className="diary-form-label">メモ</label>
+              <textarea
+                className="diary-textarea"
+                placeholder="今日の様子、気づいたこと..."
+                value={entryForm.note}
+                onChange={e => setEntryForm(f => ({ ...f, note: e.target.value }))}
+              />
+            </div>
+            {entryError && <div className="diary-error">{entryError}</div>}
+            <button className="diary-save-btn" onClick={saveEntry}>
+              {editingEntryId ? "変更を保存" : "保存する"}
+            </button>
+          </div>
+        )}
+
         {/* はじめかたガイド */}
         {!loading && plants.length === 0 && !showPlantForm && (
           <div className="diary-guide">
@@ -554,71 +620,6 @@ export default function DiaryPage() {
             <button className="diary-clear-filter" onClick={() => setFilterPlantId(null)}>× 全表示</button>
           )}
         </div>
-
-        <button className="identify-btn" onClick={showEntryForm ? cancelEntry : () => openNewEntry(filterPlantId)}>
-          {showEntryForm ? "キャンセル" : "＋ 記録を追加"}
-        </button>
-
-        {showEntryForm && (
-          <div className="diary-form-card">
-            <div className="diary-form-row">
-              <label className="diary-form-label">日付</label>
-              <input
-                type="date"
-                className="diary-date-input"
-                value={entryForm.date}
-                onChange={e => setEntryForm(f => ({ ...f, date: e.target.value }))}
-              />
-            </div>
-            <div className="diary-form-row">
-              <label className="diary-form-label">株</label>
-              <select
-                className="diary-select"
-                value={entryForm.plantId}
-                onChange={e => setEntryForm(f => ({ ...f, plantId: e.target.value }))}
-              >
-                <option value="">選択しない</option>
-                {plants.map(p => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}{p.species_name ? `（${p.species_name}）` : ""}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="diary-form-row">
-              <label className="diary-form-label">写真</label>
-              <div>
-                <button className="diary-photo-btn" onClick={() => fileInputRef.current.click()}>
-                  ＋ 写真を追加
-                </button>
-                <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handlePhoto} style={{ display: "none" }} />
-                {entryForm.photos.length > 0 && (
-                  <div className="diary-photo-grid">
-                    {entryForm.photos.map((src, i) => (
-                      <div key={i} className="diary-photo-thumb-wrap">
-                        <img src={src} alt={`preview ${i}`} className="diary-photo-thumb" />
-                        <button className="diary-photo-remove" onClick={() => removePhoto(i)}>×</button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="diary-form-row">
-              <label className="diary-form-label">メモ</label>
-              <textarea
-                className="diary-textarea"
-                placeholder="今日の様子、気づいたこと..."
-                value={entryForm.note}
-                onChange={e => setEntryForm(f => ({ ...f, note: e.target.value }))}
-              />
-            </div>
-            {entryError && <div className="diary-error">{entryError}</div>}
-            <button className="diary-save-btn" onClick={saveEntry}>
-              {editingEntryId ? "変更を保存" : "保存する"}
-            </button>
-          </div>
-        )}
 
         {/* 光量マップ */}
         {plants.length > 0 && (() => {
