@@ -289,6 +289,13 @@ export default function DiaryPage() {
   };
 
   // ---- derived ----
+  const sortedPlants = [...plants].sort((a, b) => {
+    const nameA = a.species_name || "zzz";
+    const nameB = b.species_name || "zzz";
+    if (nameA !== nameB) return nameA.localeCompare(nameB, "ja");
+    return (a.name || "").localeCompare(b.name || "", "ja");
+  });
+
   const selectedPlant = filterPlantId ? plants.find(p => p.id === filterPlantId) : null;
   const visibleEntries = filterPlantId
     ? entries.filter(e => e.plant_id === filterPlantId)
@@ -460,7 +467,7 @@ export default function DiaryPage() {
         )}
 
         <div className="diary-individual-list">
-          {plants.map(plant => (
+          {sortedPlants.map(plant => (
             <div
               key={plant.id}
               className={`diary-individual-card${filterPlantId === plant.id ? " selected" : ""}`}
