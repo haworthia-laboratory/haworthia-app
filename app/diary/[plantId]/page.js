@@ -29,6 +29,7 @@ export default function PlantTimelinePage() {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(emptyEntryForm());
   const [error, setError] = useState("");
+  const [toast, setToast] = useState("");
   const fileInputRef = useRef(null);
 
   const [thumbOverrides, setThumbOverrides] = useState({});
@@ -137,6 +138,8 @@ export default function PlantTimelinePage() {
         return;
       }
       await fetchData();
+      setToast(editingId ? "記録を更新しました" : "記録を保存しました");
+      setTimeout(() => setToast(""), 2500);
     } else {
       const allEntries = JSON.parse(localStorage.getItem("diary") || "[]");
       let updated;
@@ -147,6 +150,8 @@ export default function PlantTimelinePage() {
       }
       localStorage.setItem("diary", JSON.stringify(updated));
       setEntries(updated.filter(e => e.plant_id === plantId).sort((a, b) => b.date.localeCompare(a.date)));
+      setToast(editingId ? "記録を更新しました" : "記録を保存しました");
+      setTimeout(() => setToast(""), 2500);
     }
     cancel();
   };
@@ -187,6 +192,7 @@ export default function PlantTimelinePage() {
 
   return (
     <main>
+      {toast && <div className="diary-toast">{toast}</div>}
       <div className="container">
         <header>
           <Link href="/diary" className="back-link">← 成長日記に戻る</Link>
