@@ -3,30 +3,58 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { species } from "../zukan/data";
+import { supabase } from "../../lib/supabase";
 
-function getEntries() {
-  try {
-    return JSON.parse(localStorage.getItem("diary") || "[]");
-  } catch { return []; }
-}
-
-function saveEntries(entries) {
-  localStorage.setItem("diary", JSON.stringify(entries));
-}
-
-function today() {
-  return new Date().toISOString().slice(0, 10);
-}
+function today() { return new Date().toISOString().slice(0, 10); }
+const emptyForm = () => ({ date: today(), speciesId: "", note: "", photos: [] });
 
 export default function DiaryPage() {
   const [entries, setEntries] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ date: today(), speciesId: "", note: "", photos: [] });
+  const [editingId, setEditingId] = useState(null);
+  const [form, setForm] = useState(emptyForm());
   const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    setEntries(getEntries());
-  }, []);
+  useEffect(() => { fetchEntries(); }, []);
+
+  const fetchEntries = async () => {
+    setLoading(true);
+    if (supabase) {
+      const { data, error } = await supabase
+        .from("diary_entries")
+        .select("*")
+        .order("date", { ascending: false });
+      if (!error) setEntries(data || []);
+    } else {
+      try { setEntries(JSON.parse(localStorage.getItem("diary") || "[]")); } catch { setEntries([]); }
+    }
+    setLoading(false);
+  };
+
+  const openNew = () => {
+    setEditingId(null);
+    setForm(emptyForm());
+    setShowForm(true);
+  };
+
+  const openEdit = (entry) => {
+    setEditingId(entry.id);
+    setForm({
+      date: entry.date,
+      speciesId: entry.species_id || "",
+      note: entry.note || "",
+      photos: entry.photos || [],
+    });
+    setShowForm(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const cancel = () => {
+    setShowForm(false);
+    setEditingId(null);
+    setForm(emptyForm());
+  };
 
   const handlePhoto = (e) => {
     const files = Array.from(e.target.files);
@@ -45,8 +73,7 @@ export default function DiaryPage() {
           const canvas = document.createElement("canvas");
           canvas.width = width; canvas.height = height;
           canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-          const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
-          setForm(f => ({ ...f, photos: [...f.photos, dataUrl] }));
+          setForm(f => ({ ...f, photos: [...f.photos, canvas.toDataURL("image/jpeg", 0.8)] }));
         };
         img.src = reader.result;
       };
@@ -59,34 +86,45 @@ export default function DiaryPage() {
     setForm(f => ({ ...f, photos: f.photos.filter((_, i) => i !== index) }));
   };
 
-  const save = () => {
-    if (!form.note && form.photos.length === 0) return;
+  const save = async () => {
+    if (!form.note.trim() && form.photos.length === 0) return;
     const speciesObj = species.find(s => s.id === form.speciesId);
-    const entry = {
-      id: Date.now().toString(),
+    const payload = {
       date: form.date,
-      speciesId: form.speciesId || null,
-      speciesName: speciesObj ? speciesObj.name : null,
-      photos: form.photos,
+      species_id: form.speciesId || null,
+      species_name: speciesObj ? speciesObj.name : null,
       note: form.note,
+      photos: form.photos,
     };
-    const updated = [entry, ...entries];
-    setEntries(updated);
-    saveEntries(updated);
-    // 品種ギャラリーにも追加
-    if (form.photos.length > 0 && form.speciesId) {
-      const key = `gallery_${form.speciesId}`;
-      const existing = JSON.parse(localStorage.getItem(key) || "[]");
-      localStorage.setItem(key, JSON.stringify([...existing, ...form.photos]));
+
+    if (supabase) {
+      if (editingId) {
+        await supabase.from("diary_entries").update(payload).eq("id", editingId);
+      } else {
+        await supabase.from("diary_entries").insert(payload);
+      }
+      await fetchEntries();
+    } else {
+      let updated;
+      if (editingId) {
+        updated = entries.map(e => e.id === editingId ? { ...e, ...payload } : e);
+      } else {
+        updated = [{ id: Date.now().toString(), created_at: new Date().toISOString(), ...payload }, ...entries];
+      }
+      setEntries(updated);
+      localStorage.setItem("diary", JSON.stringify(updated));
     }
-    setForm({ date: today(), speciesId: "", note: "", photos: [] });
-    setShowForm(false);
+    cancel();
   };
 
-  const deleteEntry = (id) => {
-    const updated = entries.filter(e => e.id !== id);
-    setEntries(updated);
-    saveEntries(updated);
+  const deleteEntry = async (id) => {
+    if (supabase) {
+      await supabase.from("diary_entries").delete().eq("id", id);
+    } else {
+      const updated = entries.filter(e => e.id !== id);
+      localStorage.setItem("diary", JSON.stringify(updated));
+    }
+    setEntries(prev => prev.filter(e => e.id !== id));
   };
 
   return (
@@ -95,10 +133,12 @@ export default function DiaryPage() {
         <header>
           <Link href="/" className="back-link">← 研究室に戻る</Link>
           <h1 style={{ marginTop: "0.8rem" }}>成長日記</h1>
-          <p className="subtitle">{entries.length}件の記録</p>
+          <p className="subtitle">
+            {loading ? "読み込み中..." : `${entries.length}件の記録`}
+          </p>
         </header>
 
-        <button className="identify-btn" onClick={() => setShowForm(v => !v)}>
+        <button className="identify-btn" onClick={showForm ? cancel : openNew}>
           {showForm ? "キャンセル" : "＋ 記録を追加"}
         </button>
 
@@ -154,35 +194,38 @@ export default function DiaryPage() {
                 onChange={e => setForm(f => ({ ...f, note: e.target.value }))}
               />
             </div>
-            <button className="diary-save-btn" onClick={save}>保存する</button>
+            <button className="diary-save-btn" onClick={save}>
+              {editingId ? "変更を保存" : "保存する"}
+            </button>
           </div>
         )}
 
         <div className="diary-list">
-          {entries.length === 0 && (
-            <div className="gallery-empty">
-              <p>まだ記録がありません</p>
-            </div>
+          {!loading && entries.length === 0 && (
+            <div className="gallery-empty"><p>まだ記録がありません</p></div>
           )}
           {entries.map(entry => (
             <div key={entry.id} className="diary-entry-card">
               <div className="diary-entry-header">
                 <div>
                   <div className="diary-entry-date">{entry.date.replace(/-/g, ".")}</div>
-                  {entry.speciesName && (
-                    <Link href={`/zukan/${entry.speciesId}`} className="diary-entry-species">
-                      {entry.speciesName}
+                  {entry.species_name && (
+                    <Link href={`/zukan/${entry.species_id}`} className="diary-entry-species">
+                      {entry.species_name}
                     </Link>
                   )}
                 </div>
-                <button className="diary-delete-btn" onClick={() => deleteEntry(entry.id)}>×</button>
+                <div style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}>
+                  <button className="diary-edit-btn" onClick={() => openEdit(entry)}>編集</button>
+                  <button className="diary-delete-btn" onClick={() => deleteEntry(entry.id)}>×</button>
+                </div>
               </div>
               {entry.photos && entry.photos.length > 0 && (
                 entry.photos.length === 1
                   ? <img src={entry.photos[0]} alt="記録写真" className="diary-entry-photo" />
                   : <div className="diary-entry-photo-grid">
                       {entry.photos.map((src, i) => (
-                        <img key={i} src={src} alt={`記録写真 ${i+1}`} className="diary-entry-photo-thumb" />
+                        <img key={i} src={src} alt={`記録写真 ${i + 1}`} className="diary-entry-photo-thumb" />
                       ))}
                     </div>
               )}
