@@ -179,6 +179,224 @@ header h1 {
   border-color: rgba(90, 138, 92, 0.5);
 }
 
+/* ===== アキネーター ===== */
+.aki-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.aki-progress-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(90, 138, 92, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.aki-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #5a8a5c, #8aba94);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.aki-progress-label {
+  font-size: 0.72rem;
+  color: #6a8a6c;
+  white-space: nowrap;
+}
+
+.aki-candidates-count {
+  text-align: right;
+  font-size: 0.75rem;
+  color: #8a9a8c;
+  margin-bottom: 1rem;
+}
+
+.aki-candidates-count strong {
+  color: #3a6b3c;
+  font-size: 0.9rem;
+}
+
+.aki-card {
+  background: rgba(255, 255, 255, 0.48);
+  backdrop-filter: blur(22px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  padding: 2rem 1.5rem 1.5rem;
+  box-shadow: 0 4px 24px rgba(44, 74, 45, 0.08);
+  margin-bottom: 1rem;
+}
+
+.aki-question {
+  font-size: 1.25rem;
+  color: #2c4a2d;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.aki-hint {
+  font-size: 0.72rem;
+  color: #7a9a7c;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.04em;
+}
+
+.aki-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.aki-option-btn {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(90, 138, 92, 0.25);
+  border-radius: 14px;
+  color: #2c4a2d;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.18s ease;
+  text-align: left;
+  padding-left: 1.2rem;
+}
+
+.aki-option-btn:hover {
+  background: rgba(90, 138, 92, 0.1);
+  border-color: rgba(90, 138, 92, 0.45);
+  transform: translateX(3px);
+}
+
+.aki-back-btn {
+  background: none;
+  border: none;
+  color: #8a9a8c;
+  font-size: 0.78rem;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0.3rem 0;
+  letter-spacing: 0.04em;
+}
+
+.aki-back-btn:hover {
+  color: #4a7a4c;
+}
+
+/* 結果 */
+.aki-result-header {
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+
+.aki-result-label {
+  font-size: 1rem;
+  color: #2c4a2d;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.aki-no-result {
+  font-size: 0.85rem;
+  color: #7a9a7c;
+  line-height: 1.7;
+}
+
+.aki-results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.aki-result-card {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-left: 3px solid var(--accent, #8aba94);
+  border-radius: 14px;
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+.aki-result-card:hover {
+  background: rgba(255, 255, 255, 0.65);
+  transform: translateX(3px);
+}
+
+.aki-result-rank {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(90, 138, 92, 0.12);
+  color: #4a7a4c;
+  font-size: 0.72rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.aki-result-body {
+  flex: 1;
+}
+
+.aki-result-type {
+  font-size: 0.65rem;
+  color: #6a8a6c;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.1rem;
+}
+
+.aki-result-name {
+  font-size: 0.92rem;
+  color: #2c4a2d;
+  font-weight: 500;
+}
+
+.aki-result-sci {
+  font-size: 0.68rem;
+  color: #6a8a6c;
+  font-style: italic;
+}
+
+.aki-result-arrow {
+  color: #8aba94;
+  font-size: 1.2rem;
+}
+
+.aki-reset-btn {
+  width: 100%;
+  padding: 0.85rem;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(90, 138, 92, 0.25);
+  border-radius: 14px;
+  color: #4a7a4c;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.18s ease;
+}
+
+.aki-reset-btn:hover {
+  background: rgba(90, 138, 92, 0.1);
+}
+
 /* 図鑑：写真フィルターバナー */
 .photo-filter-banner {
   display: flex;
