@@ -43,14 +43,23 @@ function NoteIcon() {
       <defs>
         <filter id="f3"><feGaussianBlur stdDeviation="0.6" /></filter>
       </defs>
-      <path d="M14 10 Q13 9 15 9 L49 9 Q51 9 51 11 L51 55 Q51 56 49 56 L15 56 Q13 56 14 54 Z"
+      {/* ノート本体 */}
+      <path d="M13 10 Q12 9 14 9 L46 9 Q48 9 48 11 L48 53 Q48 55 46 55 L14 55 Q12 55 13 53 Z"
         fill="rgba(160,148,136,0.18)" stroke="#b0a498" strokeWidth="1.8" strokeLinejoin="round" filter="url(#f3)" />
-      <path d="M14 10 Q13 9 15 9 L49 9 Q51 9 51 11 L51 55 Q51 56 49 56 L15 56 Q13 56 14 54 Z"
+      <path d="M13 10 Q12 9 14 9 L46 9 Q48 9 48 11 L48 53 Q48 55 46 55 L14 55 Q12 55 13 53 Z"
         fill="none" stroke="#887870" strokeWidth="1.2" strokeLinejoin="round" opacity="0.8" />
-      <line x1="20" y1="22" x2="45" y2="22" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
-      <line x1="20" y1="30" x2="45" y2="30" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
-      <line x1="20" y1="38" x2="45" y2="38" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
-      <line x1="20" y1="46" x2="38" y2="46" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
+      {/* 罫線 */}
+      <line x1="19" y1="21" x2="40" y2="21" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+      <line x1="19" y1="29" x2="40" y2="29" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+      <line x1="19" y1="37" x2="34" y2="37" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
+      {/* ペン */}
+      <g transform="rotate(-40 50 44)">
+        <rect x="46" y="32" width="5" height="16" rx="1.5"
+          fill="rgba(180,168,156,0.35)" stroke="#a09080" strokeWidth="1.2" />
+        <polygon points="46,48 51,48 48.5,54"
+          fill="rgba(160,148,136,0.5)" stroke="#a09080" strokeWidth="0.8" />
+        <line x1="46" y1="35" x2="51" y2="35" stroke="#c4b8b0" strokeWidth="0.8" opacity="0.7" />
+      </g>
     </svg>
   );
 }
@@ -61,19 +70,25 @@ function BookIcon() {
       <defs>
         <filter id="fb"><feGaussianBlur stdDeviation="0.6" /></filter>
       </defs>
-      <path d="M10 12 Q10 10 12 10 L32 10 L32 54 L12 54 Q10 54 10 52 Z"
-        fill="rgba(160,148,136,0.18)" stroke="#b0a498" strokeWidth="1.8" filter="url(#fb)" />
-      <path d="M10 12 Q10 10 12 10 L32 10 L32 54 L12 54 Q10 54 10 52 Z"
+      {/* 背表紙（厚み） */}
+      <path d="M10 13 Q10 11 12 11 L17 11 L17 53 L12 53 Q10 53 10 51 Z"
+        fill="rgba(140,128,116,0.28)" stroke="#a09080" strokeWidth="1.4" />
+      {/* 本体 */}
+      <path d="M17 9 L52 9 Q54 9 54 11 L54 53 Q54 55 52 55 L17 55 Z"
+        fill="rgba(165,152,140,0.18)" stroke="#b0a498" strokeWidth="1.8" filter="url(#fb)" />
+      <path d="M17 9 L52 9 Q54 9 54 11 L54 53 Q54 55 52 55 L17 55 Z"
         fill="none" stroke="#887870" strokeWidth="1.2" opacity="0.8" />
-      <path d="M32 10 L52 10 Q54 10 54 12 L54 52 Q54 54 52 54 L32 54 Z"
-        fill="rgba(180,168,156,0.15)" stroke="#b0a498" strokeWidth="1.8" filter="url(#fb)" />
-      <path d="M32 10 L52 10 Q54 10 54 12 L54 52 Q54 54 52 54 L32 54 Z"
-        fill="none" stroke="#887870" strokeWidth="1.2" opacity="0.8" />
-      <line x1="32" y1="10" x2="32" y2="54" stroke="#b0a498" strokeWidth="1.5" />
-      <line x1="16" y1="22" x2="28" y2="22" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
-      <line x1="16" y1="29" x2="28" y2="29" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
-      <line x1="36" y1="22" x2="48" y2="22" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
-      <line x1="36" y1="29" x2="48" y2="29" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
+      {/* ページの重なり（小口） */}
+      <line x1="53" y1="12" x2="53" y2="52" stroke="#c4b8b0" strokeWidth="1" opacity="0.5" />
+      <line x1="51" y1="11" x2="51" y2="53" stroke="#d0c4bc" strokeWidth="0.7" opacity="0.4" />
+      {/* 罫線 */}
+      <line x1="23" y1="22" x2="47" y2="22" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+      <line x1="23" y1="30" x2="47" y2="30" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
+      <line x1="23" y1="38" x2="47" y2="38" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
+      <line x1="23" y1="46" x2="40" y2="46" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.4" />
+      {/* しおり */}
+      <path d="M44 9 L44 20 L41 17 L38 20 L38 9 Z"
+        fill="rgba(180,148,120,0.35)" stroke="#c0a888" strokeWidth="0.8" />
     </svg>
   );
 }
