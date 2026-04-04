@@ -518,6 +518,9 @@ export default function DiaryPage() {
         )}
 
         <div className="diary-individual-list">
+          {!showPlantForm && (
+            <button className="diary-add-individual-btn" onClick={openNewPlant}>＋ 株を登録</button>
+          )}
           {sortedPlants.map(plant => (
             <div
               key={plant.id}
@@ -544,9 +547,6 @@ export default function DiaryPage() {
               </div>
             </div>
           ))}
-          {!showPlantForm && (
-            <button className="diary-add-individual-btn" onClick={openNewPlant}>＋ 株を登録</button>
-          )}
         </div>
 
         {/* 記録一覧 */}
