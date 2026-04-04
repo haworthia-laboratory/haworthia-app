@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY, { apiVersion: "v1" });
 
 const PROMPT = `あなたはハオルチアの専門家です。以下の4品種を識別してください。
 
@@ -54,7 +54,7 @@ export async function POST(request) {
   try {
     const { image, mimeType } = await request.json();
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const imagePart = {
       inlineData: {
