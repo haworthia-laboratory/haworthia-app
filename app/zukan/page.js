@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { species } from "./data";
+import { supabase } from "../../lib/supabase";
 
 const COLOR_GROUPS = [
   { id: "all", label: "すべて", dot: null },
@@ -46,10 +47,21 @@ export default function ZukanPage() {
   const [wishlist, setWishlist] = useState(new Set());
 
   useEffect(() => {
-    const o = JSON.parse(localStorage.getItem("owned") || "[]");
     const w = JSON.parse(localStorage.getItem("wishlist") || "[]");
-    setOwned(new Set(o));
     setWishlist(new Set(w));
+
+    // 日記の登録株から持っている品種を取得
+    const loadOwned = async () => {
+      const localOwned = JSON.parse(localStorage.getItem("owned") || "[]");
+      if (supabase) {
+        const { data } = await supabase.from("plants").select("species_id");
+        const plantSpeciesIds = (data || []).map(p => p.species_id).filter(Boolean);
+        setOwned(new Set([...localOwned, ...plantSpeciesIds]));
+      } else {
+        setOwned(new Set(localOwned));
+      }
+    };
+    loadOwned();
   }, []);
 
   const toggleOwned = (e, id) => {
@@ -113,7 +125,7 @@ export default function ZukanPage() {
             <button
               key={t.id}
               className={`filter-btn${typeFilter === t.id ? " active" : ""}`}
-              onClick={() => setTypeFilter(t.id)}
+              onClick={() => setTypeFilter(typeFilter === t.id && t.id !== "all" ? "all" : t.id)}
             >{t.label}</button>
           ))}
           <button
@@ -131,7 +143,7 @@ export default function ZukanPage() {
             <button
               key={c.id}
               className={`filter-btn${colorFilter === c.id ? " active" : ""}`}
-              onClick={() => setColorFilter(c.id)}
+              onClick={() => setColorFilter(colorFilter === c.id && c.id !== "all" ? "all" : c.id)}
             >
               {c.dot && <span className="filter-dot" style={{ background: c.dot }} />}
               {c.label}
