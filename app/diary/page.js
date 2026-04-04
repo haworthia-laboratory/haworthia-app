@@ -537,9 +537,9 @@ export default function DiaryPage() {
                 className="diary-save-btn"
                 style={{ marginTop: "0.6rem", background: "linear-gradient(135deg, #4a7a6c, #5a9a8c)" }}
                 onClick={() => {
-                  openNewEntry(editingPlantId);
                   setShowPlantForm(false);
                   setEditingPlantId(null);
+                  router.push(`/diary/${editingPlantId}`);
                 }}
               >＋ この株の記録を追加</button>
             )}
