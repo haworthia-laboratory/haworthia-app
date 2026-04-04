@@ -40,35 +40,30 @@ function HaworthiaIcon() {
 function NoteIcon() {
   return (
     <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="f3"><feGaussianBlur stdDeviation="0.6" /></filter>
-      </defs>
-      {/* ノート本体（やや左寄り） */}
-      <path d="M8,9 L42,9 Q44,9 44,11 L44,55 Q44,57 42,57 L8,57 Q6,57 6,55 L6,11 Q6,9 8,9 Z"
-        fill="rgba(160,148,136,0.18)" stroke="#b0a498" strokeWidth="1.8" strokeLinejoin="round" filter="url(#f3)" />
-      <path d="M8,9 L42,9 Q44,9 44,11 L44,55 Q44,57 42,57 L8,57 Q6,57 6,55 L6,11 Q6,9 8,9 Z"
-        fill="none" stroke="#887870" strokeWidth="1.2" strokeLinejoin="round" opacity="0.8" />
-      {/* 罫線 */}
-      <line x1="12" y1="26" x2="38" y2="26" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
-      <line x1="12" y1="34" x2="38" y2="34" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
-      <line x1="12" y1="42" x2="30" y2="42" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
-      {/* 鉛筆（右上、先端が左下のノートに向かう） */}
-      <g transform="translate(50,18) rotate(145)">
-        {/* 消しゴム */}
-        <rect x="-3" y="-20" width="6" height="5" rx="1.2"
-          fill="rgba(200,178,168,0.45)" stroke="#b0988a" strokeWidth="1" />
-        {/* 金属帯 */}
-        <rect x="-3" y="-15" width="6" height="3"
-          fill="rgba(180,168,148,0.4)" stroke="#a09070" strokeWidth="0.8" />
-        {/* 本体 */}
-        <rect x="-3" y="-12" width="6" height="22" rx="0.5"
-          fill="rgba(172,158,140,0.32)" stroke="#a09080" strokeWidth="1.2" />
-        {/* 木部（先端） */}
-        <polygon points="-3,10 3,10 0,17"
-          fill="rgba(195,172,145,0.45)" stroke="#a09070" strokeWidth="0.9" />
-        {/* 芯 */}
-        <polygon points="-0.8,15 0.8,15 0,17"
-          fill="rgba(100,90,80,0.6)" />
+      {/* 開いた本の左ページ */}
+      <path d="M32,14 Q20,12 8,15 L8,52 Q20,49 32,51 Z"
+        fill="rgba(160,148,136,0.15)" stroke="#9a8e84" strokeWidth="1.6" strokeLinejoin="round" />
+      {/* 開いた本の右ページ */}
+      <path d="M32,14 Q44,12 56,15 L56,52 Q44,49 32,51 Z"
+        fill="rgba(160,148,136,0.15)" stroke="#9a8e84" strokeWidth="1.6" strokeLinejoin="round" />
+      {/* 中央の綴じ目 */}
+      <path d="M32,14 Q31,32 32,51" fill="none" stroke="#9a8e84" strokeWidth="1.2" opacity="0.6" />
+      {/* 左ページの罫線 */}
+      <line x1="13" y1="27" x2="28" y2="26" stroke="#c4b8b0" strokeWidth="0.9" strokeLinecap="round" opacity="0.7" />
+      <line x1="13" y1="34" x2="28" y2="33" stroke="#c4b8b0" strokeWidth="0.9" strokeLinecap="round" opacity="0.7" />
+      <line x1="13" y1="41" x2="24" y2="40" stroke="#c4b8b0" strokeWidth="0.9" strokeLinecap="round" opacity="0.5" />
+      {/* 鉛筆（右上から左下に向かう） */}
+      <g transform="translate(52,14) rotate(210)">
+        <rect x="-2.5" y="-18" width="5" height="4" rx="1"
+          fill="rgba(200,178,168,0.5)" stroke="#a08878" strokeWidth="1" />
+        <rect x="-2.5" y="-14" width="5" height="2.5"
+          fill="rgba(170,158,138,0.45)" stroke="#908060" strokeWidth="0.8" />
+        <rect x="-2.5" y="-11.5" width="5" height="20" rx="0.5"
+          fill="rgba(168,152,132,0.35)" stroke="#9a8878" strokeWidth="1.3" />
+        <polygon points="-2.5,8.5 2.5,8.5 0,15"
+          fill="rgba(190,168,138,0.5)" stroke="#908060" strokeWidth="0.9" />
+        <polygon points="-0.7,13 0.7,13 0,15"
+          fill="rgba(80,72,64,0.65)" />
       </g>
     </svg>
   );
@@ -77,30 +72,27 @@ function NoteIcon() {
 function BookIcon() {
   return (
     <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="fb"><feGaussianBlur stdDeviation="0.5" /></filter>
-      </defs>
-      {/* 表紙（正面・やや台形で奥行き感） */}
-      <path d="M8,16 L44,12 L44,54 L8,58 Z"
-        fill="rgba(160,148,136,0.22)" stroke="#b0a498" strokeWidth="1.8" strokeLinejoin="round" filter="url(#fb)" />
-      <path d="M8,16 L44,12 L44,54 L8,58 Z"
-        fill="none" stroke="#887870" strokeWidth="1.2" opacity="0.85" />
-      {/* 小口（右側・ページの断面） */}
-      <path d="M44,12 L56,16 L56,58 L44,54 Z"
-        fill="rgba(220,210,200,0.35)" stroke="#b0a498" strokeWidth="1.5" strokeLinejoin="round" />
-      {/* 上面 */}
-      <path d="M8,16 L44,12 L56,16 L20,20 Z"
-        fill="rgba(180,168,156,0.28)" stroke="#b0a498" strokeWidth="1.3" strokeLinejoin="round" />
-      {/* 小口のページ線（辞書らしい細かい積み重ね） */}
-      {[0,1,2,3,4,5,6,7,8,9,10,11,12].map(i => {
-        const t = i / 13;
-        const y1 = 14 + t * 40, y2 = 18 + t * 40;
-        return <line key={i} x1="44" y1={y1} x2="56" y2={y2}
-          stroke="#c8bcb0" strokeWidth="0.7" opacity={0.3 + (i % 3) * 0.1} />;
-      })}
+      {/* 背表紙（左・太くて厚い） */}
+      <path d="M10,10 L18,10 L18,56 L10,56 Z"
+        fill="rgba(130,118,106,0.35)" stroke="#8a7e72" strokeWidth="1.5" strokeLinejoin="round" />
+      {/* 表紙（正面） */}
+      <path d="M18,10 L52,10 L52,56 L18,56 Z"
+        fill="rgba(160,148,136,0.2)" stroke="#9a8e84" strokeWidth="1.7" strokeLinejoin="round" />
+      {/* 上面（厚みを強調） */}
+      <path d="M10,10 L18,10 L52,10 L52,10" fill="none" stroke="#9a8e84" strokeWidth="1.7" />
+      {/* 背表紙と表紙の境界線（立体感） */}
+      <line x1="18" y1="10" x2="18" y2="56" stroke="#7a6e62" strokeWidth="1.2" opacity="0.6" />
+      {/* ページの小口（右側・細かい線で厚みを表現） */}
+      {[0,1,2,3,4,5,6,7,8].map(i => (
+        <line key={i} x1="51" y1={12 + i * 5} x2="51" y2={15 + i * 5}
+          stroke="#c0b4a8" strokeWidth="0.6" opacity="0.45" strokeLinecap="round" />
+      ))}
+      {/* 表紙の横線2本（図鑑らしさ） */}
+      <line x1="22" y1="22" x2="48" y2="22" stroke="#b8aca0" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
+      <line x1="22" y1="28" x2="40" y2="28" stroke="#b8aca0" strokeWidth="1" strokeLinecap="round" opacity="0.45" />
       {/* しおり */}
-      <path d="M34,12 L34,24 L31,21 L28,24 L28,12 Z"
-        fill="rgba(180,148,120,0.4)" stroke="#c0a880" strokeWidth="0.8" />
+      <path d="M40,10 L40,20 L37.5,17.5 L35,20 L35,10 Z"
+        fill="rgba(175,145,115,0.45)" stroke="#b89870" strokeWidth="0.9" />
     </svg>
   );
 }
