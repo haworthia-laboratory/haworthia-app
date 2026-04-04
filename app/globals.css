@@ -1371,8 +1371,8 @@ header h1 {
 
 .light-map-track {
   position: relative;
-  height: 100px;
-  margin-bottom: 0.6rem;
+  height: 12px;
+  margin-bottom: 1rem;
 }
 
 .light-map-gradient {
@@ -1380,49 +1380,80 @@ header h1 {
   top: 0;
   left: 0;
   right: 0;
-  height: 6px;
-  border-radius: 3px;
+  height: 8px;
+  border-radius: 4px;
   background: linear-gradient(to right, #f5e97a, #c8e6a0, #7ab89c, #4a7a6c);
 }
 
 .light-map-dot-wrap {
   position: absolute;
-  top: 0;
+  top: -3px;
   transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.2rem;
 }
 
 .light-map-dot {
+  width: 14px;
+  height: 14px;
+  background: #3a6b3c;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 1px 4px rgba(44, 74, 45, 0.3);
+}
+
+.light-map-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.light-map-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.light-map-row-bar {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(90, 138, 92, 0.15);
+  position: relative;
+}
+
+.light-map-row-dot {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 10px;
   height: 10px;
   background: #3a6b3c;
   border-radius: 50%;
   border: 2px solid white;
-  box-shadow: 0 1px 4px rgba(44, 74, 45, 0.3);
-  margin-top: -2px;
+  box-shadow: 0 1px 4px rgba(44, 74, 45, 0.25);
 }
 
 .light-map-label {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  min-width: 0;
 }
 
 .light-map-plant-name {
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   color: #2c4a2d;
   font-weight: 500;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .light-map-species-name {
-  font-size: 0.62rem;
+  font-size: 0.65rem;
   color: #9ab89c;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .light-map-zones {

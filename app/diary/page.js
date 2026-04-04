@@ -601,24 +601,20 @@ export default function DiaryPage() {
             <div style={{ marginTop: "2rem", marginBottom: "1.4rem" }}>
               <div className="diary-section-title">光量マップ</div>
               <div className="light-map-card">
-                <div className="light-map-axis">
-                  <span>☀️ 明るい</span>
-                  <span>🌿 暗め</span>
+                <div className="light-map-axis" style={{ marginBottom: "0.8rem" }}>
+                  <span>☀️ 明るい</span><span>🌿 暗め</span>
                 </div>
-                <div className="light-map-track">
-                  <div className="light-map-gradient" />
+                <div className="light-map-rows">
                   {plantsWithLight.map(p => (
-                    <div
-                      key={p.id}
-                      className="light-map-dot-wrap"
-                      style={{ left: `${p.lightBar}%` }}
-                    >
-                      <div className="light-map-dot" />
-                      <div className="light-map-label">
+                    <div key={p.id} className="light-map-row">
+                      <div className="light-map-label" style={{ width: "110px", flexShrink: 0 }}>
                         <div className="light-map-plant-name">{p.name}</div>
                         {p.species_name && p.species_name !== p.name && (
                           <div className="light-map-species-name">{p.species_name}</div>
                         )}
+                      </div>
+                      <div className="light-map-row-bar">
+                        <div className="light-map-row-dot" style={{ left: `${p.lightBar}%` }} />
                       </div>
                     </div>
                   ))}
