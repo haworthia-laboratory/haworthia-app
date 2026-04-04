@@ -85,6 +85,7 @@ export default function DiaryPage() {
     });
     setPlantSpeciesQuery(sp ? sp.name : "");
     setShowPlantForm(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const savePlant = async () => {
