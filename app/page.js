@@ -169,7 +169,7 @@ export default function Home() {
             <HaworthiaIcon />
           </div>
           <h1>ハオルチア研究室</h1>
-          <p className="subtitle">あなただけの育成記録</p>
+          <p className="subtitle">～ あなただけの育成記録 ～</p>
         </header>
 
         <div className="home-nav">
