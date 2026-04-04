@@ -1079,14 +1079,18 @@ header h1 {
 }
 
 .diary-section-title {
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  color: #9ab89c;
-  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: white;
+  background: #4a7a4c;
+  border-radius: 8px;
+  padding: 0.35rem 0.8rem;
   margin-bottom: 0.8rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.6rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .diary-clear-filter {
