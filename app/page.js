@@ -53,7 +53,7 @@ function NoteIcon() {
       <line x1="13" y1="34" x2="28" y2="33" stroke="#c4b8b0" strokeWidth="0.9" strokeLinecap="round" opacity="0.7" />
       <line x1="13" y1="41" x2="24" y2="40" stroke="#c4b8b0" strokeWidth="0.9" strokeLinecap="round" opacity="0.5" />
       {/* 鉛筆（右上から左下に向かう） */}
-      <g transform="translate(52,14) rotate(210)">
+      <g transform="translate(52,14) rotate(30)">
         <rect x="-2.5" y="-18" width="5" height="4" rx="1"
           fill="rgba(200,178,168,0.5)" stroke="#a08878" strokeWidth="1" />
         <rect x="-2.5" y="-14" width="5" height="2.5"
