@@ -2,118 +2,10 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-
-function analyzeImageColor(imgElement) {
-  const canvas = document.createElement("canvas");
-  const SIZE = 80;
-  canvas.width = SIZE;
-  canvas.height = SIZE;
-  const ctx = canvas.getContext("2d");
-  ctx.drawImage(imgElement, 0, 0, SIZE, SIZE);
-  const data = ctx.getImageData(0, 0, SIZE, SIZE).data;
-
-  let rSum = 0, gSum = 0, bSum = 0, count = 0;
-  for (let i = 0; i < data.length; i += 4) {
-    const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
-    if (a < 128) continue;
-    const brightness = (r + g + b) / 3;
-    if (brightness > 240 || brightness < 15) continue;
-    rSum += r; gSum += g; bSum += b; count++;
-  }
-  if (count === 0) return "green";
-
-  const r = rSum / count, g = gSum / count, b = bSum / count;
-  const max = Math.max(r, g, b), min = Math.min(r, g, b), diff = max - min;
-  const brightness = (r + g + b) / 3;
-  const saturation = max === 0 ? 0 : diff / max;
-
-  if (saturation < 0.15) return brightness < 80 ? "black" : "gray";
-
-  let hue = 0;
-  if (max === r) hue = ((g - b) / diff + 6) % 6 * 60;
-  else if (max === g) hue = ((b - r) / diff + 2) * 60;
-  else hue = ((r - g) / diff + 4) * 60;
-
-  if (hue < 30 || hue >= 330) return "red";
-  if (hue < 60) return "red";
-  if (hue < 150) return "green";
-  if (hue < 195) return "blue";
-  if (hue < 270) return hue < 230 ? "blue" : "purple";
-  if (hue < 310) return "purple";
-  return "red";
-}
-
-function CameraIcon() {
-  return (
-    <svg viewBox="0 0 64 64" width="52" height="52" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="f1" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="0.6" />
-        </filter>
-      </defs>
-      <path d="M8 22 Q7 21 9 20 L55 20 Q57 20 56 22 L56 52 Q56 54 54 54 L10 54 Q8 54 8 52 Z"
-        fill="rgba(160,148,136,0.2)" stroke="#b0a498" strokeWidth="1.8" strokeLinejoin="round" filter="url(#f1)" />
-      <path d="M8 22 Q7 21 9 20 L55 20 Q57 20 56 22 L56 52 Q56 54 54 54 L10 54 Q8 54 8 52 Z"
-        fill="none" stroke="#887870" strokeWidth="1.2" strokeLinejoin="round" strokeDasharray="1,0" opacity="0.7"/>
-      <path d="M22 20 Q22 13 26 13 L38 13 Q42 13 42 20"
-        fill="rgba(160,148,136,0.15)" stroke="#b0a498" strokeWidth="1.6" strokeLinejoin="round" />
-      <circle cx="32" cy="37" r="11" fill="rgba(210,200,195,0.25)" stroke="#b0a498" strokeWidth="1.8" filter="url(#f1)" />
-      <circle cx="32" cy="37" r="7" fill="rgba(220,210,205,0.35)" stroke="#887870" strokeWidth="1.2" />
-      <circle cx="29" cy="34" r="2.5" fill="rgba(255,255,255,0.55)" />
-      <circle cx="48" cy="26" r="3" fill="rgba(160,148,136,0.25)" stroke="#b0a498" strokeWidth="1.2" />
-    </svg>
-  );
-}
-
-function MagnifyIcon() {
-  return (
-    <svg viewBox="0 0 64 64" width="52" height="52" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="f2" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="0.6" />
-        </filter>
-      </defs>
-      <circle cx="26" cy="26" r="17" fill="rgba(210,200,195,0.2)" stroke="#b0a498" strokeWidth="1.8" filter="url(#f2)" />
-      <circle cx="26" cy="26" r="17" fill="none" stroke="#887870" strokeWidth="1.2" opacity="0.8" />
-      <circle cx="26" cy="26" r="12" fill="rgba(220,212,208,0.18)" stroke="#c4b8b0" strokeWidth="0.8" />
-      <path d="M18 18 Q20 15 24 16" fill="none" stroke="rgba(255,255,255,0.75)" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M38 38 Q41 41 48 50 Q50 53 48 54 Q46 56 44 53 Q36 45 33 41"
-        fill="rgba(160,148,136,0.18)" stroke="#b0a498" strokeWidth="3.5" strokeLinecap="round" filter="url(#f2)" />
-      <path d="M38 38 Q41 41 48 50 Q50 53 48 54 Q46 56 44 53 Q36 45 33 41"
-        fill="none" stroke="#887870" strokeWidth="2.5" strokeLinecap="round" opacity="0.8" />
-    </svg>
-  );
-}
-
-function NoteIcon() {
-  return (
-    <svg viewBox="0 0 64 64" width="52" height="52" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="f3" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="0.6" />
-        </filter>
-      </defs>
-      <path d="M14 10 Q13 9 15 9 L49 9 Q51 9 51 11 L51 55 Q51 56 49 56 L15 56 Q13 56 14 54 Z"
-        fill="rgba(160,148,136,0.18)" stroke="#b0a498" strokeWidth="1.8" strokeLinejoin="round" filter="url(#f3)" />
-      <path d="M14 10 Q13 9 15 9 L49 9 Q51 9 51 11 L51 55 Q51 56 49 56 L15 56 Q13 56 14 54 Z"
-        fill="none" stroke="#887870" strokeWidth="1.2" strokeLinejoin="round" opacity="0.8" />
-      {[14, 22, 30, 38, 46].map((y, i) => (
-        <path key={i} d={`M11 ${y} Q9 ${y+2} 11 ${y+4} Q13 ${y+6} 11 ${y+8}`}
-          fill="none" stroke="#c4b8b0" strokeWidth="1.4" strokeLinecap="round" />
-      ))}
-      <line x1="20" y1="22" x2="45" y2="22" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
-      <line x1="20" y1="30" x2="45" y2="30" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
-      <line x1="20" y1="38" x2="45" y2="38" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
-      <line x1="20" y1="46" x2="38" y2="46" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
-      <path d="M39 44 Q44 40 46 44 Q44 48 39 44Z" fill="rgba(160,148,136,0.45)" stroke="#b0a498" strokeWidth="0.8" />
-    </svg>
-  );
-}
 
 function HaworthiaIcon() {
   return (
-    <svg viewBox="0 0 160 160" width="90" height="90" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 160 160" width="64" height="64" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="wc">
           <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="3" result="noise"/>
@@ -123,11 +15,6 @@ function HaworthiaIcon() {
           <stop offset="0%" stopColor="#d8f0dc" stopOpacity="0.9"/>
           <stop offset="60%" stopColor="#aad4b2" stopOpacity="0.7"/>
           <stop offset="100%" stopColor="#88be92" stopOpacity="0.6"/>
-        </radialGradient>
-        <radialGradient id="lg2" cx="45%" cy="80%" r="65%">
-          <stop offset="0%" stopColor="#ccecd4" stopOpacity="0.85"/>
-          <stop offset="60%" stopColor="#98c8a2" stopOpacity="0.65"/>
-          <stop offset="100%" stopColor="#78b082" stopOpacity="0.55"/>
         </radialGradient>
         <radialGradient id="win" cx="50%" cy="15%" r="65%">
           <stop offset="0%" stopColor="#ffffff" stopOpacity="0.98"/>
@@ -139,49 +26,9 @@ function HaworthiaIcon() {
         {[0,45,90,135,180,225,270,315].map((angle, i) => (
           <g key={i} transform={`rotate(${angle} 80 80)`}>
             <path d="M80,73 C71,65 65,47 68,27 Q74,17 80,15 Q86,17 92,27 C95,47 89,65 80,73Z"
-              fill={i%2===0?"url(#lg1)":"url(#lg2)"} stroke="#8aba94" strokeWidth="0.8" opacity={i%2===0?"0.9":"0.85"}/>
+              fill="url(#lg1)" stroke="#8aba94" strokeWidth="0.8" opacity="0.9"/>
             <path d="M80,68 C74,61 71,48 73,31 Q78,22 80,19 Q82,22 87,31 C89,48 86,61 80,68Z"
               fill="url(#win)"/>
-            {i%2===0 && <>
-              <line x1="80" y1="16" x2="80" y2="11" stroke="rgba(255,255,255,0.95)" strokeWidth="1.2" strokeLinecap="round"/>
-              <line x1="77" y1="18" x2="74" y2="14" stroke="rgba(255,255,255,0.7)" strokeWidth="0.8" strokeLinecap="round"/>
-              <line x1="83" y1="18" x2="86" y2="14" stroke="rgba(255,255,255,0.7)" strokeWidth="0.8" strokeLinecap="round"/>
-            </>}
-          </g>
-        ))}
-        {[22,94,166,238,310].map((angle, i) => (
-          <g key={i} transform={`rotate(${angle} 80 80)`}>
-            <path d="M80,75 C73,68 69,53 71,38 Q77,29 80,27 Q83,29 89,38 C91,53 87,68 80,75Z"
-              fill={i%2===0?"url(#lg1)":"url(#lg2)"} stroke="#8aba94" strokeWidth="0.7" opacity={i%2===0?"0.9":"0.85"}/>
-            <path d="M80,71 C75,65 73,54 75,41 Q79,33 80,31 Q81,33 85,41 C87,54 85,65 80,71Z"
-              fill="url(#win)"/>
-            {i%2===0 && <line x1="80" y1="28" x2="80" y2="23" stroke="rgba(255,255,255,0.9)" strokeWidth="1" strokeLinecap="round"/>}
-          </g>
-        ))}
-        {[45,135,225,315].map((angle, i) => (
-          <g key={i} transform={`rotate(${angle} 80 80)`}>
-            <path d="M80,77 C75,71 72,60 74,49 Q78,42 80,40 Q82,42 86,49 C88,60 85,71 80,77Z"
-              fill={i%2===0?"url(#lg1)":"url(#lg2)"} stroke="#8aba94" strokeWidth="0.65" opacity={i%2===0?"0.9":"0.85"}/>
-            <path d="M80,74 C77,69 75,61 77,52 Q79,46 80,44 Q81,46 83,52 C85,61 83,69 80,74Z"
-              fill="url(#win)"/>
-            {i%2===0 && <>
-              <line x1="80" y1="41" x2="80" y2="37" stroke="rgba(255,255,255,0.95)" strokeWidth="1" strokeLinecap="round"/>
-              <line x1="78" y1="43" x2="76" y2="40" stroke="rgba(255,255,255,0.6)" strokeWidth="0.7" strokeLinecap="round"/>
-              <line x1="82" y1="43" x2="84" y2="40" stroke="rgba(255,255,255,0.6)" strokeWidth="0.7" strokeLinecap="round"/>
-            </>}
-          </g>
-        ))}
-        {[0,72,144,216,288].map((angle, i) => (
-          <g key={i} transform={`rotate(${angle} 80 80)`}>
-            <path d="M80,80 C74,79 71,74 73,68 Q76,63 80,62 Q84,63 87,68 C89,74 86,79 80,80Z"
-              fill={i%2===0?"#c0e4c8":"#cce8d4"} stroke="#8aba94" strokeWidth="0.55" opacity={i%2===0?"0.92":"0.87"}/>
-            <path d="M80,79 C76,78 74,74 75,69 Q78,65 80,64 Q82,65 85,69 C86,74 84,78 80,79Z"
-              fill="rgba(255,255,255,0.6)"/>
-            {i%2===0 && <>
-              <line x1="80" y1="63" x2="80" y2="59" stroke="rgba(255,255,255,0.9)" strokeWidth="0.9" strokeLinecap="round"/>
-              <line x1="78" y1="64" x2="76" y2="61" stroke="rgba(255,255,255,0.55)" strokeWidth="0.6" strokeLinecap="round"/>
-              <line x1="82" y1="64" x2="84" y2="61" stroke="rgba(255,255,255,0.55)" strokeWidth="0.6" strokeLinecap="round"/>
-            </>}
           </g>
         ))}
         <circle cx="80" cy="80" r="3" fill="rgba(255,255,255,0.75)"/>
@@ -190,75 +37,83 @@ function HaworthiaIcon() {
   );
 }
 
+function NoteIcon() {
+  return (
+    <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="f3"><feGaussianBlur stdDeviation="0.6" /></filter>
+      </defs>
+      <path d="M14 10 Q13 9 15 9 L49 9 Q51 9 51 11 L51 55 Q51 56 49 56 L15 56 Q13 56 14 54 Z"
+        fill="rgba(160,148,136,0.18)" stroke="#b0a498" strokeWidth="1.8" strokeLinejoin="round" filter="url(#f3)" />
+      <path d="M14 10 Q13 9 15 9 L49 9 Q51 9 51 11 L51 55 Q51 56 49 56 L15 56 Q13 56 14 54 Z"
+        fill="none" stroke="#887870" strokeWidth="1.2" strokeLinejoin="round" opacity="0.8" />
+      <line x1="20" y1="22" x2="45" y2="22" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+      <line x1="20" y1="30" x2="45" y2="30" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+      <line x1="20" y1="38" x2="45" y2="38" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+      <line x1="20" y1="46" x2="38" y2="46" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
+    </svg>
+  );
+}
+
+function BookIcon() {
+  return (
+    <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="fb"><feGaussianBlur stdDeviation="0.6" /></filter>
+      </defs>
+      <path d="M10 12 Q10 10 12 10 L32 10 L32 54 L12 54 Q10 54 10 52 Z"
+        fill="rgba(160,148,136,0.18)" stroke="#b0a498" strokeWidth="1.8" filter="url(#fb)" />
+      <path d="M10 12 Q10 10 12 10 L32 10 L32 54 L12 54 Q10 54 10 52 Z"
+        fill="none" stroke="#887870" strokeWidth="1.2" opacity="0.8" />
+      <path d="M32 10 L52 10 Q54 10 54 12 L54 52 Q54 54 52 54 L32 54 Z"
+        fill="rgba(180,168,156,0.15)" stroke="#b0a498" strokeWidth="1.8" filter="url(#fb)" />
+      <path d="M32 10 L52 10 Q54 10 54 12 L54 52 Q54 54 52 54 L32 54 Z"
+        fill="none" stroke="#887870" strokeWidth="1.2" opacity="0.8" />
+      <line x1="32" y1="10" x2="32" y2="54" stroke="#b0a498" strokeWidth="1.5" />
+      <line x1="16" y1="22" x2="28" y2="22" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+      <line x1="16" y1="29" x2="28" y2="29" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
+      <line x1="36" y1="22" x2="48" y2="22" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+      <line x1="36" y1="29" x2="48" y2="29" stroke="#c4b8b0" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
+    </svg>
+  );
+}
+
+function DiagnoseIcon() {
+  return (
+    <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="fd"><feGaussianBlur stdDeviation="0.6" /></filter>
+      </defs>
+      <circle cx="32" cy="32" r="22" fill="rgba(160,148,136,0.18)" stroke="#b0a498" strokeWidth="1.8" filter="url(#fd)" />
+      <circle cx="32" cy="32" r="22" fill="none" stroke="#887870" strokeWidth="1.2" opacity="0.8" />
+      <text x="32" y="40" textAnchor="middle" fontSize="26" fill="#b0a498" fontWeight="300" fontFamily="serif">?</text>
+    </svg>
+  );
+}
+
+function LightIcon() {
+  return (
+    <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="fl"><feGaussianBlur stdDeviation="0.6" /></filter>
+      </defs>
+      <circle cx="32" cy="28" r="12" fill="rgba(220,200,140,0.3)" stroke="#c8b870" strokeWidth="1.8" filter="url(#fl)" />
+      <circle cx="32" cy="28" r="12" fill="none" stroke="#a89848" strokeWidth="1.2" opacity="0.8" />
+      {[0,45,90,135,180,225,270,315].map((a, i) => {
+        const rad = a * Math.PI / 180;
+        const x1 = 32 + 15 * Math.cos(rad), y1 = 28 + 15 * Math.sin(rad);
+        const x2 = 32 + 20 * Math.cos(rad), y2 = 28 + 20 * Math.sin(rad);
+        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#c8b870" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />;
+      })}
+      <rect x="20" y="46" width="24" height="4" rx="2" fill="rgba(160,148,136,0.2)" stroke="#b0a498" strokeWidth="1.2" />
+      <rect x="24" y="50" width="16" height="3" rx="1.5" fill="rgba(160,148,136,0.15)" stroke="#b0a498" strokeWidth="1" />
+    </svg>
+  );
+}
+
 export default function Home() {
-  const router = useRouter();
-  const [image, setImage] = useState(null);
-  const [imageData, setImageData] = useState(null);
-  const [imageEl, setImageEl] = useState(null);
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [lightResult, setLightResult] = useState(null);
-  const fileInputRef = useRef(null);
   const lightInputRef = useRef(null);
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    // まずObjectURLでプレビューを即座に表示
-    const objectUrl = URL.createObjectURL(file);
-    setImage(objectUrl);
-    setResult(null);
-
-    // バックグラウンドでリサイズ・base64変換（鑑定用）
-    const img = new window.Image();
-    img.onload = () => {
-      setImageEl(img);
-      const maxSize = 1024;
-      let { width, height } = img;
-      if (width > maxSize || height > maxSize) {
-        if (width > height) { height = Math.round(height * maxSize / width); width = maxSize; }
-        else { width = Math.round(width * maxSize / height); height = maxSize; }
-      }
-      const canvas = document.createElement("canvas");
-      canvas.width = width;
-      canvas.height = height;
-      canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-      const resized = canvas.toDataURL("image/jpeg", 0.85);
-      setImageData({ data: resized.split(",")[1], mimeType: "image/jpeg" });
-    };
-    img.src = objectUrl;
-  };
-
-  const searchByPhoto = () => {
-    if (!imageEl) return;
-    const color = analyzeImageColor(imageEl);
-    router.push(`/zukan?color=${color}`);
-  };
-
-  const identify = async () => {
-    if (!imageData) return;
-    setLoading(true);
-    try {
-      const response = await fetch("/api/identify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: imageData.data, mimeType: imageData.mimeType }),
-      });
-      const data = await response.json();
-      setResult(data);
-    } catch (error) {
-      setResult({ error: true });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const reset = () => {
-    setImage(null);
-    setImageData(null);
-    setResult(null);
-  };
 
   const measureLight = (e) => {
     const file = e.target.files[0];
@@ -294,111 +149,33 @@ export default function Home() {
   return (
     <main>
       <div className="container">
-        <header>
-          <h1>ハオルチア研究室</h1>
-          <p className="subtitle">撮影→鑑定→記録　あなただけの育成記録</p>
-          <div className="steps">
-            <div className="step">
-              <CameraIcon />
-              <span className="step-label">撮影</span>
-            </div>
-            <span className="step-arrow">→</span>
-            <div className="step">
-              <MagnifyIcon />
-              <span className="step-label">鑑定</span>
-            </div>
-            <span className="step-arrow">→</span>
-            <div className="step">
-              <NoteIcon />
-              <span className="step-label">記録</span>
-            </div>
+        <header style={{ marginBottom: "2rem" }}>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.8rem" }}>
+            <HaworthiaIcon />
           </div>
+          <h1>ハオルチア研究室</h1>
+          <p className="subtitle">あなただけの育成記録</p>
         </header>
 
-        <div className="upload-card" style={{ position: "relative" }}>
-          {image ? (
-            <img src={image} alt="選択した画像" className="preview" />
-          ) : (
-            <div className="upload-placeholder">
-              <HaworthiaIcon />
-              <p>写真をタップして選択</p>
-              <p className="sub">カメラまたはアルバムから</p>
+        <div className="home-nav">
+
+          <Link href="/diary" className="home-nav-card">
+            <div className="home-nav-icon"><NoteIcon /></div>
+            <div className="home-nav-body">
+              <div className="home-nav-title">成長日記</div>
+              <div className="home-nav-desc">株の登録・写真記録・成長メモ</div>
             </div>
-          )}
-          {!image && (
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageUpload}
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100%",
-                opacity: 0,
-                cursor: "pointer",
-              }}
-            />
-          )}
-        </div>
+            <div className="home-nav-arrow">›</div>
+          </Link>
 
-        {image && !loading && !result && (
-          <div className="action-btns">
-            <button className="identify-btn" onClick={identify}>
-              鑑定する
-            </button>
-            <button className="photo-zukan-btn" onClick={searchByPhoto}>
-              図鑑で色から絞り込む
-            </button>
-          </div>
-        )}
-
-        {loading && (
-          <div className="loading">
-            <div className="spinner" />
-            <p>観察中...</p>
-          </div>
-        )}
-
-        {result && !loading && (
-          <>
-            <div className="result-card">
-              {result.error ? (
-                <p className="not-found">エラーが発生しました。<br />{result.detail}</p>
-              ) : result.is_haworthia ? (
-                <>
-                  <div className="result-label">鑑定結果</div>
-                  <div className="species-name">{result.species}</div>
-                  <div className="scientific-name">{result.scientific_name}</div>
-                  <div className="confidence-wrap">
-                    <div className="confidence-bar">
-                      <div className="bar" style={{ width: `${result.confidence}%` }} />
-                    </div>
-                    <div className="confidence-text">確信度 {result.confidence}%</div>
-                  </div>
-                  <div className="divider" />
-                  <p className="description">{result.description}</p>
-                </>
-              ) : (
-                <p className="not-found">ハオルチアが見つかりませんでした。<br />別の写真をお試しください。</p>
-              )}
+          <div className="home-nav-card home-nav-card--light" onClick={() => lightInputRef.current.click()} style={{ cursor: "pointer" }}>
+            <div className="home-nav-icon"><LightIcon /></div>
+            <div className="home-nav-body">
+              <div className="home-nav-title">照度チェック</div>
+              <div className="home-nav-desc">置き場所の明るさを写真で確認</div>
             </div>
-            <button className="retry-btn" onClick={reset}>
-              別の写真を試す
-            </button>
-          </>
-        )}
-
-        <Link href="/zukan" className="zukan-link">図鑑を見る</Link>
-        <Link href="/akinator" className="zukan-link">品種あてっこ</Link>
-        <Link href="/diary" className="zukan-link">成長日記</Link>
-
-        <div className="light-meter">
-          <div className="light-meter-title">照度チェック</div>
-          <p className="light-meter-sub">植物の置いている場所を撮影して明るさを確認</p>
-          <button className="light-btn" onClick={() => lightInputRef.current.click()}>
-            写真で測る
-          </button>
+            <div className="home-nav-arrow">›</div>
+          </div>
           <input
             ref={lightInputRef}
             type="file"
@@ -415,8 +192,26 @@ export default function Home() {
               <div className="light-desc">{lightResult.desc}</div>
             </div>
           )}
-        </div>
 
+          <Link href="/zukan" className="home-nav-card">
+            <div className="home-nav-icon"><BookIcon /></div>
+            <div className="home-nav-body">
+              <div className="home-nav-title">図鑑</div>
+              <div className="home-nav-desc">登録品種を検索・フィルター</div>
+            </div>
+            <div className="home-nav-arrow">›</div>
+          </Link>
+
+          <Link href="/akinator" className="home-nav-card">
+            <div className="home-nav-icon"><DiagnoseIcon /></div>
+            <div className="home-nav-body">
+              <div className="home-nav-title">品種診断</div>
+              <div className="home-nav-desc">質問に答えて品種を絞り込む</div>
+            </div>
+            <div className="home-nav-arrow">›</div>
+          </Link>
+
+        </div>
       </div>
     </main>
   );
