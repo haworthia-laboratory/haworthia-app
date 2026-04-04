@@ -263,6 +263,27 @@ export default function DiaryPage() {
           <p className="subtitle">{loading ? "読み込み中..." : `${entries.length}件の記録`}</p>
         </header>
 
+        {/* はじめかたガイド */}
+        {!loading && plants.length === 0 && !showPlantForm && (
+          <div className="diary-guide">
+            <div className="diary-guide-step">
+              <span className="diary-guide-num">①</span>
+              <div>
+                <div className="diary-guide-label">株を登録する</div>
+                <div className="diary-guide-desc">新しく入手した個体・株分けした株を登録</div>
+              </div>
+            </div>
+            <div className="diary-guide-arrow">↓</div>
+            <div className="diary-guide-step diary-guide-step--muted">
+              <span className="diary-guide-num diary-guide-num--muted">②</span>
+              <div>
+                <div className="diary-guide-label diary-guide-label--muted">記録を追加する</div>
+                <div className="diary-guide-desc">登録した株の成長・作業を記録</div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* 株一覧 */}
         <div className="diary-section-title">登録株</div>
 
