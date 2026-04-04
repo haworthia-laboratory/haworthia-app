@@ -6,70 +6,158 @@ import { species } from "../zukan/data";
 import { supabase } from "../../lib/supabase";
 
 function today() { return new Date().toISOString().slice(0, 10); }
-const emptyForm = () => ({ date: today(), speciesId: "", note: "", photos: [], acquiredDate: today() });
+
+const emptyEntryForm = () => ({ date: today(), plantId: "", note: "", photos: [] });
+const emptyPlantForm = () => ({ name: "", speciesId: "", acquiredDate: today(), acquiredType: "purchase", memo: "" });
+
+const ACQUIRED_TYPES = [
+  { id: "purchase", label: "購入" },
+  { id: "divide", label: "株分け" },
+  { id: "gift", label: "もらった" },
+  { id: "seed", label: "実生" },
+  { id: "other", label: "その他" },
+];
 
 export default function DiaryPage() {
   const [entries, setEntries] = useState([]);
+  const [plants, setPlants] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [editingId, setEditingId] = useState(null);
-  const [form, setForm] = useState(emptyForm());
-  const [speciesQuery, setSpeciesQuery] = useState("");
-  const [showSpeciesList, setShowSpeciesList] = useState(false);
+
+  // 日記フォーム
+  const [showEntryForm, setShowEntryForm] = useState(false);
+  const [editingEntryId, setEditingEntryId] = useState(null);
+  const [entryForm, setEntryForm] = useState(emptyEntryForm());
   const fileInputRef = useRef(null);
-  const speciesInputRef = useRef(null);
 
-  useEffect(() => { fetchEntries(); }, []);
+  // 株フォーム
+  const [showPlantForm, setShowPlantForm] = useState(false);
+  const [editingPlantId, setEditingPlantId] = useState(null);
+  const [plantForm, setPlantForm] = useState(emptyPlantForm());
+  const [plantSpeciesQuery, setPlantSpeciesQuery] = useState("");
+  const [showPlantSpeciesList, setShowPlantSpeciesList] = useState(false);
+  const plantSpeciesRef = useRef(null);
 
-  const fetchEntries = async () => {
+  // フィルター
+  const [filterPlantId, setFilterPlantId] = useState(null);
+
+  useEffect(() => { fetchAll(); }, []);
+
+  const fetchAll = async () => {
     setLoading(true);
     if (supabase) {
-      const { data, error } = await supabase
-        .from("diary_entries")
-        .select("*")
-        .order("date", { ascending: false });
-      if (!error) setEntries(data || []);
+      const [{ data: e }, { data: p }] = await Promise.all([
+        supabase.from("diary_entries").select("*").order("date", { ascending: false }),
+        supabase.from("plants").select("*").order("created_at", { ascending: true }),
+      ]);
+      setEntries(e || []);
+      setPlants(p || []);
     } else {
       try { setEntries(JSON.parse(localStorage.getItem("diary") || "[]")); } catch { setEntries([]); }
+      try { setPlants(JSON.parse(localStorage.getItem("plants") || "[]")); } catch { setPlants([]); }
     }
     setLoading(false);
   };
 
-  const openNew = () => {
-    setEditingId(null);
-    setForm(emptyForm());
-    setSpeciesQuery("");
-    setShowForm(true);
+  // ---- 株 CRUD ----
+  const openNewPlant = () => {
+    setEditingPlantId(null);
+    setPlantForm(emptyPlantForm());
+    setPlantSpeciesQuery("");
+    setShowPlantForm(true);
   };
 
-  const openEdit = (entry) => {
-    setEditingId(entry.id);
-    const sp = species.find(s => s.id === entry.species_id);
-    setForm({
-      date: entry.date,
-      speciesId: entry.species_id || "",
-      note: entry.note || "",
-      photos: entry.photos || [],
+  const openEditPlant = (plant) => {
+    setEditingPlantId(plant.id);
+    const sp = species.find(s => s.id === plant.species_id);
+    setPlantForm({
+      name: plant.name,
+      speciesId: plant.species_id || "",
+      acquiredDate: plant.acquired_date || today(),
+      acquiredType: plant.acquired_type || "purchase",
+      memo: plant.memo || "",
     });
-    setSpeciesQuery(sp ? sp.name : "");
-    setShowForm(true);
+    setPlantSpeciesQuery(sp ? sp.name : "");
+    setShowPlantForm(true);
+  };
+
+  const savePlant = async () => {
+    if (!plantForm.name.trim()) return;
+    const speciesObj = species.find(s => s.id === plantForm.speciesId);
+    const payload = {
+      name: plantForm.name,
+      species_id: plantForm.speciesId || null,
+      species_name: speciesObj ? speciesObj.name : null,
+      acquired_date: plantForm.acquiredDate || null,
+      acquired_type: plantForm.acquiredType || null,
+      memo: plantForm.memo || null,
+    };
+
+    if (supabase) {
+      if (editingPlantId) {
+        await supabase.from("plants").update(payload).eq("id", editingPlantId);
+      } else {
+        await supabase.from("plants").insert(payload);
+      }
+      await fetchAll();
+    } else {
+      let updated;
+      if (editingPlantId) {
+        updated = plants.map(p => p.id === editingPlantId ? { ...p, ...payload } : p);
+      } else {
+        updated = [...plants, { id: Date.now().toString(), created_at: new Date().toISOString(), ...payload }];
+      }
+      setPlants(updated);
+      localStorage.setItem("plants", JSON.stringify(updated));
+    }
+    setShowPlantForm(false);
+    setEditingPlantId(null);
+  };
+
+  const deletePlant = async (id) => {
+    if (supabase) {
+      await supabase.from("plants").delete().eq("id", id);
+    } else {
+      const updated = plants.filter(p => p.id !== id);
+      localStorage.setItem("plants", JSON.stringify(updated));
+      setPlants(updated);
+      return;
+    }
+    setPlants(prev => prev.filter(p => p.id !== id));
+    if (filterPlantId === id) setFilterPlantId(null);
+  };
+
+  const filteredPlantSpecies = plantSpeciesQuery
+    ? species.filter(s =>
+        s.name.includes(plantSpeciesQuery) ||
+        s.scientific.toLowerCase().includes(plantSpeciesQuery.toLowerCase())
+      ).slice(0, 8)
+    : [];
+
+  // ---- 日記 CRUD ----
+  const openNewEntry = (plantId = null) => {
+    setEditingEntryId(null);
+    setEntryForm({ ...emptyEntryForm(), plantId: plantId || "" });
+    setShowEntryForm(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const cancel = () => {
-    setShowForm(false);
-    setEditingId(null);
-    setForm(emptyForm());
-    setSpeciesQuery("");
-    setShowSpeciesList(false);
+  const openEditEntry = (entry) => {
+    setEditingEntryId(entry.id);
+    setEntryForm({
+      date: entry.date,
+      plantId: entry.plant_id || "",
+      note: entry.note || "",
+      photos: entry.photos || [],
+    });
+    setShowEntryForm(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const filteredSpecies = speciesQuery
-    ? species.filter(s =>
-        s.name.includes(speciesQuery) ||
-        s.scientific.toLowerCase().includes(speciesQuery.toLowerCase())
-      ).slice(0, 8)
-    : [];
+  const cancelEntry = () => {
+    setShowEntryForm(false);
+    setEditingEntryId(null);
+    setEntryForm(emptyEntryForm());
+  };
 
   const handlePhoto = (e) => {
     const files = Array.from(e.target.files);
@@ -88,7 +176,7 @@ export default function DiaryPage() {
           const canvas = document.createElement("canvas");
           canvas.width = width; canvas.height = height;
           canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-          setForm(f => ({ ...f, photos: [...f.photos, canvas.toDataURL("image/jpeg", 0.8)] }));
+          setEntryForm(f => ({ ...f, photos: [...f.photos, canvas.toDataURL("image/jpeg", 0.8)] }));
         };
         img.src = reader.result;
       };
@@ -98,42 +186,40 @@ export default function DiaryPage() {
   };
 
   const removePhoto = (index) => {
-    setForm(f => ({ ...f, photos: f.photos.filter((_, i) => i !== index) }));
+    setEntryForm(f => ({ ...f, photos: f.photos.filter((_, i) => i !== index) }));
   };
 
-  const isFirstEntryForSpecies = form.speciesId && !editingId &&
-    !entries.some(e => e.species_id === form.speciesId);
-
-  const save = async () => {
-    if (!form.note.trim() && form.photos.length === 0) return;
-    const speciesObj = species.find(s => s.id === form.speciesId);
+  const saveEntry = async () => {
+    if (!entryForm.note.trim() && entryForm.photos.length === 0) return;
+    const plant = plants.find(p => p.id === entryForm.plantId);
     const payload = {
-      date: form.date,
-      species_id: form.speciesId || null,
-      species_name: speciesObj ? speciesObj.name : null,
-      note: form.note,
-      photos: form.photos,
-      acquired_date: isFirstEntryForSpecies ? form.acquiredDate : null,
+      date: entryForm.date,
+      plant_id: entryForm.plantId || null,
+      plant_name: plant ? plant.name : null,
+      species_id: plant?.species_id || null,
+      species_name: plant?.species_name || null,
+      note: entryForm.note,
+      photos: entryForm.photos,
     };
 
     if (supabase) {
-      if (editingId) {
-        await supabase.from("diary_entries").update(payload).eq("id", editingId);
+      if (editingEntryId) {
+        await supabase.from("diary_entries").update(payload).eq("id", editingEntryId);
       } else {
         await supabase.from("diary_entries").insert(payload);
       }
-      await fetchEntries();
+      await fetchAll();
     } else {
       let updated;
-      if (editingId) {
-        updated = entries.map(e => e.id === editingId ? { ...e, ...payload } : e);
+      if (editingEntryId) {
+        updated = entries.map(e => e.id === editingEntryId ? { ...e, ...payload } : e);
       } else {
         updated = [{ id: Date.now().toString(), created_at: new Date().toISOString(), ...payload }, ...entries];
       }
       setEntries(updated);
       localStorage.setItem("diary", JSON.stringify(updated));
     }
-    cancel();
+    cancelEntry();
   };
 
   const deleteEntry = async (id) => {
@@ -146,66 +232,84 @@ export default function DiaryPage() {
     setEntries(prev => prev.filter(e => e.id !== id));
   };
 
+  // ---- derived ----
+  const selectedPlant = filterPlantId ? plants.find(p => p.id === filterPlantId) : null;
+  const visibleEntries = filterPlantId
+    ? entries.filter(e => e.plant_id === filterPlantId)
+    : entries;
+
+  const lastDateByPlant = {};
+  const thumbByPlant = {};
+  entries.forEach(e => {
+    if (!e.plant_id) return;
+    if (!lastDateByPlant[e.plant_id] || e.date > lastDateByPlant[e.plant_id]) {
+      lastDateByPlant[e.plant_id] = e.date;
+    }
+  });
+  [...entries].reverse().forEach(e => {
+    if (e.plant_id && e.photos?.length > 0 && !thumbByPlant[e.plant_id]) {
+      thumbByPlant[e.plant_id] = e.photos[0];
+    }
+  });
+
+  const acquiredTypeLabel = (type) => ACQUIRED_TYPES.find(t => t.id === type)?.label || "";
+
   return (
     <main>
       <div className="container">
         <header>
           <Link href="/" className="back-link">← 研究室に戻る</Link>
           <h1 style={{ marginTop: "0.8rem" }}>成長日記</h1>
-          <p className="subtitle">
-            {loading ? "読み込み中..." : `${entries.length}件の記録`}
-          </p>
+          <p className="subtitle">{loading ? "読み込み中..." : `${entries.length}件の記録`}</p>
         </header>
 
-        <button className="identify-btn" onClick={showForm ? cancel : openNew}>
-          {showForm ? "キャンセル" : "＋ 記録を追加"}
-        </button>
+        {/* 株一覧 */}
+        <div className="diary-section-title">登録株</div>
 
-        {showForm && (
+        {showPlantForm && (
           <div className="diary-form-card">
             <div className="diary-form-row">
-              <label className="diary-form-label">日付</label>
+              <label className="diary-form-label">株の名前</label>
               <input
-                type="date"
+                type="text"
                 className="diary-date-input"
-                value={form.date}
-                onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
+                placeholder="例：ノリピア1号、親株"
+                value={plantForm.name}
+                onChange={e => setPlantForm(f => ({ ...f, name: e.target.value }))}
               />
             </div>
             <div className="diary-form-row">
               <label className="diary-form-label">品種</label>
               <div className="species-search-wrap">
                 <input
-                  ref={speciesInputRef}
+                  ref={plantSpeciesRef}
                   type="text"
                   className="diary-date-input"
                   placeholder="品種名で検索..."
-                  value={speciesQuery}
+                  value={plantSpeciesQuery}
                   onChange={e => {
-                    setSpeciesQuery(e.target.value);
-                    setForm(f => ({ ...f, speciesId: "" }));
-                    setShowSpeciesList(true);
+                    setPlantSpeciesQuery(e.target.value);
+                    setPlantForm(f => ({ ...f, speciesId: "" }));
+                    setShowPlantSpeciesList(true);
                   }}
-                  onFocus={() => setShowSpeciesList(true)}
-                  onBlur={() => setTimeout(() => setShowSpeciesList(false), 150)}
+                  onFocus={() => setShowPlantSpeciesList(true)}
+                  onBlur={() => setTimeout(() => setShowPlantSpeciesList(false), 150)}
                 />
-                {form.speciesId && (
+                {plantForm.speciesId && (
                   <button className="species-clear-btn" onClick={() => {
-                    setForm(f => ({ ...f, speciesId: "" }));
-                    setSpeciesQuery("");
-                    speciesInputRef.current?.focus();
+                    setPlantForm(f => ({ ...f, speciesId: "" }));
+                    setPlantSpeciesQuery("");
+                    plantSpeciesRef.current?.focus();
                   }}>×</button>
                 )}
-                {showSpeciesList && filteredSpecies.length > 0 && (
+                {showPlantSpeciesList && filteredPlantSpecies.length > 0 && (
                   <div className="species-dropdown">
-                    {filteredSpecies.map(s => (
-                      <div
-                        key={s.id}
-                        className="species-dropdown-item"
+                    {filteredPlantSpecies.map(s => (
+                      <div key={s.id} className="species-dropdown-item"
                         onMouseDown={() => {
-                          setForm(f => ({ ...f, speciesId: s.id }));
-                          setSpeciesQuery(s.name);
-                          setShowSpeciesList(false);
+                          setPlantForm(f => ({ ...f, speciesId: s.id }));
+                          setPlantSpeciesQuery(s.name);
+                          setShowPlantSpeciesList(false);
                         }}
                       >
                         <span className="species-dropdown-name">{s.name}</span>
@@ -216,17 +320,117 @@ export default function DiaryPage() {
                 )}
               </div>
             </div>
-            {isFirstEntryForSpecies && (
-              <div className="diary-form-row">
-                <label className="diary-form-label">入手日</label>
-                <input
-                  type="date"
-                  className="diary-date-input"
-                  value={form.acquiredDate}
-                  onChange={e => setForm(f => ({ ...f, acquiredDate: e.target.value }))}
-                />
+            <div className="diary-form-row">
+              <label className="diary-form-label">入手・株分け日</label>
+              <input
+                type="date"
+                className="diary-date-input"
+                value={plantForm.acquiredDate}
+                onChange={e => setPlantForm(f => ({ ...f, acquiredDate: e.target.value }))}
+              />
+            </div>
+            <div className="diary-form-row">
+              <label className="diary-form-label">入手方法</label>
+              <div className="acquired-type-group">
+                {ACQUIRED_TYPES.map(t => (
+                  <button
+                    key={t.id}
+                    className={`acquired-type-btn${plantForm.acquiredType === t.id ? " active" : ""}`}
+                    onClick={() => setPlantForm(f => ({ ...f, acquiredType: t.id }))}
+                  >{t.label}</button>
+                ))}
               </div>
-            )}
+            </div>
+            <div className="diary-form-row">
+              <label className="diary-form-label">メモ</label>
+              <textarea
+                className="diary-textarea"
+                placeholder="購入場所、入手経緯など"
+                value={plantForm.memo}
+                onChange={e => setPlantForm(f => ({ ...f, memo: e.target.value }))}
+              />
+            </div>
+            <div style={{ display: "flex", gap: "0.6rem" }}>
+              <button className="diary-save-btn" style={{ flex: 1 }} onClick={savePlant}>
+                {editingPlantId ? "変更を保存" : "登録する"}
+              </button>
+              <button className="diary-cancel-btn" onClick={() => { setShowPlantForm(false); setEditingPlantId(null); }}>
+                キャンセル
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className="diary-individual-list">
+          {plants.map(plant => (
+            <div
+              key={plant.id}
+              className={`diary-individual-card${filterPlantId === plant.id ? " selected" : ""}`}
+              onClick={() => setFilterPlantId(filterPlantId === plant.id ? null : plant.id)}
+            >
+              <div className="diary-individual-thumb">
+                {thumbByPlant[plant.id]
+                  ? <img src={thumbByPlant[plant.id]} alt={plant.name} />
+                  : <span className="diary-individual-placeholder">🌿</span>
+                }
+              </div>
+              <div className="diary-individual-info">
+                <div className="diary-individual-name">{plant.name}</div>
+                {plant.species_name && <div className="diary-individual-species">{plant.species_name}</div>}
+                <div className="diary-individual-last">
+                  {plant.acquired_date && `${acquiredTypeLabel(plant.acquired_type)} ${plant.acquired_date.replace(/-/g, ".")}`}
+                  {lastDateByPlant[plant.id] && ` · 最終記録 ${lastDateByPlant[plant.id].replace(/-/g, ".")}`}
+                </div>
+              </div>
+              <div className="diary-individual-actions" onClick={e => e.stopPropagation()}>
+                <button className="diary-edit-btn" onClick={() => openEditPlant(plant)}>編集</button>
+                <button className="diary-delete-btn" onClick={() => deletePlant(plant.id)}>×</button>
+              </div>
+            </div>
+          ))}
+          {!showPlantForm && (
+            <button className="diary-add-individual-btn" onClick={openNewPlant}>＋ 株を登録</button>
+          )}
+        </div>
+
+        {/* 記録一覧 */}
+        <div className="diary-section-title" style={{ marginTop: "1.8rem" }}>
+          {selectedPlant ? `${selectedPlant.name} の記録` : "すべての記録"}
+          {filterPlantId && (
+            <button className="diary-clear-filter" onClick={() => setFilterPlantId(null)}>× 全表示</button>
+          )}
+        </div>
+
+        <button className="identify-btn" onClick={showEntryForm ? cancelEntry : () => openNewEntry(filterPlantId)}>
+          {showEntryForm ? "キャンセル" : "＋ 記録を追加"}
+        </button>
+
+        {showEntryForm && (
+          <div className="diary-form-card">
+            <div className="diary-form-row">
+              <label className="diary-form-label">日付</label>
+              <input
+                type="date"
+                className="diary-date-input"
+                value={entryForm.date}
+                onChange={e => setEntryForm(f => ({ ...f, date: e.target.value }))}
+              />
+            </div>
+            <div className="diary-form-row">
+              <label className="diary-form-label">株</label>
+              <select
+                className="diary-select"
+                value={entryForm.plantId}
+                onChange={e => setEntryForm(f => ({ ...f, plantId: e.target.value }))}
+              >
+                <option value="">選択しない</option>
+                {plants.map(p => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}{p.species_name ? `（${p.species_name}）` : ""}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className="diary-form-row">
               <label className="diary-form-label">写真</label>
               <div>
@@ -234,9 +438,9 @@ export default function DiaryPage() {
                   ＋ 写真を追加
                 </button>
                 <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handlePhoto} style={{ display: "none" }} />
-                {form.photos.length > 0 && (
+                {entryForm.photos.length > 0 && (
                   <div className="diary-photo-grid">
-                    {form.photos.map((src, i) => (
+                    {entryForm.photos.map((src, i) => (
                       <div key={i} className="diary-photo-thumb-wrap">
                         <img src={src} alt={`preview ${i}`} className="diary-photo-thumb" />
                         <button className="diary-photo-remove" onClick={() => removePhoto(i)}>×</button>
@@ -251,25 +455,28 @@ export default function DiaryPage() {
               <textarea
                 className="diary-textarea"
                 placeholder="今日の様子、気づいたこと..."
-                value={form.note}
-                onChange={e => setForm(f => ({ ...f, note: e.target.value }))}
+                value={entryForm.note}
+                onChange={e => setEntryForm(f => ({ ...f, note: e.target.value }))}
               />
             </div>
-            <button className="diary-save-btn" onClick={save}>
-              {editingId ? "変更を保存" : "保存する"}
+            <button className="diary-save-btn" onClick={saveEntry}>
+              {editingEntryId ? "変更を保存" : "保存する"}
             </button>
           </div>
         )}
 
         <div className="diary-list">
-          {!loading && entries.length === 0 && (
+          {!loading && visibleEntries.length === 0 && (
             <div className="gallery-empty"><p>まだ記録がありません</p></div>
           )}
-          {entries.map(entry => (
+          {visibleEntries.map(entry => (
             <div key={entry.id} className="diary-entry-card">
               <div className="diary-entry-header">
                 <div>
                   <div className="diary-entry-date">{entry.date.replace(/-/g, ".")}</div>
+                  {entry.plant_name && (
+                    <div className="diary-entry-individual">{entry.plant_name}</div>
+                  )}
                   {entry.species_name && (
                     <Link href={`/zukan/${entry.species_id}`} className="diary-entry-species">
                       {entry.species_name}
@@ -277,7 +484,7 @@ export default function DiaryPage() {
                   )}
                 </div>
                 <div style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}>
-                  <button className="diary-edit-btn" onClick={() => openEdit(entry)}>編集</button>
+                  <button className="diary-edit-btn" onClick={() => openEditEntry(entry)}>編集</button>
                   <button className="diary-delete-btn" onClick={() => deleteEntry(entry.id)}>×</button>
                 </div>
               </div>

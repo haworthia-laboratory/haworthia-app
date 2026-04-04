@@ -1293,6 +1293,30 @@ header h1 {
   color: #9ab89c;
 }
 
+.acquired-type-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.acquired-type-btn {
+  padding: 0.35rem 0.8rem;
+  background: transparent;
+  border: 1px solid rgba(90, 138, 92, 0.25);
+  border-radius: 20px;
+  color: #7a9b7c;
+  font-size: 0.8rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.acquired-type-btn.active {
+  background: rgba(90, 138, 92, 0.12);
+  border-color: rgba(90, 138, 92, 0.5);
+  color: #3a6b3c;
+}
+
 .diary-entry-individual {
   font-size: 1rem;
   color: #2c4a2d;
