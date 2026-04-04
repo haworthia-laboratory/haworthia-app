@@ -1352,6 +1352,31 @@ header h1 {
   padding-left: 0.6rem;
 }
 
+.plant-sort-group {
+  display: flex;
+  gap: 0.3rem;
+  margin-left: auto;
+}
+
+.plant-sort-btn {
+  padding: 0.2rem 0.6rem;
+  background: transparent;
+  border: 1px solid rgba(90, 138, 92, 0.25);
+  border-radius: 20px;
+  color: #9ab89c;
+  font-size: 0.68rem;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.05em;
+  transition: all 0.15s ease;
+}
+
+.plant-sort-btn.active {
+  background: rgba(90, 138, 92, 0.1);
+  border-color: rgba(90, 138, 92, 0.4);
+  color: #3a6b3c;
+}
+
 .acquired-type-group {
   display: flex;
   flex-wrap: wrap;

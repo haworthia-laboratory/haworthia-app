@@ -38,8 +38,9 @@ export default function DiaryPage() {
   const [showPlantSpeciesList, setShowPlantSpeciesList] = useState(false);
   const plantSpeciesRef = useRef(null);
 
-  // フィルター
+  // フィルター・ソート
   const [filterPlantId, setFilterPlantId] = useState(null);
+  const [plantSort, setPlantSort] = useState("species");
 
   useEffect(() => { fetchAll(); }, []);
 
@@ -290,6 +291,11 @@ export default function DiaryPage() {
 
   // ---- derived ----
   const sortedPlants = [...plants].sort((a, b) => {
+    if (plantSort === "acquired") {
+      const dateA = a.acquired_date || "9999";
+      const dateB = b.acquired_date || "9999";
+      return dateA.localeCompare(dateB);
+    }
     const nameA = a.species_name || "zzz";
     const nameB = b.species_name || "zzz";
     if (nameA !== nameB) return nameA.localeCompare(nameB, "ja");
@@ -348,7 +354,19 @@ export default function DiaryPage() {
         )}
 
         {/* 株一覧 */}
-        <div className="diary-section-title">登録株</div>
+        <div className="diary-section-title">
+          登録株
+          <div className="plant-sort-group">
+            <button
+              className={`plant-sort-btn${plantSort === "species" ? " active" : ""}`}
+              onClick={() => setPlantSort("species")}
+            >品種順</button>
+            <button
+              className={`plant-sort-btn${plantSort === "acquired" ? " active" : ""}`}
+              onClick={() => setPlantSort("acquired")}
+            >入手日順</button>
+          </div>
+        </div>
 
         {showPlantForm && (
           <div className="diary-form-card">
