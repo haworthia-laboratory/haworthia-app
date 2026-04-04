@@ -484,6 +484,20 @@ export default function DiaryPage() {
           </div>
         )}
 
+        {/* 編集中の株への記録追加 */}
+        {editingPlantId && !showEntryForm && (
+          <button
+            className="diary-add-record-inline"
+            onClick={() => {
+              openNewEntry(editingPlantId);
+              setShowPlantForm(false);
+              setEditingPlantId(null);
+            }}
+          >
+            ＋ この株の記録を追加
+          </button>
+        )}
+
         <div className="diary-individual-list">
           {sortedPlants.map(plant => (
             <div

@@ -1476,6 +1476,26 @@ header h1 {
   border-right: none;
 }
 
+.diary-add-record-inline {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 0.6rem;
+  background: transparent;
+  border: 1px solid rgba(90, 138, 92, 0.3);
+  border-radius: 12px;
+  color: #5a8a5c;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+
+.diary-add-record-inline:hover {
+  background: rgba(90, 138, 92, 0.05);
+  border-color: rgba(90, 138, 92, 0.5);
+}
+
 .plant-sort-group {
   display: flex;
   gap: 0.3rem;
