@@ -6,7 +6,7 @@ import { species } from "../zukan/data";
 import { supabase } from "../../lib/supabase";
 
 function today() { return new Date().toISOString().slice(0, 10); }
-const emptyForm = () => ({ date: today(), speciesId: "", note: "", photos: [] });
+const emptyForm = () => ({ date: today(), speciesId: "", note: "", photos: [], acquiredDate: today() });
 
 export default function DiaryPage() {
   const [entries, setEntries] = useState([]);
@@ -101,6 +101,9 @@ export default function DiaryPage() {
     setForm(f => ({ ...f, photos: f.photos.filter((_, i) => i !== index) }));
   };
 
+  const isFirstEntryForSpecies = form.speciesId && !editingId &&
+    !entries.some(e => e.species_id === form.speciesId);
+
   const save = async () => {
     if (!form.note.trim() && form.photos.length === 0) return;
     const speciesObj = species.find(s => s.id === form.speciesId);
@@ -110,6 +113,7 @@ export default function DiaryPage() {
       species_name: speciesObj ? speciesObj.name : null,
       note: form.note,
       photos: form.photos,
+      acquired_date: isFirstEntryForSpecies ? form.acquiredDate : null,
     };
 
     if (supabase) {
@@ -212,6 +216,17 @@ export default function DiaryPage() {
                 )}
               </div>
             </div>
+            {isFirstEntryForSpecies && (
+              <div className="diary-form-row">
+                <label className="diary-form-label">入手日</label>
+                <input
+                  type="date"
+                  className="diary-date-input"
+                  value={form.acquiredDate}
+                  onChange={e => setForm(f => ({ ...f, acquiredDate: e.target.value }))}
+                />
+              </div>
+            )}
             <div className="diary-form-row">
               <label className="diary-form-label">写真</label>
               <div>
