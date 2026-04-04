@@ -1252,6 +1252,42 @@ header h1 {
   background: rgba(90, 138, 92, 0.04);
 }
 
+.species-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.species-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(90, 138, 92, 0.1);
+  border: 1px solid rgba(90, 138, 92, 0.25);
+  border-radius: 20px;
+  padding: 0.2rem 0.5rem 0.2rem 0.7rem;
+  font-size: 0.78rem;
+  color: #3a6b3c;
+}
+
+.species-tag-cross {
+  font-size: 0.72rem;
+  color: #9ab89c;
+  margin: 0 0.1rem;
+}
+
+.species-tag-remove {
+  background: none;
+  border: none;
+  color: #9ab89c;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  margin-left: 0.1rem;
+}
+
 .species-search-wrap {
   position: relative;
 }

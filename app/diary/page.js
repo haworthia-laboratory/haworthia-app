@@ -8,7 +8,7 @@ import { supabase } from "../../lib/supabase";
 function today() { return new Date().toISOString().slice(0, 10); }
 
 const emptyEntryForm = () => ({ date: today(), plantId: "", note: "", photos: [] });
-const emptyPlantForm = () => ({ name: "", speciesId: "", acquiredDate: today(), acquiredType: "purchase", memo: "", photos: [] });
+const emptyPlantForm = () => ({ name: "", speciesIds: [], acquiredDate: today(), acquiredType: "purchase", memo: "", photos: [] });
 
 const ACQUIRED_TYPES = [
   { id: "purchase", label: "購入" },
@@ -74,28 +74,31 @@ export default function DiaryPage() {
 
   const openEditPlant = (plant) => {
     setEditingPlantId(plant.id);
-    const sp = species.find(s => s.id === plant.species_id);
+    const ids = plant.species_ids || (plant.species_id ? [plant.species_id] : []);
     setPlantForm({
       name: plant.name,
-      speciesId: plant.species_id || "",
+      speciesIds: ids,
       acquiredDate: plant.acquired_date || today(),
       acquiredType: plant.acquired_type || "purchase",
       memo: plant.memo || "",
       photos: [],
     });
-    setPlantSpeciesQuery(sp ? sp.name : "");
     setShowPlantForm(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const savePlant = async () => {
     setPlantError("");
-    const speciesObj = species.find(s => s.id === plantForm.speciesId);
-    const defaultName = speciesObj ? speciesObj.name : "名前なし";
+    const selectedSpecies = plantForm.speciesIds.map(id => species.find(s => s.id === id)).filter(Boolean);
+    const defaultName = selectedSpecies.length > 0
+      ? selectedSpecies.map(s => s.name).join(" × ")
+      : "名前なし";
     const payload = {
       name: plantForm.name.trim() || defaultName,
-      species_id: plantForm.speciesId || null,
-      species_name: speciesObj ? speciesObj.name : null,
+      species_id: plantForm.speciesIds[0] || null,
+      species_name: selectedSpecies.length > 0 ? selectedSpecies.map(s => s.name).join(" × ") : null,
+      species_ids: plantForm.speciesIds,
+      species_names: selectedSpecies.map(s => s.name),
       acquired_date: plantForm.acquiredDate || null,
       acquired_type: plantForm.acquiredType || null,
       memo: plantForm.memo || null,
@@ -465,43 +468,53 @@ export default function DiaryPage() {
               />
             </div>
             <div className="diary-form-row">
-              <label className="diary-form-label">品種</label>
+              <label className="diary-form-label">品種（複数可）</label>
+              {plantForm.speciesIds.length > 0 && (
+                <div className="species-tags">
+                  {plantForm.speciesIds.map((id, i) => {
+                    const sp = species.find(s => s.id === id);
+                    return (
+                      <div key={id} className="species-tag">
+                        {i > 0 && <span className="species-tag-cross">×</span>}
+                        <span>{sp ? sp.name : id}</span>
+                        <button className="species-tag-remove" onClick={() =>
+                          setPlantForm(f => ({ ...f, speciesIds: f.speciesIds.filter((_, j) => j !== i) }))
+                        }>×</button>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
               <div className="species-search-wrap">
                 <input
                   ref={plantSpeciesRef}
                   type="text"
                   className="diary-date-input"
-                  placeholder="品種名で検索..."
+                  placeholder={plantForm.speciesIds.length === 0 ? "品種名で検索..." : "＋ 品種を追加..."}
                   value={plantSpeciesQuery}
                   onChange={e => {
                     setPlantSpeciesQuery(e.target.value);
-                    setPlantForm(f => ({ ...f, speciesId: "" }));
                     setShowPlantSpeciesList(true);
                   }}
                   onFocus={() => setShowPlantSpeciesList(true)}
                   onBlur={() => setTimeout(() => setShowPlantSpeciesList(false), 150)}
                 />
-                {plantForm.speciesId && (
-                  <button className="species-clear-btn" onClick={() => {
-                    setPlantForm(f => ({ ...f, speciesId: "" }));
-                    setPlantSpeciesQuery("");
-                    plantSpeciesRef.current?.focus();
-                  }}>×</button>
-                )}
                 {showPlantSpeciesList && filteredPlantSpecies.length > 0 && (
                   <div className="species-dropdown">
-                    {filteredPlantSpecies.map(s => (
-                      <div key={s.id} className="species-dropdown-item"
-                        onMouseDown={() => {
-                          setPlantForm(f => ({ ...f, speciesId: s.id }));
-                          setPlantSpeciesQuery(s.name);
-                          setShowPlantSpeciesList(false);
-                        }}
-                      >
-                        <span className="species-dropdown-name">{s.name}</span>
-                        <span className="species-dropdown-sci">{s.scientific}</span>
-                      </div>
-                    ))}
+                    {filteredPlantSpecies
+                      .filter(s => !plantForm.speciesIds.includes(s.id))
+                      .map(s => (
+                        <div key={s.id} className="species-dropdown-item"
+                          onMouseDown={() => {
+                            setPlantForm(f => ({ ...f, speciesIds: [...f.speciesIds, s.id] }));
+                            setPlantSpeciesQuery("");
+                            setShowPlantSpeciesList(false);
+                          }}
+                        >
+                          <span className="species-dropdown-name">{s.name}</span>
+                          <span className="species-dropdown-sci">{s.scientific}</span>
+                        </div>
+                      ))}
                   </div>
                 )}
               </div>
