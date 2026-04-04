@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import { species } from "./data";
 import { supabase } from "../../lib/supabase";
 
@@ -39,18 +38,24 @@ function getColorGroup(s) {
 }
 
 export default function ZukanPage() {
-  const searchParams = useSearchParams();
   const [sort, setSort] = useState("name-asc");
   const [query, setQuery] = useState("");
-  const [colorFilter, setColorFilter] = useState(searchParams.get("color") || "all");
+  const [colorFilter, setColorFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
   const [markFilter, setMarkFilter] = useState("all");
   const [viewMode, setViewMode] = useState("list");
   const [owned, setOwned] = useState(new Set());
   const [wishlist, setWishlist] = useState(new Set());
-  const [fromPhoto, setFromPhoto] = useState(!!searchParams.get("color"));
+  const [fromPhoto, setFromPhoto] = useState(false);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const color = params.get("color");
+    if (color) {
+      setColorFilter(color);
+      setFromPhoto(true);
+    }
+
     const w = JSON.parse(localStorage.getItem("wishlist") || "[]");
     setWishlist(new Set(w));
 
