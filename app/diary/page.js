@@ -500,22 +500,20 @@ export default function DiaryPage() {
                 キャンセル
               </button>
             </div>
+            {editingPlantId && (
+              <button
+                className="diary-save-btn"
+                style={{ marginTop: "0.6rem", background: "linear-gradient(135deg, #4a7a6c, #5a9a8c)" }}
+                onClick={() => {
+                  openNewEntry(editingPlantId);
+                  setShowPlantForm(false);
+                  setEditingPlantId(null);
+                }}
+              >＋ この株の記録を追加</button>
+            )}
           </div>
         )}
 
-        {/* 編集中の株への記録追加 */}
-        {editingPlantId && !showEntryForm && (
-          <button
-            className="diary-add-record-inline"
-            onClick={() => {
-              openNewEntry(editingPlantId);
-              setShowPlantForm(false);
-              setEditingPlantId(null);
-            }}
-          >
-            ＋ この株の記録を追加
-          </button>
-        )}
 
         <div className="diary-individual-list">
           {!showPlantForm && (
