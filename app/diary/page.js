@@ -42,11 +42,19 @@ export default function DiaryPage() {
   const [filterPlantId, setFilterPlantId] = useState(null);
   const [plantSort, setPlantSort] = useState("species");
 
+  // サムネイル上書き
+  const [thumbOverrides, setThumbOverrides] = useState({});
+
   // エラー
   const [entryError, setEntryError] = useState("");
   const [plantError, setPlantError] = useState("");
 
-  useEffect(() => { fetchAll(); }, []);
+  useEffect(() => {
+    fetchAll();
+    try {
+      setThumbOverrides(JSON.parse(localStorage.getItem("plantThumbnails") || "{}"));
+    } catch { setThumbOverrides({}); }
+  }, []);
 
   const fetchAll = async () => {
     setLoading(true);
@@ -301,6 +309,12 @@ export default function DiaryPage() {
     cancelEntry();
   };
 
+  const setThumbnail = (plantId, photoSrc) => {
+    const next = { ...thumbOverrides, [plantId]: photoSrc };
+    setThumbOverrides(next);
+    localStorage.setItem("plantThumbnails", JSON.stringify(next));
+  };
+
   const deleteEntry = async (id) => {
     if (supabase) {
       await supabase.from("diary_entries").delete().eq("id", id);
@@ -342,6 +356,8 @@ export default function DiaryPage() {
       thumbByPlant[e.plant_id] = e.photos[0];
     }
   });
+  // ユーザーが選んだサムネイルで上書き
+  Object.assign(thumbByPlant, thumbOverrides);
 
   const acquiredTypeLabel = (type) => ACQUIRED_TYPES.find(t => t.id === type)?.label || "";
 
@@ -384,12 +400,8 @@ export default function DiaryPage() {
             <div className="diary-form-row">
               <label className="diary-form-label">写真</label>
               <div>
-                <button className="diary-photo-btn" onClick={() => fileInputRef.current.click()}>
-                  ＋ 写真を追加
-                </button>
-                <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handlePhoto} style={{ display: "none" }} />
                 {entryForm.photos.length > 0 && (
-                  <div className="diary-photo-grid">
+                  <div className="diary-photo-grid" style={{ marginBottom: "0.5rem" }}>
                     {entryForm.photos.map((src, i) => (
                       <div key={i} className="diary-photo-thumb-wrap">
                         <img src={src} alt={`preview ${i}`} className="diary-photo-thumb" />
@@ -398,6 +410,10 @@ export default function DiaryPage() {
                     ))}
                   </div>
                 )}
+                <button className="diary-photo-btn" onClick={() => fileInputRef.current.click()}>
+                  ＋ 写真を追加
+                </button>
+                <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handlePhoto} style={{ display: "none" }} />
               </div>
             </div>
             <div className="diary-form-row">
@@ -699,13 +715,20 @@ export default function DiaryPage() {
                 </div>
               </div>
               {entry.photos && entry.photos.length > 0 && (
-                entry.photos.length === 1
-                  ? <img src={entry.photos[0]} alt="記録写真" className="diary-entry-photo" />
-                  : <div className="diary-entry-photo-grid">
-                      {entry.photos.map((src, i) => (
-                        <img key={i} src={src} alt={`記録写真 ${i + 1}`} className="diary-entry-photo-thumb" />
-                      ))}
+                <div className="diary-entry-photo-grid">
+                  {entry.photos.map((src, i) => (
+                    <div key={i} className="diary-entry-photo-wrap">
+                      <img src={src} alt={`記録写真 ${i + 1}`} className={entry.photos.length === 1 ? "diary-entry-photo" : "diary-entry-photo-thumb"} />
+                      {entry.plant_id && (
+                        <button
+                          className={`diary-thumb-btn${thumbByPlant[entry.plant_id] === src ? " active" : ""}`}
+                          onClick={() => setThumbnail(entry.plant_id, src)}
+                          title="サムネイルに設定"
+                        >{thumbByPlant[entry.plant_id] === src ? "★" : "☆"}</button>
+                      )}
                     </div>
+                  ))}
+                </div>
               )}
               {entry.note && <p className="diary-entry-note">{entry.note}</p>}
             </div>

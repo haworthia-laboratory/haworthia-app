@@ -1329,6 +1329,36 @@ header h1 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.3rem;
+  margin-bottom: 0.6rem;
+}
+
+.diary-entry-photo-wrap {
+  position: relative;
+}
+
+.diary-thumb-btn {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: rgba(0, 0, 0, 0.45);
+  border: none;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.75rem;
+  padding: 0.2rem 0.35rem;
+  cursor: pointer;
+  line-height: 1;
+  backdrop-filter: blur(4px);
+  transition: all 0.15s ease;
+}
+
+.diary-thumb-btn.active {
+  background: rgba(200, 160, 60, 0.75);
+  color: #fff;
+}
+
+.diary-thumb-btn:hover {
+  background: rgba(0, 0, 0, 0.65);
 }
 
 .diary-entry-photo-thumb {
