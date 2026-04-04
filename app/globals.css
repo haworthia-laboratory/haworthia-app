@@ -6,7 +6,11 @@
 
 body {
   min-height: 100vh;
-  background: linear-gradient(160deg, #eef3ee 0%, #f7f9f4 50%, #e6ede7 100%);
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(200, 230, 210, 0.5) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(180, 215, 225, 0.4) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 10%, rgba(240, 248, 235, 0.6) 0%, transparent 40%),
+    linear-gradient(160deg, #eaf0ea 0%, #f4f8f2 50%, #e4eceb 100%);
   font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', sans-serif;
 }
 
@@ -72,10 +76,10 @@ header h1 {
 
 /* アップロードエリア */
 .upload-card {
-  background: rgba(255, 255, 255, 0.62);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.75);
   border-radius: 22px;
   min-height: 270px;
   display: flex;
@@ -83,13 +87,14 @@ header h1 {
   justify-content: center;
   cursor: pointer;
   overflow: hidden;
-  box-shadow: 0 4px 28px rgba(44, 74, 45, 0.07), inset 0 1px 0 rgba(255,255,255,0.9);
+  box-shadow: 0 4px 28px rgba(44, 74, 45, 0.07), inset 0 1px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(180,210,185,0.2);
   transition: all 0.3s ease;
 }
 
 .upload-card:hover {
-  box-shadow: 0 8px 36px rgba(44, 74, 45, 0.12), inset 0 1px 0 rgba(255,255,255,0.9);
+  box-shadow: 0 8px 36px rgba(44, 74, 45, 0.1), inset 0 1px 0 rgba(255,255,255,0.95);
   transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.55);
 }
 
 .upload-placeholder {
@@ -177,9 +182,9 @@ header h1 {
 
 /* 結果カード */
 .result-card {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
   border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 22px;
   padding: 1.8rem;
@@ -283,10 +288,11 @@ header h1 {
 
 /* 照度チェック */
 .light-meter {
-  background: rgba(255, 255, 255, 0.62);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(180,210,190,0.15);
   border-radius: 22px;
   padding: 1.5rem;
   margin-top: 1.2rem;
@@ -374,7 +380,8 @@ header h1 {
   margin-top: 1.2rem;
   padding: 0.75rem;
   background: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(180,210,190,0.15);
   border-radius: 14px;
   color: #4a5a4b;
   font-size: 0.88rem;
@@ -408,7 +415,7 @@ header h1 {
   width: 100%;
   padding: 0.6rem 1rem;
   margin-bottom: 0.6rem;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.4);
   border: 1px solid rgba(90, 138, 92, 0.2);
   border-radius: 100px;
   font-size: 0.85rem;
@@ -518,10 +525,11 @@ header h1 {
 }
 
 .zukan-grid-card {
-  background: rgba(255, 255, 255, 0.62);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(180,210,190,0.15);
   border-radius: 16px;
   overflow: hidden;
   text-decoration: none;
@@ -624,10 +632,11 @@ header h1 {
 
 .zukan-card {
   display: flex;
-  background: rgba(255, 255, 255, 0.62);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(180,210,190,0.15);
   border-radius: 18px;
   overflow: hidden;
   text-decoration: none;
@@ -724,7 +733,8 @@ header h1 {
   display: flex;
   gap: 0;
   background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(180,210,190,0.15);
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 4px 18px rgba(44, 74, 45, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
@@ -775,10 +785,11 @@ header h1 {
 }
 
 .detail-card {
-  background: rgba(255, 255, 255, 0.62);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(180,210,190,0.15);
   border-radius: 16px;
   padding: 1.1rem 1.2rem;
   box-shadow: 0 4px 18px rgba(44, 74, 45, 0.06), inset 0 1px 0 rgba(255,255,255,0.9);
@@ -872,9 +883,9 @@ header h1 {
 
 /* 日記 */
 .diary-form-card {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
   border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 18px;
   padding: 1.4rem;
@@ -900,7 +911,7 @@ header h1 {
 .diary-date-input,
 .diary-select,
 .diary-textarea {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.4);
   border: 1px solid rgba(90, 138, 92, 0.2);
   border-radius: 10px;
   padding: 0.6rem 0.8rem;
@@ -969,10 +980,11 @@ header h1 {
 }
 
 .diary-entry-card {
-  background: rgba(255, 255, 255, 0.62);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(180,210,190,0.15);
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 4px 18px rgba(44, 74, 45, 0.06);
@@ -1111,8 +1123,9 @@ header h1 {
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  background: rgba(255, 255, 255, 0.62);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(180,210,190,0.15);
   border-radius: 14px;
   padding: 0.7rem 0.9rem;
   cursor: pointer;
@@ -1294,7 +1307,7 @@ header h1 {
 }
 
 .diary-guide {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.4);
   border: 1px solid rgba(90, 138, 92, 0.15);
   border-radius: 16px;
   padding: 1.2rem 1.4rem;
@@ -1353,8 +1366,9 @@ header h1 {
 }
 
 .light-map-card {
-  background: rgba(255, 255, 255, 0.62);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(180,210,190,0.15);
   border-radius: 18px;
   padding: 1.2rem 1.4rem 1rem;
   box-shadow: 0 4px 18px rgba(44, 74, 45, 0.06);
