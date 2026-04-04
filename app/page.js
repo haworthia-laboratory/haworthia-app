@@ -2,6 +2,47 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+function analyzeImageColor(imgElement) {
+  const canvas = document.createElement("canvas");
+  const SIZE = 80;
+  canvas.width = SIZE;
+  canvas.height = SIZE;
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(imgElement, 0, 0, SIZE, SIZE);
+  const data = ctx.getImageData(0, 0, SIZE, SIZE).data;
+
+  let rSum = 0, gSum = 0, bSum = 0, count = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+    if (a < 128) continue;
+    const brightness = (r + g + b) / 3;
+    if (brightness > 240 || brightness < 15) continue;
+    rSum += r; gSum += g; bSum += b; count++;
+  }
+  if (count === 0) return "green";
+
+  const r = rSum / count, g = gSum / count, b = bSum / count;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b), diff = max - min;
+  const brightness = (r + g + b) / 3;
+  const saturation = max === 0 ? 0 : diff / max;
+
+  if (saturation < 0.15) return brightness < 80 ? "black" : "gray";
+
+  let hue = 0;
+  if (max === r) hue = ((g - b) / diff + 6) % 6 * 60;
+  else if (max === g) hue = ((b - r) / diff + 2) * 60;
+  else hue = ((r - g) / diff + 4) * 60;
+
+  if (hue < 30 || hue >= 330) return "red";
+  if (hue < 60) return "red";
+  if (hue < 150) return "green";
+  if (hue < 195) return "blue";
+  if (hue < 270) return hue < 230 ? "blue" : "purple";
+  if (hue < 310) return "purple";
+  return "red";
+}
 
 function CameraIcon() {
   return (
@@ -150,8 +191,10 @@ function HaworthiaIcon() {
 }
 
 export default function Home() {
+  const router = useRouter();
   const [image, setImage] = useState(null);
   const [imageData, setImageData] = useState(null);
+  const [imageEl, setImageEl] = useState(null);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [lightResult, setLightResult] = useState(null);
@@ -183,12 +226,19 @@ export default function Home() {
         canvas.getContext("2d").drawImage(img, 0, 0, width, height);
         const resized = canvas.toDataURL("image/jpeg", 0.85);
         setImage(resized);
+        setImageEl(img);
         setImageData({ data: resized.split(",")[1], mimeType: "image/jpeg" });
         setResult(null);
       };
       img.src = reader.result;
     };
     reader.readAsDataURL(file);
+  };
+
+  const searchByPhoto = () => {
+    if (!imageEl) return;
+    const color = analyzeImageColor(imageEl);
+    router.push(`/zukan?color=${color}`);
   };
 
   const identify = async () => {
@@ -293,9 +343,14 @@ export default function Home() {
         </div>
 
         {image && !loading && !result && (
-          <button className="identify-btn" onClick={identify}>
-            鑑定する
-          </button>
+          <div className="action-btns">
+            <button className="identify-btn" onClick={identify}>
+              鑑定する
+            </button>
+            <button className="photo-zukan-btn" onClick={searchByPhoto}>
+              図鑑で色から絞り込む
+            </button>
+          </div>
         )}
 
         {loading && (

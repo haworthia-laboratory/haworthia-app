@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { species } from "./data";
 import { supabase } from "../../lib/supabase";
 
@@ -37,76 +38,17 @@ function getColorGroup(s) {
   return "green";
 }
 
-function analyzeImageColor(file, callback) {
-  const img = new window.Image();
-  const url = URL.createObjectURL(file);
-  img.onload = () => {
-    const canvas = document.createElement("canvas");
-    const SIZE = 80;
-    canvas.width = SIZE;
-    canvas.height = SIZE;
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0, SIZE, SIZE);
-    URL.revokeObjectURL(url);
-
-    const data = ctx.getImageData(0, 0, SIZE, SIZE).data;
-    let rSum = 0, gSum = 0, bSum = 0, count = 0;
-
-    for (let i = 0; i < data.length; i += 4) {
-      const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
-      if (a < 128) continue;
-      // 白飛び・黒つぶれは除外して植物部分だけ拾う
-      const brightness = (r + g + b) / 3;
-      if (brightness > 240 || brightness < 15) continue;
-      rSum += r; gSum += g; bSum += b; count++;
-    }
-
-    if (count === 0) { callback("green"); return; }
-    const r = rSum / count, g = gSum / count, b = bSum / count;
-
-    // HSV変換で色相を判定
-    const max = Math.max(r, g, b), min = Math.min(r, g, b), diff = max - min;
-    const brightness = (r + g + b) / 3;
-    const saturation = max === 0 ? 0 : diff / max;
-
-    // 彩度が低い → グレー or ブラック
-    if (saturation < 0.15) {
-      callback(brightness < 80 ? "black" : "gray");
-      return;
-    }
-
-    let hue = 0;
-    if (max === r) hue = ((g - b) / diff + 6) % 6 * 60;
-    else if (max === g) hue = ((b - r) / diff + 2) * 60;
-    else hue = ((r - g) / diff + 4) * 60;
-
-    if (hue < 30 || hue >= 330) callback("red");
-    else if (hue < 60) callback("red");
-    else if (hue < 150) callback("green");
-    else if (hue < 195) callback("blue");
-    else if (hue < 270) {
-      // 青〜紫の境界：彩度と輝度で判断
-      callback(hue < 230 ? "blue" : "purple");
-    }
-    else if (hue < 310) callback("purple");
-    else callback("red");
-  };
-  img.src = url;
-}
-
 export default function ZukanPage() {
+  const searchParams = useSearchParams();
   const [sort, setSort] = useState("name-asc");
   const [query, setQuery] = useState("");
-  const [colorFilter, setColorFilter] = useState("all");
+  const [colorFilter, setColorFilter] = useState(searchParams.get("color") || "all");
   const [typeFilter, setTypeFilter] = useState("all");
   const [markFilter, setMarkFilter] = useState("all");
   const [viewMode, setViewMode] = useState("list");
   const [owned, setOwned] = useState(new Set());
   const [wishlist, setWishlist] = useState(new Set());
-  const [photoPreview, setPhotoPreview] = useState(null);
-  const [photoAnalyzing, setPhotoAnalyzing] = useState(false);
-  const [photoResult, setPhotoResult] = useState(null);
-  const photoInputRef = useRef(null);
+  const [fromPhoto, setFromPhoto] = useState(!!searchParams.get("color"));
 
   useEffect(() => {
     const w = JSON.parse(localStorage.getItem("wishlist") || "[]");
@@ -135,25 +77,6 @@ export default function ZukanPage() {
       localStorage.setItem("owned", JSON.stringify([...next]));
       return next;
     });
-  };
-
-  const handlePhotoSearch = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setPhotoAnalyzing(true);
-    setPhotoPreview(URL.createObjectURL(file));
-    analyzeImageColor(file, (color) => {
-      setColorFilter(color);
-      setPhotoResult(COLOR_GROUPS.find(c => c.id === color)?.label || "グリーン");
-      setPhotoAnalyzing(false);
-    });
-  };
-
-  const clearPhotoSearch = () => {
-    setPhotoPreview(null);
-    setPhotoResult(null);
-    setColorFilter("all");
-    if (photoInputRef.current) photoInputRef.current.value = "";
   };
 
   const toggleWishlist = (e, id) => {
@@ -201,38 +124,14 @@ export default function ZukanPage() {
           onChange={(e) => setQuery(e.target.value)}
         />
 
-        <div className="photo-search-area">
-          {photoPreview ? (
-            <div className="photo-search-result">
-              <img src={photoPreview} className="photo-search-thumb" alt="解析中の写真" />
-              <div className="photo-search-info">
-                {photoAnalyzing ? (
-                  <span className="photo-search-label">解析中...</span>
-                ) : (
-                  <>
-                    <span className="photo-search-label">
-                      色味：<strong>{photoResult}</strong> で絞り込み中
-                    </span>
-                    <span className="photo-search-hint">目安です。手動で変更できます</span>
-                  </>
-                )}
-              </div>
-              <button className="photo-search-clear" onClick={clearPhotoSearch}>✕</button>
-            </div>
-          ) : (
-            <label className="photo-search-btn">
-              <input
-                ref={photoInputRef}
-                type="file"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={handlePhotoSearch}
-              />
-              <span className="photo-search-icon">🔍</span>
-              写真で色を絞り込む
-            </label>
-          )}
-        </div>
+        {fromPhoto && (
+          <div className="photo-filter-banner">
+            <span>
+              写真の色味：<strong>{COLOR_GROUPS.find(c => c.id === colorFilter)?.label}</strong> で絞り込み中
+            </span>
+            <button className="photo-filter-clear" onClick={() => { setColorFilter("all"); setFromPhoto(false); }}>✕ 解除</button>
+          </div>
+        )}
 
         <div className="filter-bar">
           {TYPE_GROUPS.map((t) => (
