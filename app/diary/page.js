@@ -350,11 +350,7 @@ export default function DiaryPage() {
           <p className="subtitle">{loading ? "読み込み中..." : `${entries.length}件の記録`}</p>
         </header>
 
-        {/* 記録追加ボタン・フォーム（常に上部固定） */}
-        <button className="identify-btn" onClick={showEntryForm ? cancelEntry : () => openNewEntry(filterPlantId)}>
-          {showEntryForm ? "キャンセル" : "＋ 記録を追加"}
-        </button>
-
+        {/* 記録追加フォーム */}
         {showEntryForm && (
           <div className="diary-form-card">
             <div className="diary-form-row">
@@ -410,9 +406,12 @@ export default function DiaryPage() {
               />
             </div>
             {entryError && <div className="diary-error">{entryError}</div>}
-            <button className="diary-save-btn" onClick={saveEntry}>
-              {editingEntryId ? "変更を保存" : "保存する"}
-            </button>
+            <div style={{ display: "flex", gap: "0.6rem" }}>
+              <button className="diary-save-btn" style={{ flex: 1 }} onClick={saveEntry}>
+                {editingEntryId ? "変更を保存" : "保存する"}
+              </button>
+              <button className="diary-cancel-btn" onClick={cancelEntry}>キャンセル</button>
+            </div>
           </div>
         )}
 
