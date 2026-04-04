@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { species } from "../zukan/data";
 import { supabase } from "../../lib/supabase";
 
@@ -19,6 +20,7 @@ const ACQUIRED_TYPES = [
 ];
 
 export default function DiaryPage() {
+  const router = useRouter();
   const [entries, setEntries] = useState([]);
   const [plants, setPlants] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -370,71 +372,6 @@ export default function DiaryPage() {
           <p className="subtitle">{loading ? "読み込み中..." : `${entries.length}件の記録`}</p>
         </header>
 
-        {/* 記録追加フォーム */}
-        {showEntryForm && (
-          <div className="diary-form-card">
-            <div className="diary-form-row">
-              <label className="diary-form-label">日付</label>
-              <input
-                type="date"
-                className="diary-date-input"
-                value={entryForm.date}
-                onChange={e => setEntryForm(f => ({ ...f, date: e.target.value }))}
-              />
-            </div>
-            <div className="diary-form-row">
-              <label className="diary-form-label">株</label>
-              <select
-                className="diary-select"
-                value={entryForm.plantId}
-                onChange={e => setEntryForm(f => ({ ...f, plantId: e.target.value }))}
-              >
-                <option value="">選択しない</option>
-                {plants.map(p => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}{p.species_name ? `（${p.species_name}）` : ""}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="diary-form-row">
-              <label className="diary-form-label">写真</label>
-              <div>
-                {entryForm.photos.length > 0 && (
-                  <div className="diary-photo-grid" style={{ marginBottom: "0.5rem" }}>
-                    {entryForm.photos.map((src, i) => (
-                      <div key={i} className="diary-photo-thumb-wrap">
-                        <img src={src} alt={`preview ${i}`} className="diary-photo-thumb" />
-                        <button className="diary-photo-remove" onClick={() => removePhoto(i)}>×</button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                <button className="diary-photo-btn" onClick={() => fileInputRef.current.click()}>
-                  ＋ 写真を追加
-                </button>
-                <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handlePhoto} style={{ display: "none" }} />
-              </div>
-            </div>
-            <div className="diary-form-row">
-              <label className="diary-form-label">メモ</label>
-              <textarea
-                className="diary-textarea"
-                placeholder="今日の様子、気づいたこと..."
-                value={entryForm.note}
-                onChange={e => setEntryForm(f => ({ ...f, note: e.target.value }))}
-              />
-            </div>
-            {entryError && <div className="diary-error">{entryError}</div>}
-            <div style={{ display: "flex", gap: "0.6rem" }}>
-              <button className="diary-save-btn" style={{ flex: 1 }} onClick={saveEntry}>
-                {editingEntryId ? "変更を保存" : "保存する"}
-              </button>
-              <button className="diary-cancel-btn" onClick={cancelEntry}>キャンセル</button>
-            </div>
-          </div>
-        )}
-
         {/* はじめかたガイド */}
         {!loading && plants.length === 0 && !showPlantForm && (
           <div className="diary-guide">
@@ -617,8 +554,9 @@ export default function DiaryPage() {
           {sortedPlants.map(plant => (
             <div
               key={plant.id}
-              className={`diary-individual-card${filterPlantId === plant.id ? " selected" : ""}`}
-              onClick={() => setFilterPlantId(filterPlantId === plant.id ? null : plant.id)}
+              className="diary-individual-card"
+              onClick={() => router.push(`/diary/${plant.id}`)}
+              style={{ cursor: "pointer" }}
             >
               <div className="diary-individual-thumb">
                 {thumbByPlant[plant.id]
@@ -642,25 +580,15 @@ export default function DiaryPage() {
           ))}
         </div>
 
-        {/* 記録一覧 */}
-        <div className="diary-section-title" style={{ marginTop: "1.8rem" }}>
-          {selectedPlant ? `${selectedPlant.name} の記録` : "すべての記録"}
-          {filterPlantId && (
-            <button className="diary-clear-filter" onClick={() => setFilterPlantId(null)}>× 全表示</button>
-          )}
-        </div>
-
         {/* 光量マップ */}
         {plants.length > 0 && (() => {
           const plantsWithLight = plants
             .map(p => ({ ...p, lightBar: species.find(s => s.id === p.species_id)?.lightBar }))
             .filter(p => p.lightBar != null)
             .sort((a, b) => b.lightBar - a.lightBar);
-
           if (plantsWithLight.length === 0) return null;
-
           return (
-            <div style={{ marginTop: "2rem", marginBottom: "1.4rem" }}>
+            <div style={{ marginTop: "1.4rem", marginBottom: "0.5rem" }}>
               <div className="diary-section-title">光量マップ</div>
               <div className="light-map-card">
                 <div className="light-map-axis" style={{ marginBottom: "0.8rem" }}>
@@ -690,50 +618,6 @@ export default function DiaryPage() {
             </div>
           );
         })()}
-
-        <div className="diary-list">
-          {!loading && visibleEntries.length === 0 && (
-            <div className="gallery-empty"><p>まだ記録がありません</p></div>
-          )}
-          {visibleEntries.map(entry => (
-            <div key={entry.id} className="diary-entry-card">
-              <div className="diary-entry-header">
-                <div>
-                  <div className="diary-entry-date">{entry.date.replace(/-/g, ".")}</div>
-                  {entry.plant_name && (
-                    <div className="diary-entry-individual">{entry.plant_name}</div>
-                  )}
-                  {entry.species_name && (
-                    <Link href={`/zukan/${entry.species_id}`} className="diary-entry-species">
-                      {entry.species_name}
-                    </Link>
-                  )}
-                </div>
-                <div style={{ display: "flex", gap: "0.6rem", alignItems: "center" }}>
-                  <button className="diary-edit-btn" onClick={() => openEditEntry(entry)}>編集</button>
-                  <button className="diary-delete-btn" onClick={() => deleteEntry(entry.id)}>×</button>
-                </div>
-              </div>
-              {entry.photos && entry.photos.length > 0 && (
-                <div className="diary-entry-photo-grid">
-                  {entry.photos.map((src, i) => (
-                    <div key={i} className="diary-entry-photo-wrap">
-                      <img src={src} alt={`記録写真 ${i + 1}`} className={entry.photos.length === 1 ? "diary-entry-photo" : "diary-entry-photo-thumb"} />
-                      {entry.plant_id && (
-                        <button
-                          className={`diary-thumb-btn${thumbByPlant[entry.plant_id] === src ? " active" : ""}`}
-                          onClick={() => setThumbnail(entry.plant_id, src)}
-                          title="サムネイルに設定"
-                        >{thumbByPlant[entry.plant_id] === src ? "★" : "☆"}</button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-              {entry.note && <p className="diary-entry-note">{entry.note}</p>}
-            </div>
-          ))}
-        </div>
       </div>
     </main>
   );
