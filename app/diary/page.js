@@ -50,6 +50,7 @@ export default function DiaryPage() {
   // エラー
   const [entryError, setEntryError] = useState("");
   const [plantError, setPlantError] = useState("");
+  const [deleteConfirm, setDeleteConfirm] = useState(null); // { id, label }
 
   useEffect(() => {
     fetchAll();
@@ -365,6 +366,18 @@ export default function DiaryPage() {
 
   return (
     <main>
+      {deleteConfirm && (
+        <div className="confirm-overlay" onClick={() => setDeleteConfirm(null)}>
+          <div className="confirm-sheet" onClick={e => e.stopPropagation()}>
+            <p className="confirm-msg">「{deleteConfirm.label}」を削除しますか？</p>
+            <p className="confirm-sub">記録ごとすべて削除されます。この操作は取り消せません</p>
+            <div className="confirm-btns">
+              <button className="confirm-cancel" onClick={() => setDeleteConfirm(null)}>キャンセル</button>
+              <button className="confirm-ok" onClick={() => { deletePlant(deleteConfirm.id); setDeleteConfirm(null); }}>削除する</button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="container">
         <header>
           <Link href="/" className="back-link">← 研究室に戻る</Link>
@@ -574,7 +587,7 @@ export default function DiaryPage() {
               </div>
               <div className="diary-individual-actions" onClick={e => e.stopPropagation()}>
                 <button className="diary-edit-btn" onClick={() => openEditPlant(plant)}>編集</button>
-                <button className="diary-delete-btn" onClick={() => deletePlant(plant.id)}>×</button>
+                <button className="diary-delete-btn" onClick={() => setDeleteConfirm({ id: plant.id, label: plant.name })}>×</button>
               </div>
             </div>
           ))}

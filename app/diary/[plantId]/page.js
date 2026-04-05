@@ -33,6 +33,7 @@ export default function PlantTimelinePage() {
   const fileInputRef = useRef(null);
 
   const [thumbOverrides, setThumbOverrides] = useState({});
+  const [deleteConfirm, setDeleteConfirm] = useState(null); // { id, label }
 
   useEffect(() => {
     fetchData();
@@ -193,6 +194,18 @@ export default function PlantTimelinePage() {
   return (
     <main>
       {toast && <div className="diary-toast">{toast}</div>}
+      {deleteConfirm && (
+        <div className="confirm-overlay" onClick={() => setDeleteConfirm(null)}>
+          <div className="confirm-sheet" onClick={e => e.stopPropagation()}>
+            <p className="confirm-msg">「{deleteConfirm.label}」を削除しますか？</p>
+            <p className="confirm-sub">この操作は取り消せません</p>
+            <div className="confirm-btns">
+              <button className="confirm-cancel" onClick={() => setDeleteConfirm(null)}>キャンセル</button>
+              <button className="confirm-ok" onClick={() => { deleteEntry(deleteConfirm.id); setDeleteConfirm(null); }}>削除する</button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="container">
         <header>
           <Link href="/diary" className="back-link">← 成長日記に戻る</Link>
@@ -282,7 +295,7 @@ export default function PlantTimelinePage() {
                   <div className="timeline-date">{entry.date.replace(/-/g, ".")}</div>
                   <div style={{ display: "flex", gap: "0.5rem" }}>
                     <button className="diary-edit-btn" onClick={() => openEdit(entry)}>編集</button>
-                    <button className="diary-delete-btn" onClick={() => deleteEntry(entry.id)}>×</button>
+                    <button className="diary-delete-btn" onClick={() => setDeleteConfirm({ id: entry.id, label: entry.date.replace(/-/g, ".") + "の記録" })}>×</button>
                   </div>
                 </div>
                 {entry.photos?.length > 0 && (

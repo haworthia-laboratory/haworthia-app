@@ -26,15 +26,20 @@ const TYPE_GROUPS = [
   { id: "選抜種", label: "選抜種" },
 ];
 
+const GROUP_FILTERS = [
+  { id: "all",         label: "全系統" },
+  { id: "オブツーサ系",    label: "オブツーサ" },
+  { id: "万象・玉扇系",   label: "万象・玉扇" },
+  { id: "クーペリー系",   label: "クーペリー" },
+  { id: "コンプトニアナ系", label: "コンプトニアナ" },
+  { id: "ボエルゲリー系",  label: "ボエルゲリー" },
+  { id: "軟葉系",        label: "軟葉系" },
+  { id: "硬葉系",        label: "硬葉系" },
+  { id: "交配種",        label: "交配種" },
+];
+
 function getColorGroup(s) {
-  const text = s.name + s.description;
-  if (text.includes("黒") || text.includes("ブラック") || text.includes("黒紫") || text.includes("黒オブ")) return "black";
-  if (text.includes("グレー") || text.includes("灰") || text.includes("シルバー") || text.includes("銀")) return "gray";
-  if (text.includes("紫") || text.includes("パープル")) return "purple";
-  if (text.includes("赤") || text.includes("紅") || text.includes("レッド") || text.includes("ピンク")) return "red";
-  if (text.includes("白斑") || text.includes("白い斑") || text.includes("錦") || text.includes("乳白") || text.includes("白みがかった")) return "white";
-  if (text.includes("青") || text.includes("ブルー") || text.includes("水色")) return "blue";
-  return "green";
+  return s.colorGroup || "green";
 }
 
 export default function ZukanPage() {
@@ -43,6 +48,7 @@ export default function ZukanPage() {
   const [colorFilter, setColorFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
   const [markFilter, setMarkFilter] = useState("all");
+  const [groupFilter, setGroupFilter] = useState("all");
   const [viewMode, setViewMode] = useState("list");
   const [owned, setOwned] = useState(new Set());
   const [wishlist, setWishlist] = useState(new Set());
@@ -99,6 +105,7 @@ export default function ZukanPage() {
     if (query && !s.name.includes(query) && !s.scientific.toLowerCase().includes(query.toLowerCase())) return false;
     if (colorFilter !== "all" && getColorGroup(s) !== colorFilter) return false;
     if (typeFilter !== "all" && s.type !== typeFilter) return false;
+    if (groupFilter !== "all" && s.group !== groupFilter) return false;
     if (markFilter === "owned" && !owned.has(s.id)) return false;
     if (markFilter === "wishlist" && !wishlist.has(s.id)) return false;
     return true;
@@ -146,6 +153,8 @@ export default function ZukanPage() {
               onClick={() => setTypeFilter(typeFilter === t.id && t.id !== "all" ? "all" : t.id)}
             >{t.label}</button>
           ))}
+        </div>
+        <div className="filter-bar">
           <button
             className={`filter-btn${markFilter === "owned" ? " active" : ""}`}
             onClick={() => setMarkFilter(markFilter === "owned" ? "all" : "owned")}
@@ -154,6 +163,16 @@ export default function ZukanPage() {
             className={`filter-btn${markFilter === "wishlist" ? " active" : ""}`}
             onClick={() => setMarkFilter(markFilter === "wishlist" ? "all" : "wishlist")}
           >☆ 欲しい</button>
+        </div>
+
+        <div className="filter-bar">
+          {GROUP_FILTERS.map((g) => (
+            <button
+              key={g.id}
+              className={`filter-btn${groupFilter === g.id ? " active" : ""}`}
+              onClick={() => setGroupFilter(groupFilter === g.id && g.id !== "all" ? "all" : g.id)}
+            >{g.label}</button>
+          ))}
         </div>
 
         <div className="filter-bar">

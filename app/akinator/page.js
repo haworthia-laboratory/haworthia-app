@@ -67,15 +67,7 @@ function getTraits(s) {
     id.includes("nishiki") || id.includes("variegata") || id.includes("korisato") ||
     id.includes("truncata-variegata") || id.includes("maughanii-variegata");
 
-  const color = (() => {
-    if (text.includes("黒") || text.includes("ブラック") || text.includes("黒紫")) return "dark";
-    if (text.includes("紫") || text.includes("パープル")) return "purple";
-    if (text.includes("赤") || text.includes("紅") || text.includes("ピンク")) return "red";
-    if (text.includes("白斑") || text.includes("錦") || text.includes("乳白") || isVariegated) return "white";
-    if (text.includes("青") || text.includes("ブルー")) return "blue";
-    if (text.includes("グレー") || text.includes("灰") || text.includes("シルバー")) return "gray";
-    return "green";
-  })();
+  const color = s.colorGroup || "green";
 
   // 購入場所
   const isCommon = // ホームセンター・100均で売られる定番種
@@ -159,6 +151,26 @@ const EXTRA_QUESTIONS = [
 ];
 
 const QUESTIONS = [
+  {
+    id: "group",
+    text: "どの系統に\n興味がありますか？",
+    hint: "好きな系統があれば絞り込めます。わからなければ「気にしない」でOK",
+    options: [
+      { label: "オブツーサ系　ぷっくり・半透明の窓", value: "オブツーサ系" },
+      { label: "万象・玉扇系　葉先が平ら・幾何学模様", value: "万象・玉扇系" },
+      { label: "クーペリー系　繊細・毛や繊維がある", value: "クーペリー系" },
+      { label: "コンプトニアナ系　網目模様・大型", value: "コンプトニアナ系" },
+      { label: "ボエルゲリー系　青みがかった丸い窓", value: "ボエルゲリー系" },
+      { label: "軟葉系　ぷっくり系その他の原種", value: "軟葉系" },
+      { label: "硬葉系　硬くてとがった葉・縞模様", value: "硬葉系" },
+      { label: "交配種　品種改良・カラフルな個体", value: "交配種" },
+      { label: "気にしない・わからない", value: "unknown" },
+    ],
+    filter: (s, v) => {
+      if (v === "unknown") return true;
+      return s.group === v;
+    },
+  },
   {
     id: "color",
     text: "葉の色は？",
@@ -305,16 +317,50 @@ const QUESTIONS = [
   },
 ];
 
+function IdentifyIcon() {
+  return (
+    <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+      <defs><filter id="fi"><feGaussianBlur stdDeviation="0.5"/></filter></defs>
+      <circle cx="26" cy="26" r="16" fill="rgba(160,148,136,0.18)" stroke="#b0a498" strokeWidth="1.8" filter="url(#fi)"/>
+      <circle cx="26" cy="26" r="16" fill="none" stroke="#887870" strokeWidth="1.1" opacity="0.8"/>
+      <line x1="38" y1="38" x2="51" y2="51" stroke="#9a8e84" strokeWidth="2.8" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function ExploreIcon() {
+  return (
+    <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+      <line x1="32" y1="52" x2="32" y2="38" stroke="#9a8e84" strokeWidth="1.8" strokeLinecap="round"/>
+      <path d="M32,38 Q24,32 15,22" fill="none" stroke="#9a8e84" strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M32,38 Q40,32 49,22" fill="none" stroke="#9a8e84" strokeWidth="1.5" strokeLinecap="round"/>
+      <line x1="32" y1="38" x2="32" y2="20" stroke="#9a8e84" strokeWidth="1.5" strokeLinecap="round"/>
+      <ellipse cx="13" cy="18" rx="7" ry="5.5" fill="rgba(122,154,122,0.28)" stroke="#7a9a7a" strokeWidth="1.4"/>
+      <ellipse cx="51" cy="18" rx="7" ry="5.5" fill="rgba(122,154,122,0.28)" stroke="#7a9a7a" strokeWidth="1.4"/>
+      <ellipse cx="32" cy="14" rx="7" ry="5.5" fill="rgba(122,154,122,0.28)" stroke="#7a9a7a" strokeWidth="1.4"/>
+      <circle cx="32" cy="53" r="2.5" fill="rgba(160,148,136,0.35)" stroke="#9a8e84" strokeWidth="1.2"/>
+    </svg>
+  );
+}
+
+// 「品種を特定する」モード：グループ質問を除いた特徴質問
+const IDENTIFY_QUESTIONS = QUESTIONS.filter(q => q.id !== "group");
+// 「系統から探す」モード：グループ質問を先頭に、残りは好み寄りの質問
+const EXPLORE_QUESTIONS = QUESTIONS;
+
 export default function AkinatorPage() {
+  const [mode, setMode] = useState(null); // "identify" | "explore"
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [candidates, setCandidates] = useState(species);
   const [done, setDone] = useState(false);
-  const [extraStep, setExtraStep] = useState(0); // 追加質問のインデックス
-  const [inExtra, setInExtra] = useState(false); // 追加質問モード中か
+  const [extraStep, setExtraStep] = useState(0);
+  const [inExtra, setInExtra] = useState(false);
+
+  const activeQuestions = mode === "explore" ? EXPLORE_QUESTIONS : IDENTIFY_QUESTIONS;
 
   const handleAnswer = (value) => {
-    const q = inExtra ? EXTRA_QUESTIONS[extraStep] : QUESTIONS[step];
+    const q = inExtra ? EXTRA_QUESTIONS[extraStep] : activeQuestions[step];
     const next = candidates.filter(s => q.filter(s, value));
     setAnswers([...answers, { q: q.id, v: value }]);
     setCandidates(next);
@@ -329,7 +375,7 @@ export default function AkinatorPage() {
       }
     } else {
       const nextStep = step + 1;
-      if (next.length <= 4 || nextStep >= QUESTIONS.length) {
+      if (next.length <= 4 || nextStep >= activeQuestions.length) {
         setDone(true);
       } else {
         setStep(nextStep);
@@ -344,6 +390,7 @@ export default function AkinatorPage() {
   };
 
   const reset = () => {
+    setMode(null);
     setStep(0);
     setAnswers([]);
     setCandidates(species);
@@ -352,7 +399,7 @@ export default function AkinatorPage() {
     setInExtra(false);
   };
 
-  const totalQuestions = inExtra ? EXTRA_QUESTIONS.length : QUESTIONS.length;
+  const totalQuestions = inExtra ? EXTRA_QUESTIONS.length : activeQuestions.length;
   const currentStep = inExtra ? extraStep : step;
   const progress = Math.round((currentStep / totalQuestions) * 100);
 
@@ -362,11 +409,36 @@ export default function AkinatorPage() {
         <header>
           <Link href="/" className="back-link">← 研究室に戻る</Link>
           <h1 style={{ marginTop: "0.8rem" }}>品種診断</h1>
-          <p className="subtitle">質問に答えて品種を絞り込もう</p>
         </header>
 
-        {!done ? (
+        {/* モード選択 */}
+        {!mode ? (
+          <div className="aki-mode-select">
+            <button className="aki-mode-btn" onClick={() => setMode("identify")}>
+              <div className="aki-mode-icon"><IdentifyIcon /></div>
+              <span className="aki-mode-title">品種を特定する</span>
+              <span className="aki-mode-desc">手元の株が何か調べたい</span>
+            </button>
+            <button className="aki-mode-btn" onClick={() => setMode("explore")}>
+              <div className="aki-mode-icon"><ExploreIcon /></div>
+              <span className="aki-mode-title">系統から探す</span>
+              <span className="aki-mode-desc">好きな系統のおすすめを知りたい</span>
+            </button>
+          </div>
+        ) : !done ? (
           <>
+            {/* モード切替タブ */}
+            <div className="aki-mode-tabs">
+              <button
+                className={`aki-mode-tab${mode === "identify" ? " active" : ""}`}
+                onClick={() => { setMode("identify"); setStep(0); setAnswers([]); setCandidates(species); setDone(false); setInExtra(false); setExtraStep(0); }}
+              >品種を特定する</button>
+              <button
+                className={`aki-mode-tab${mode === "explore" ? " active" : ""}`}
+                onClick={() => { setMode("explore"); setStep(0); setAnswers([]); setCandidates(species); setDone(false); setInExtra(false); setExtraStep(0); }}
+              >系統から探す</button>
+            </div>
+
             <div className="aki-progress-wrap">
               <div className="aki-progress-bar">
                 <div className="aki-progress-fill" style={{ width: `${progress}%` }} />
@@ -380,13 +452,13 @@ export default function AkinatorPage() {
 
             <div className="aki-card">
               <div className="aki-question">
-                {(inExtra ? EXTRA_QUESTIONS[extraStep] : QUESTIONS[step]).text.split("\n").map((line, i, arr) => (
+                {(inExtra ? EXTRA_QUESTIONS[extraStep] : activeQuestions[step]).text.split("\n").map((line, i, arr) => (
                   <span key={i}>{line}{i < arr.length - 1 ? <br /> : ""}</span>
                 ))}
               </div>
-              <div className="aki-hint">{(inExtra ? EXTRA_QUESTIONS[extraStep] : QUESTIONS[step]).hint}</div>
+              <div className="aki-hint">{(inExtra ? EXTRA_QUESTIONS[extraStep] : activeQuestions[step]).hint}</div>
               <div className="aki-options">
-                {(inExtra ? EXTRA_QUESTIONS[extraStep] : QUESTIONS[step]).options.map((opt) => (
+                {(inExtra ? EXTRA_QUESTIONS[extraStep] : activeQuestions[step]).options.map((opt) => (
                   <button
                     key={opt.value}
                     className="aki-option-btn"
@@ -398,7 +470,7 @@ export default function AkinatorPage() {
               </div>
             </div>
 
-            {step > 0 && (
+            {step > 0 && !inExtra && (
               <button className="aki-back-btn" onClick={() => {
                 const prevStep = step - 1;
                 setStep(prevStep);
@@ -406,14 +478,29 @@ export default function AkinatorPage() {
                 setAnswers(prevAnswers);
                 let c = species;
                 for (let i = 0; i < prevStep; i++) {
-                  c = c.filter(s => QUESTIONS[i].filter(s, prevAnswers[i].v));
+                  c = c.filter(s => activeQuestions[i].filter(s, prevAnswers[i].v));
                 }
                 setCandidates(c);
               }}>← 前の質問に戻る</button>
             )}
+            {step === 0 && !inExtra && (
+              <button className="aki-back-btn" onClick={reset}>← モード選択に戻る</button>
+            )}
           </>
         ) : (
           <>
+            {/* モード切替タブ（結果画面でも表示） */}
+            <div className="aki-mode-tabs">
+              <button
+                className={`aki-mode-tab${mode === "identify" ? " active" : ""}`}
+                onClick={() => { setMode("identify"); setStep(0); setAnswers([]); setCandidates(species); setDone(false); setInExtra(false); setExtraStep(0); }}
+              >品種を特定する</button>
+              <button
+                className={`aki-mode-tab${mode === "explore" ? " active" : ""}`}
+                onClick={() => { setMode("explore"); setStep(0); setAnswers([]); setCandidates(species); setDone(false); setInExtra(false); setExtraStep(0); }}
+              >系統から探す</button>
+            </div>
+
             <div className="aki-result-header">
               {candidates.length === 0 ? (
                 <p className="aki-no-result">候補が見つかりませんでした。<br />「わからない」を多めに使って再挑戦してみてください。</p>
@@ -443,7 +530,7 @@ export default function AkinatorPage() {
                 もう少し絞り込む（追加質問へ）
               </button>
             )}
-            <button className="aki-reset-btn" onClick={reset}>最初からやり直す</button>
+            <button className="aki-reset-btn" onClick={reset}>モード選択に戻る</button>
           </>
         )}
       </div>

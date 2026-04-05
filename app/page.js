@@ -110,6 +110,7 @@ function DiagnoseIcon() {
   );
 }
 
+
 function LightIcon() {
   return (
     <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { species } from "../data";
 import { notFound } from "next/navigation";
+import { supabase } from "../../../lib/supabase";
 
 export default function SpeciesPage({ params }) {
   const s = species.find((sp) => sp.id === params.id);
@@ -11,7 +12,24 @@ export default function SpeciesPage({ params }) {
 
   useEffect(() => {
     const imgs = JSON.parse(localStorage.getItem(`gallery_${params.id}`) || "[]");
-    setUserGallery(imgs);
+
+    const loadDiaryPhotos = async () => {
+      let diaryPhotos = [];
+      if (supabase) {
+        const { data } = await supabase
+          .from("diary_entries")
+          .select("photos")
+          .eq("species_id", params.id);
+        diaryPhotos = (data || []).flatMap(e => e.photos || []);
+      } else {
+        const allEntries = JSON.parse(localStorage.getItem("diary") || "[]");
+        diaryPhotos = allEntries
+          .filter(e => e.species_id === params.id)
+          .flatMap(e => e.photos || []);
+      }
+      setUserGallery([...imgs, ...diaryPhotos]);
+    };
+    loadDiaryPhotos();
   }, [params.id]);
 
   if (!s) notFound();
@@ -73,6 +91,48 @@ export default function SpeciesPage({ params }) {
             <div className="light-bar" style={{ width: `${s.lightBar}%` }} />
           </div>
           <div className="light-desc" style={{ marginTop: "0.4rem" }}>{s.lightDesc}</div>
+        </div>
+
+        <div className="detail-section-title">相場価格</div>
+        <div className="detail-card">
+          {s.price ? (
+            <div className="price-table">
+              <div className="price-row">
+                <span className="price-label">{s.price.isNishiki ? "この品種（錦）" : "通常品"}</span>
+                <span className="price-value">{s.price.normal}</span>
+              </div>
+              {!s.price.isNishiki && s.price.nishiki && (
+                <>
+                  <div className="price-divider" />
+                  <div className="price-row">
+                    <span className="price-label">錦（斑入り）</span>
+                    <span className="price-value">{s.price.nishiki}</span>
+                  </div>
+                </>
+              )}
+              {s.price.noribana && (
+                <>
+                  <div className="price-divider" />
+                  <div className="price-row">
+                    <span className="price-label">糊斑</span>
+                    <span className="price-value">{s.price.noribana}</span>
+                  </div>
+                </>
+              )}
+              {!s.price.isNishiki && !s.price.nishiki && (
+                <>
+                  <div className="price-divider" />
+                  <div className="price-row">
+                    <span className="price-label">錦（斑入り）</span>
+                    <span className="price-value detail-empty">この品種には錦個体の流通がほとんどない</span>
+                  </div>
+                </>
+              )}
+            </div>
+          ) : (
+            <p className="care-value detail-empty">価格情報なし</p>
+          )}
+          <p className="price-note">※ 相場はネット・オークション等の参考値。個体差・時期により大きく変動します。</p>
         </div>
 
         <div className="detail-section-title">交配情報</div>
