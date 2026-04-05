@@ -1322,7 +1322,7 @@ export const species = [
       nishiki: "5,000〜30,000円",
       noribana: null,
     },
-    gallery: ["/images/atrofusca-hybrid-side.png", "/images/atrofusca-hybrid-top.png"],
+    gallery: ["/images/atrofusca-hybrid-top.png", "/images/atrofusca-hybrid-side.png"],
   },
   {
     id: "picta",

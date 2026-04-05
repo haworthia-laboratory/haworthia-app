@@ -53,6 +53,7 @@ export default function ZukanPage() {
   const [owned, setOwned] = useState(new Set());
   const [wishlist, setWishlist] = useState(new Set());
   const [fromPhoto, setFromPhoto] = useState(false);
+  const [diaryPhotos, setDiaryPhotos] = useState({});
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -65,18 +66,35 @@ export default function ZukanPage() {
     const w = JSON.parse(localStorage.getItem("wishlist") || "[]");
     setWishlist(new Set(w));
 
-    // 日記の登録株から持っている品種を取得
-    const loadOwned = async () => {
+    const loadAll = async () => {
       const localOwned = JSON.parse(localStorage.getItem("owned") || "[]");
       if (supabase) {
-        const { data } = await supabase.from("plants").select("species_id");
-        const plantSpeciesIds = (data || []).map(p => p.species_id).filter(Boolean);
+        const [{ data: plants }, { data: entries }] = await Promise.all([
+          supabase.from("plants").select("species_id"),
+          supabase.from("diary_entries").select("species_id, photos").not("species_id", "is", null),
+        ]);
+        const plantSpeciesIds = (plants || []).map(p => p.species_id).filter(Boolean);
         setOwned(new Set([...localOwned, ...plantSpeciesIds]));
+        const photoMap = {};
+        for (const e of (entries || [])) {
+          if (e.species_id && e.photos?.length > 0 && !photoMap[e.species_id]) {
+            photoMap[e.species_id] = e.photos[0];
+          }
+        }
+        setDiaryPhotos(photoMap);
       } else {
         setOwned(new Set(localOwned));
+        const allEntries = JSON.parse(localStorage.getItem("diary") || "[]");
+        const photoMap = {};
+        for (const e of allEntries) {
+          if (e.species_id && e.photos?.length > 0 && !photoMap[e.species_id]) {
+            photoMap[e.species_id] = e.photos[0];
+          }
+        }
+        setDiaryPhotos(photoMap);
       }
     };
-    loadOwned();
+    loadAll();
   }, []);
 
   const toggleOwned = (e, id) => {
@@ -240,8 +258,8 @@ export default function ZukanPage() {
             {sorted.map((s) => (
               <Link key={s.id} href={`/zukan/${s.id}`} className="zukan-grid-card" style={{ "--accent": s.accent }}>
                 <div className="zukan-grid-img-wrap">
-                  {s.gallery && s.gallery[0] ? (
-                    <img src={s.gallery[0]} alt={s.name} className="zukan-grid-img" />
+                  {(s.gallery && s.gallery[0]) || diaryPhotos[s.id] ? (
+                    <img src={s.gallery?.[0] || diaryPhotos[s.id]} alt={s.name} className="zukan-grid-img" />
                   ) : (
                     <svg className="zukan-grid-placeholder" viewBox="0 0 100 100" fill="none">
                       <circle cx="50" cy="40" r="28" stroke="#5a8a5c" strokeWidth="2"/>
