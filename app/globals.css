@@ -1440,6 +1440,8 @@ header h1 {
 
 .zukan-card {
   display: flex;
+  align-items: center;
+  min-height: 90px;
   background: rgba(255, 255, 255, 0.42);
   backdrop-filter: blur(22px) saturate(1.5);
   -webkit-backdrop-filter: blur(22px) saturate(1.5);
@@ -1465,13 +1467,14 @@ header h1 {
 }
 
 .zukan-card-thumb {
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: 80px;
   flex-shrink: 0;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   margin-left: auto;
-  margin-right: 2.2rem;
+  margin-right: 2.4rem;
+  align-self: center;
 }
 
 .zukan-card-thumb img {
