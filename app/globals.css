@@ -1269,6 +1269,15 @@ header h1 {
   color: #3a6b3c;
 }
 
+.filter-sep {
+  width: 1px;
+  height: 20px;
+  background: rgba(90, 138, 92, 0.15);
+  align-self: center;
+  flex-shrink: 0;
+  margin: 0 0.1rem;
+}
+
 .filter-dot {
   width: 7px;
   height: 7px;

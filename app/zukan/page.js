@@ -27,15 +27,14 @@ const TYPE_GROUPS = [
 ];
 
 const GROUP_FILTERS = [
-  { id: "all",         label: "全系統" },
-  { id: "オブツーサ系",    label: "オブツーサ" },
-  { id: "万象・玉扇系",   label: "万象・玉扇" },
-  { id: "クーペリー系",   label: "クーペリー" },
-  { id: "コンプトニアナ系", label: "コンプトニアナ" },
-  { id: "ボエルゲリー系",  label: "ボエルゲリー" },
+  { id: "all",          label: "全系統" },
+  { id: "オブツーサ系",    label: "オブツーサ系" },
+  { id: "万象・玉扇系",   label: "万象・玉扇系" },
+  { id: "クーペリー系",   label: "クーペリー系" },
+  { id: "コンプトニアナ系", label: "コンプトニアナ系" },
+  { id: "ボエルゲリー系",  label: "ボエルゲリー系" },
   { id: "軟葉系",        label: "軟葉系" },
   { id: "硬葉系",        label: "硬葉系" },
-  { id: "交配種",        label: "交配種" },
 ];
 
 function getColorGroup(s) {
@@ -171,8 +170,7 @@ export default function ZukanPage() {
               onClick={() => setTypeFilter(typeFilter === t.id && t.id !== "all" ? "all" : t.id)}
             >{t.label}</button>
           ))}
-        </div>
-        <div className="filter-bar">
+          <span className="filter-sep" />
           <button
             className={`filter-btn${markFilter === "owned" ? " active" : ""}`}
             onClick={() => setMarkFilter(markFilter === "owned" ? "all" : "owned")}
