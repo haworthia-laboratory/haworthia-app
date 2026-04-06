@@ -6,19 +6,6 @@ import { useRouter } from "next/navigation";
 import { species } from "../zukan/data";
 import { supabase } from "../../lib/supabase";
 
-function useAuth() {
-  const [user, setUser] = useState(undefined); // undefined = まだ確認中
-  useEffect(() => {
-    if (!supabase) { setUser(null); return; }
-    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null));
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
-      setUser(session?.user ?? null);
-    });
-    return () => subscription.unsubscribe();
-  }, []);
-  return user;
-}
-
 function today() { return new Date().toISOString().slice(0, 10); }
 
 const emptyEntryForm = () => ({ date: today(), plantId: "", note: "", photos: [] });
@@ -34,7 +21,6 @@ const ACQUIRED_TYPES = [
 
 export default function DiaryPage() {
   const router = useRouter();
-  const user = useAuth();
   const [entries, setEntries] = useState([]);
   const [plants, setPlants] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -67,16 +53,11 @@ export default function DiaryPage() {
   const [deleteConfirm, setDeleteConfirm] = useState(null); // { id, label }
 
   useEffect(() => {
-    if (user === undefined) return; // 認証確認中
-    if (user === null && supabase) {
-      router.push("/login");
-      return;
-    }
     fetchAll();
     try {
       setThumbOverrides(JSON.parse(localStorage.getItem("plantThumbnails") || "{}"));
     } catch { setThumbOverrides({}); }
-  }, [user]);
+  }, []);
 
   const fetchAll = async () => {
     setLoading(true);
@@ -133,7 +114,6 @@ export default function DiaryPage() {
       acquired_date: plantForm.acquiredDate || null,
       acquired_type: plantForm.acquiredType || null,
       memo: plantForm.memo || null,
-      ...(user ? { user_id: user.id } : {}),
     };
 
     if (supabase) {
@@ -152,7 +132,6 @@ export default function DiaryPage() {
             species_name: newPlant.species_name,
             note: "",
             photos: plantForm.photos,
-            ...(user ? { user_id: user.id } : {}),
           });
           if (entryErr) { setPlantError("株は登録できましたが写真の保存に失敗しました。写真のサイズが大きすぎる可能性があります"); return; }
         }
