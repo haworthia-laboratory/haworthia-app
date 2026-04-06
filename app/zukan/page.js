@@ -41,6 +41,39 @@ function getColorGroup(s) {
   return s.colorGroup || "green";
 }
 
+function DropdownFilter({ id, label, options, value, onChange, colorDot, openDropdown, setOpenDropdown }) {
+  const selected = options.find(o => o.id === value);
+  const isActive = value !== "all";
+  const isOpen = openDropdown === id;
+  const buttonLabel = isActive ? selected?.label : (label || selected?.label);
+  return (
+    <div className="fd-wrap">
+      <button
+        className={`fd-btn${isActive ? " active" : ""}`}
+        onMouseDown={e => { e.preventDefault(); setOpenDropdown(isOpen ? null : id); }}
+      >
+        {colorDot && isActive && <span className="filter-dot" style={{ background: selected?.dot }} />}
+        {buttonLabel}
+        <span className="fd-arrow">▾</span>
+      </button>
+      {isOpen && (
+        <div className="fd-menu">
+          {options.map(o => (
+            <button
+              key={o.id}
+              className={`fd-item${value === o.id ? " active" : ""}`}
+              onMouseDown={e => { e.preventDefault(); onChange(o.id); setOpenDropdown(null); }}
+            >
+              {o.dot && <span className="filter-dot" style={{ background: o.dot }} />}
+              {o.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ZukanPage() {
   const [sort, setSort] = useState("name-asc");
   const [query, setQuery] = useState("");
@@ -53,6 +86,7 @@ export default function ZukanPage() {
   const [wishlist, setWishlist] = useState(new Set());
   const [fromPhoto, setFromPhoto] = useState(false);
   const [diaryPhotos, setDiaryPhotos] = useState({});
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -162,14 +196,10 @@ export default function ZukanPage() {
           </div>
         )}
 
-        <div className="filter-bar">
-          {TYPE_GROUPS.map((t) => (
-            <button
-              key={t.id}
-              className={`filter-btn${typeFilter === t.id ? " active" : ""}`}
-              onClick={() => setTypeFilter(typeFilter === t.id && t.id !== "all" ? "all" : t.id)}
-            >{t.label}</button>
-          ))}
+        <div className="filter-bar-compact">
+          <DropdownFilter id="type" label="タイプ" options={TYPE_GROUPS} value={typeFilter} onChange={setTypeFilter} openDropdown={openDropdown} setOpenDropdown={setOpenDropdown} />
+          <DropdownFilter id="group" label="系統" options={GROUP_FILTERS} value={groupFilter} onChange={setGroupFilter} openDropdown={openDropdown} setOpenDropdown={setOpenDropdown} />
+          <DropdownFilter id="color" label="カラー" options={COLOR_GROUPS} value={colorFilter} onChange={setColorFilter} colorDot openDropdown={openDropdown} setOpenDropdown={setOpenDropdown} />
           <span className="filter-sep" />
           <button
             className={`filter-btn${markFilter === "owned" ? " active" : ""}`}
@@ -179,29 +209,6 @@ export default function ZukanPage() {
             className={`filter-btn${markFilter === "wishlist" ? " active" : ""}`}
             onClick={() => setMarkFilter(markFilter === "wishlist" ? "all" : "wishlist")}
           >☆ 欲しい</button>
-        </div>
-
-        <div className="filter-bar">
-          {GROUP_FILTERS.map((g) => (
-            <button
-              key={g.id}
-              className={`filter-btn${groupFilter === g.id ? " active" : ""}`}
-              onClick={() => setGroupFilter(groupFilter === g.id && g.id !== "all" ? "all" : g.id)}
-            >{g.label}</button>
-          ))}
-        </div>
-
-        <div className="filter-bar">
-          {COLOR_GROUPS.map((c) => (
-            <button
-              key={c.id}
-              className={`filter-btn${colorFilter === c.id ? " active" : ""}`}
-              onClick={() => setColorFilter(colorFilter === c.id && c.id !== "all" ? "all" : c.id)}
-            >
-              {c.dot && <span className="filter-dot" style={{ background: c.dot }} />}
-              {c.label}
-            </button>
-          ))}
         </div>
 
         <div className="sort-view-bar">
