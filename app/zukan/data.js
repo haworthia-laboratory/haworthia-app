@@ -118,7 +118,7 @@ export const species = [
       nishiki: "3,000〜20,000円",
       noribana: null,
     },
-    gallery: ["/images/umbraticola-top.png"],
+    gallery: ["/images/umbraticola-top.png", "/images/umbraticola-side.png"],
   },
   {
     id: "milky-cloud",
@@ -671,7 +671,7 @@ export const species = [
       nishiki: "3,000〜15,000円",
       noribana: null,
     },
-    gallery: [],
+    gallery: ["/images/arachnoidea-top.png", "/images/arachnoidea-side.png"],
   },
   {
     id: "cooperi-pilifera",
@@ -815,7 +815,7 @@ export const species = [
       nishiki: "3,000〜20,000円",
       noribana: null,
     },
-    gallery: [],
+    gallery: ["/images/cooperi-gordoniana-top.png", "/images/cooperi-gordoniana-side.png"],
   },
   {
     id: "herbacea",
@@ -1128,7 +1128,7 @@ export const species = [
       nishiki: "2,000〜15,000円",
       noribana: null,
     },
-    gallery: [],
+    gallery: ["/images/reinwardtii-top.png", "/images/reinwardtii-side.png"],
   },
   {
     id: "coarctata",
@@ -2649,7 +2649,7 @@ export const species = [
     lightDesc: "1,500〜4,000 lux程度の明るい間接光が適する。芒が光を散乱させ輝きが増す。",
     breeding: null,
     price: { normal: "500〜5,000円", nishiki: "3,000〜20,000円", noribana: null },
-    gallery: [],
+    gallery: ["/images/wimii-top.png", "/images/wimii-side.png"],
   },
   {
     id: "green-jem",
@@ -2749,7 +2749,7 @@ export const species = [
     lightDesc: "1,000〜3,000 lux程度の柔らかい光が最適。強光は透明感を損なう。",
     breeding: null,
     price: { normal: "1,900〜5,000円", nishiki: null, noribana: "5,000〜20,000円" },
-    gallery: [],
+    gallery: ["/images/kyubi-top.png", "/images/kyubi-side.png"],
   },
   {
     id: "cooperi-hyb",
