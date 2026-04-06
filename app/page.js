@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { supabase } from "../lib/supabase";
 
 function HaworthiaIcon() {
   return (
@@ -134,6 +135,20 @@ function LightIcon() {
 export default function Home() {
   const [lightResult, setLightResult] = useState(null);
   const lightInputRef = useRef(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (!supabase) return;
+    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null));
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    if (supabase) await supabase.auth.signOut();
+  };
 
   const measureLight = (e) => {
     const file = e.target.files[0];
@@ -175,6 +190,16 @@ export default function Home() {
           </div>
           <h1>ハオルチア研究室</h1>
           <p className="subtitle">～ あなただけの育成記録 ～</p>
+          <div className="home-auth-bar">
+            {user ? (
+              <>
+                <span className="home-auth-email">{user.email}</span>
+                <button className="home-auth-btn" onClick={handleLogout}>ログアウト</button>
+              </>
+            ) : (
+              <Link href="/login" className="home-auth-btn home-auth-btn--login">ログイン / 新規登録</Link>
+            )}
+          </div>
         </header>
 
         <div className="home-nav">

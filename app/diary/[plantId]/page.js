@@ -6,6 +6,19 @@ import { useParams, useRouter } from "next/navigation";
 import { species } from "../../zukan/data";
 import { supabase } from "../../../lib/supabase";
 
+function useAuth() {
+  const [user, setUser] = useState(undefined);
+  useEffect(() => {
+    if (!supabase) { setUser(null); return; }
+    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user ?? null));
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+  return user;
+}
+
 function today() { return new Date().toISOString().slice(0, 10); }
 const emptyEntryForm = () => ({ date: today(), note: "", photos: [] });
 
@@ -20,6 +33,7 @@ const ACQUIRED_TYPES = [
 export default function PlantTimelinePage() {
   const { plantId } = useParams();
   const router = useRouter();
+  const user = useAuth();
 
   const [plant, setPlant] = useState(null);
   const [entries, setEntries] = useState([]);
@@ -36,11 +50,16 @@ export default function PlantTimelinePage() {
   const [deleteConfirm, setDeleteConfirm] = useState(null); // { id, label }
 
   useEffect(() => {
+    if (user === undefined) return;
+    if (user === null && supabase) {
+      router.push("/login");
+      return;
+    }
     fetchData();
     try {
       setThumbOverrides(JSON.parse(localStorage.getItem("plantThumbnails") || "{}"));
     } catch { setThumbOverrides({}); }
-  }, [plantId]);
+  }, [user, plantId]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -125,6 +144,7 @@ export default function PlantTimelinePage() {
       species_name: plant?.species_name || null,
       note: form.note,
       photos: form.photos,
+      ...(user ? { user_id: user.id } : {}),
     };
     if (supabase) {
       const { error: err } = editingId
