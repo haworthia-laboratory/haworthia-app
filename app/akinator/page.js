@@ -430,22 +430,22 @@ const NAME_CATEGORIES = [
   },
   {
     value: "fantasy",
-    label: "✨ 幻想・宝石系",
-    desc: "氷砂糖・白鯨・碧瑠璃など",
-    filter: (s) => /[砂糖瑠璃鯨宝晶玻璃珠翡翠琥珀碧]/.test(s.name) ||
-      ["hakugei", "heki-ruri", "kori-sato", "hakuteijo"].some(k => s.id.includes(k)),
+    label: "💎 宝石・スイーツ系",
+    desc: "氷砂糖・碧瑠璃・琥珀など",
+    filter: (s) => /[瑠璃晶玻璃翡翠琥珀碧]/.test(s.name) || /[砂糖蜜]/.test(s.name) ||
+      ["heki-ruri", "kyu-korisato", "shin-korisato", "kori-sato", "hybrid-amber"].some(k => s.id.includes(k)),
     sub: [
       {
         label: "💎 宝石・鉱物",
-        desc: "碧瑠璃など",
-        filter: (s) => /[瑠璃晶玻璃翡翠琥珀碧]/.test(s.name) || ["heki-ruri"].some(k => s.id.includes(k)),
+        desc: "碧瑠璃・琥珀など",
+        filter: (s) => /[瑠璃晶玻璃翡翠琥珀碧]/.test(s.name) || ["heki-ruri", "hybrid-amber"].some(k => s.id.includes(k)),
       },
       {
-        label: "🤍 白・淡い・甘い",
-        desc: "氷砂糖・白鯨など",
-        filter: (s) => /[砂糖白鯨]/.test(s.name) || ["hakugei", "kori-sato"].some(k => s.id.includes(k)),
+        label: "🍬 スイーツ・甘い名前",
+        desc: "氷砂糖など",
+        filter: (s) => /[砂糖蜜]/.test(s.name) || ["kyu-korisato", "shin-korisato", "kori-sato"].some(k => s.id.includes(k)),
       },
-      { label: "すべて見る", desc: "", filter: (s) => /[砂糖瑠璃鯨宝晶玻璃珠翡翠琥珀碧]/.test(s.name) || ["hakugei", "heki-ruri", "kori-sato", "hakuteijo"].some(k => s.id.includes(k)) },
+      { label: "すべて見る", desc: "", filter: (s) => /[瑠璃晶玻璃翡翠琥珀碧]/.test(s.name) || /[砂糖蜜]/.test(s.name) || ["heki-ruri", "kyu-korisato", "shin-korisato", "kori-sato", "hybrid-amber"].some(k => s.id.includes(k)) },
     ],
   },
   {
@@ -551,16 +551,19 @@ export default function AkinatorPage() {
   const [selectedCat, setSelectedCat] = useState(null); // サブカテゴリ表示用
 
   const activeQuestions = mode === "explore" ? EXPLORE_QUESTIONS : IDENTIFY_QUESTIONS;
+  const activeExtraQuestions = (mode === "name" || mode === "impression")
+    ? EXTRA_QUESTIONS.filter(q => q.id !== "size")
+    : EXTRA_QUESTIONS;
 
   const handleAnswer = (value) => {
-    const q = inExtra ? EXTRA_QUESTIONS[extraStep] : activeQuestions[step];
+    const q = inExtra ? activeExtraQuestions[extraStep] : activeQuestions[step];
     const next = candidates.filter(s => q.filter(s, value));
     setAnswers([...answers, { q: q.id, v: value }]);
     setCandidates(next);
 
     if (inExtra) {
       const nextExtra = extraStep + 1;
-      if (next.length <= 4 || nextExtra >= EXTRA_QUESTIONS.length) {
+      if (next.length <= 4 || nextExtra >= activeExtraQuestions.length) {
         setInExtra(false);
         setDone(true);
       } else {
@@ -616,7 +619,7 @@ export default function AkinatorPage() {
     setSelectedCat(null);
   };
 
-  const totalQuestions = inExtra ? EXTRA_QUESTIONS.length : activeQuestions.length;
+  const totalQuestions = inExtra ? activeExtraQuestions.length : activeQuestions.length;
   const currentStep = inExtra ? extraStep : step;
   const progress = Math.round((currentStep / totalQuestions) * 100);
 
@@ -721,13 +724,13 @@ export default function AkinatorPage() {
 
             <div className="aki-card">
               <div className="aki-question">
-                {(inExtra ? EXTRA_QUESTIONS[extraStep] : activeQuestions[step]).text.split("\n").map((line, i, arr) => (
+                {(inExtra ? activeExtraQuestions[extraStep] : activeQuestions[step]).text.split("\n").map((line, i, arr) => (
                   <span key={i}>{line}{i < arr.length - 1 ? <br /> : ""}</span>
                 ))}
               </div>
-              <div className="aki-hint">{(inExtra ? EXTRA_QUESTIONS[extraStep] : activeQuestions[step]).hint}</div>
+              <div className="aki-hint">{(inExtra ? activeExtraQuestions[extraStep] : activeQuestions[step]).hint}</div>
               <div className="aki-options">
-                {(inExtra ? EXTRA_QUESTIONS[extraStep] : activeQuestions[step]).options.map((opt) => (
+                {(inExtra ? activeExtraQuestions[extraStep] : activeQuestions[step]).options.map((opt) => (
                   <button
                     key={opt.value}
                     className="aki-option-btn"
@@ -794,7 +797,7 @@ export default function AkinatorPage() {
               ))}
             </div>
 
-            {candidates.length > 4 && !inExtra && EXTRA_QUESTIONS.length > 0 && (
+            {candidates.length > 4 && !inExtra && activeExtraQuestions.length > 0 && (
               <button className="aki-extra-btn" onClick={startExtra}>
                 もう少し絞り込む（追加質問へ）
               </button>
