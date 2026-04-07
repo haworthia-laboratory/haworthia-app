@@ -53,10 +53,20 @@ export default function DiaryPage() {
   const [deleteConfirm, setDeleteConfirm] = useState(null); // { id, label }
 
   useEffect(() => {
-    fetchAll();
-    try {
-      setThumbOverrides(JSON.parse(localStorage.getItem("plantThumbnails") || "{}"));
-    } catch { setThumbOverrides({}); }
+    const init = async () => {
+      if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          router.push("/login");
+          return;
+        }
+      }
+      fetchAll();
+      try {
+        setThumbOverrides(JSON.parse(localStorage.getItem("plantThumbnails") || "{}"));
+      } catch { setThumbOverrides({}); }
+    };
+    init();
   }, []);
 
   const fetchAll = async () => {
@@ -117,11 +127,13 @@ export default function DiaryPage() {
     };
 
     if (supabase) {
+      const { data: { user } } = await supabase.auth.getUser();
+      const userId = user?.id;
       if (editingPlantId) {
         const { error } = await supabase.from("plants").update(payload).eq("id", editingPlantId);
         if (error) { setPlantError(`保存に失敗しました：${error.message}`); return; }
       } else {
-        const { data: newPlant, error: plantErr } = await supabase.from("plants").insert(payload).select().single();
+        const { data: newPlant, error: plantErr } = await supabase.from("plants").insert({ ...payload, user_id: userId }).select().single();
         if (plantErr) { setPlantError(`登録に失敗しました：${plantErr.message}`); return; }
         if (newPlant && plantForm.photos.length > 0) {
           const { error: entryErr } = await supabase.from("diary_entries").insert({
@@ -132,6 +144,7 @@ export default function DiaryPage() {
             species_name: newPlant.species_name,
             note: "",
             photos: plantForm.photos,
+            user_id: userId,
           });
           if (entryErr) { setPlantError("株は登録できましたが写真の保存に失敗しました。写真のサイズが大きすぎる可能性があります"); return; }
         }
@@ -288,6 +301,10 @@ export default function DiaryPage() {
     };
 
     if (supabase) {
+      if (!editingEntryId) {
+        const { data: { user } } = await supabase.auth.getUser();
+        payload.user_id = user?.id;
+      }
       const { error } = editingEntryId
         ? await supabase.from("diary_entries").update(payload).eq("id", editingEntryId)
         : await supabase.from("diary_entries").insert(payload);

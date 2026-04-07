@@ -36,10 +36,20 @@ export default function PlantTimelinePage() {
   const [deleteConfirm, setDeleteConfirm] = useState(null); // { id, label }
 
   useEffect(() => {
-    fetchData();
-    try {
-      setThumbOverrides(JSON.parse(localStorage.getItem("plantThumbnails") || "{}"));
-    } catch { setThumbOverrides({}); }
+    const init = async () => {
+      if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+          router.push("/login");
+          return;
+        }
+      }
+      fetchData();
+      try {
+        setThumbOverrides(JSON.parse(localStorage.getItem("plantThumbnails") || "{}"));
+      } catch { setThumbOverrides({}); }
+    };
+    init();
   }, [plantId]);
 
   const fetchData = async () => {
