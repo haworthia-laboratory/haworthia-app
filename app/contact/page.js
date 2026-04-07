@@ -30,6 +30,12 @@ export default function ContactPage() {
             読み込んでいます…
           </iframe>
         </div>
+
+        <div style={{ textAlign: "center", marginTop: "1.5rem", paddingBottom: "1rem" }}>
+          <Link href="/privacy" style={{ fontSize: "0.72rem", color: "#a0b8a2", textDecoration: "none" }}>
+            プライバシーポリシー
+          </Link>
+        </div>
       </div>
     </main>
   );

@@ -2658,3 +2658,30 @@ header h1 {
   border-color: rgba(90,138,92,0.5);
   color: #3a6b3c;
 }
+
+/* プライバシーポリシー */
+.privacy-body {
+  margin-top: 1.5rem;
+  font-size: 0.82rem;
+  color: #4a6a4c;
+  line-height: 1.85;
+}
+.privacy-body h2 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2c4a2d;
+  margin-top: 1.8rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(90,138,92,0.15);
+}
+.privacy-body p {
+  margin-bottom: 0.6rem;
+}
+.privacy-body ul {
+  padding-left: 1.2rem;
+  margin-bottom: 0.6rem;
+}
+.privacy-body li {
+  margin-bottom: 0.3rem;
+}
