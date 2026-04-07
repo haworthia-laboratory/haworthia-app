@@ -135,15 +135,6 @@ export default function SpeciesPage({ params }) {
           <p className="price-note">※ 相場はネット・オークション等の参考値。個体差・時期により大きく変動します。</p>
         </div>
 
-        <div className="detail-section-title">交配情報</div>
-        <div className="detail-card">
-          {s.breeding ? (
-            <p className="care-value">{s.breeding}</p>
-          ) : (
-            <p className="care-value detail-empty">記録なし（随時更新予定）</p>
-          )}
-        </div>
-
         <div className="detail-section-title">ギャラリー</div>
         <div className="gallery-wrap">
           {allGallery.length > 0 ? (
