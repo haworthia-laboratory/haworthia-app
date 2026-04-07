@@ -232,6 +232,12 @@ export default function Home() {
           </Link>
 
         </div>
+
+        <div style={{ textAlign: "center", marginTop: "2rem", paddingBottom: "1rem" }}>
+          <Link href="/contact" style={{ fontSize: "0.72rem", color: "#a0b8a2", textDecoration: "none" }}>
+            お問い合わせ
+          </Link>
+        </div>
       </div>
     </main>
   );
