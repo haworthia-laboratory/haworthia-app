@@ -10,6 +10,7 @@ export default function AccountPage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pwLoading, setPwLoading] = useState(false);
@@ -31,20 +32,35 @@ export default function AccountPage() {
     e.preventDefault();
     setPwError("");
     setPwMessage("");
+    if (!currentPassword) {
+      setPwError("現在のパスワードを入力してください");
+      return;
+    }
     if (newPassword.length < 6) {
-      setPwError("パスワードは6文字以上で入力してください");
+      setPwError("新しいパスワードは6文字以上で入力してください");
       return;
     }
     if (newPassword !== confirmPassword) {
-      setPwError("パスワードが一致しません");
+      setPwError("新しいパスワードが一致しません");
       return;
     }
     setPwLoading(true);
+    // 現在のパスワードで再認証
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: user.email,
+      password: currentPassword,
+    });
+    if (signInError) {
+      setPwError("現在のパスワードが正しくありません");
+      setPwLoading(false);
+      return;
+    }
     const { error } = await supabase.auth.updateUser({ password: newPassword });
     if (error) {
       setPwError("変更に失敗しました：" + error.message);
     } else {
       setPwMessage("パスワードを変更しました");
+      setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
     }
@@ -82,6 +98,17 @@ export default function AccountPage() {
         <div style={{ marginTop: "1.5rem" }}>
           <div className="diary-section-title">パスワードを変更</div>
           <form className="auth-form" onSubmit={handlePasswordChange}>
+            <div className="auth-form-row">
+              <label className="auth-label">現在のパスワード</label>
+              <input
+                className="auth-input"
+                type="password"
+                value={currentPassword}
+                onChange={e => setCurrentPassword(e.target.value)}
+                placeholder="現在のパスワード"
+                autoComplete="current-password"
+              />
+            </div>
             <div className="auth-form-row">
               <label className="auth-label">新しいパスワード</label>
               <input
