@@ -721,7 +721,11 @@ export default function AkinatorPage() {
               </div>
               <div className="aki-hint">{(inExtra ? activeExtraQuestions[extraStep] : activeQuestions[step]).hint}</div>
               <div className="aki-options">
-                {(inExtra ? activeExtraQuestions[extraStep] : activeQuestions[step]).options.map((opt) => (
+                {(inExtra ? activeExtraQuestions[extraStep] : activeQuestions[step]).options.filter((opt) => {
+                  const q = inExtra ? activeExtraQuestions[extraStep] : activeQuestions[step];
+                  if (opt.value === "unknown") return true;
+                  return candidates.filter(s => q.filter(s, opt.value)).length > 0;
+                }).map((opt) => (
                   <button
                     key={opt.value}
                     className="aki-option-btn"
