@@ -773,7 +773,9 @@ export default function AkinatorPage() {
                 <p className="aki-no-result">候補が見つかりませんでした。<br />「わからない」を多めに使って再挑戦してみてください。</p>
               ) : (
                 <p className="aki-result-label">
-                  {candidates.length === 1 ? "これでは？" : `候補は ${candidates.length} 種あります`}
+                  {(mode === "explore" || mode === "name" || mode === "impression")
+                    ? (candidates.length === 1 ? "この子がおすすめ♡" : `${candidates.length} 種がおすすめです♡`)
+                    : (candidates.length === 1 ? "これでは？" : `候補は ${candidates.length} 種あります`)}
                 </p>
               )}
             </div>
