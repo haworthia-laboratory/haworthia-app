@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { supabase } from "../lib/supabase";
 
 function HaworthiaIcon() {
   return (
@@ -148,6 +149,12 @@ function LightIcon() {
 export default function Home() {
   const [lightResult, setLightResult] = useState(null);
   const lightInputRef = useRef(null);
+  const [session, setSession] = useState(undefined); // undefined=未確認, null=未ログイン
+
+  useEffect(() => {
+    if (!supabase) { setSession(null); return; }
+    supabase.auth.getSession().then(({ data: { session } }) => setSession(session));
+  }, []);
 
   const measureLight = (e) => {
     const file = e.target.files[0];
@@ -192,6 +199,25 @@ export default function Home() {
         </header>
 
         <div className="home-nav">
+
+          {session === null && (
+            <Link href="/login" className="home-login-banner">
+              <div className="home-login-banner-text">
+                <span className="home-login-banner-title">ログイン / 新規登録</span>
+                <span className="home-login-banner-desc">成長日記の記録・管理はログインが必要です</span>
+              </div>
+              <span className="home-login-banner-arrow">›</span>
+            </Link>
+          )}
+          {session && (
+            <Link href="/account" className="home-login-banner home-login-banner--loggedin">
+              <div className="home-login-banner-text">
+                <span className="home-login-banner-title">ログイン中</span>
+                <span className="home-login-banner-desc">{session.user.email}</span>
+              </div>
+              <span className="home-login-banner-arrow">›</span>
+            </Link>
+          )}
 
           <Link href="/diary" className="home-nav-card">
             <div className="home-nav-icon"><NoteIcon /></div>

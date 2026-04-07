@@ -2685,3 +2685,39 @@ header h1 {
 .privacy-body li {
   margin-bottom: 0.3rem;
 }
+
+/* トップページ ログインバナー */
+.home-login-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 1rem;
+  background: rgba(90,138,92,0.08);
+  border: 1px solid rgba(90,138,92,0.2);
+  border-radius: 14px;
+  text-decoration: none;
+  margin-bottom: 0.4rem;
+}
+.home-login-banner--loggedin {
+  background: rgba(90,138,92,0.05);
+  border-color: rgba(90,138,92,0.12);
+}
+.home-login-banner-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex: 1;
+}
+.home-login-banner-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3a6b3c;
+}
+.home-login-banner-desc {
+  font-size: 0.68rem;
+  color: #7a9a7c;
+}
+.home-login-banner-arrow {
+  font-size: 1.1rem;
+  color: #7a9a7c;
+}
