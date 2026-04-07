@@ -365,12 +365,12 @@ const NAME_CATEGORIES = [
           ["kyubi", "ryujo", "shuten"].some(k => s.id.includes(k)),
       },
       {
-        label: "🧜 海・西洋の伝説",
+        label: "🧜 ファンタジー・幻想生物",
         desc: "マーメイドなど",
         filter: (s) => s.name.includes("マーメイド") || ["mermaid"].some(k => s.id.includes(k)),
       },
       {
-        label: "🏯 城・宮・宝",
+        label: "🏯 幻の城・宮殿",
         desc: "白帝城・宝城など",
         filter: (s) => /[城宮殿宝楼]/.test(s.name) ||
           ["hakuteijo"].some(k => s.id.includes(k)),
