@@ -405,7 +405,7 @@ const NAME_CATEGORIES = [
   },
   {
     value: "wabi",
-    label: "🌸 和の美系",
+    label: "🌸 和の情景系",
     desc: "氷川玉露・花時計・星雲の舞など",
     filter: (s) => /[玉花舞姫錦雅美麗華彩紫桜梅菊蘭]/.test(s.name) ||
       ["hanadokei", "hikawa-gyokuro", "seiun"].some(k => s.id.includes(k)),
