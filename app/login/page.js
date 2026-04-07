@@ -27,11 +27,13 @@ export default function LoginPage() {
     }
 
     if (mode === "signup") {
-      const { error: err } = await supabase.auth.signUp({ email, password });
+      const { data, error: err } = await supabase.auth.signUp({ email, password });
       if (err) {
         setError(err.message);
+      } else if (data?.user?.identities?.length === 0) {
+        setError("このメールアドレスはすでに登録されています。ログインタブからログインしてください。");
       } else {
-        setMessage("確認メールを送信しました。メールのリンクをクリックしてログインしてください。");
+        setMessage("アカウントを作成しました。ログインタブからログインしてください。");
       }
     } else {
       const { error: err } = await supabase.auth.signInWithPassword({ email, password });
