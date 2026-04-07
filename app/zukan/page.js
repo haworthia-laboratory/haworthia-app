@@ -306,6 +306,12 @@ export default function ZukanPage() {
             ))}
           </div>
         )}
+
+        <div style={{ textAlign: "center", marginTop: "1.5rem", paddingBottom: "1rem" }}>
+          <Link href="/gallery" style={{ fontSize: "0.78rem", color: "#7a9a7c", textDecoration: "none" }}>
+            みんなのギャラリーを見る →
+          </Link>
+        </div>
       </div>
     </main>
   );

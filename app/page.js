@@ -236,15 +236,6 @@ export default function Home() {
             <div className="home-nav-arrow">›</div>
           </Link>
 
-          <Link href="/gallery" className="home-nav-card">
-            <div className="home-nav-icon"><GalleryIcon /></div>
-            <div className="home-nav-body">
-              <div className="home-nav-title">ギャラリー</div>
-              <div className="home-nav-desc">みんなのハオルチア写真</div>
-            </div>
-            <div className="home-nav-arrow">›</div>
-          </Link>
-
           <Link href="/akinator" className="home-nav-card">
             <div className="home-nav-icon"><DiagnoseIcon /></div>
             <div className="home-nav-body">
