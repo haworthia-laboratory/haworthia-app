@@ -460,17 +460,12 @@ function NameIcon() {
 function ImpressionIcon() {
   return (
     <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
-      {/* 丸 */}
-      <circle cx="20" cy="20" r="8" fill="none" stroke="#9ab89c" strokeWidth="1.5" opacity="0.8"/>
-      {/* 三角 */}
-      <polygon points="44,12 52,26 36,26" fill="none" stroke="#b0a498" strokeWidth="1.5" opacity="0.8"/>
-      {/* 菱形 */}
-      <polygon points="32,36 40,44 32,52 24,44" fill="none" stroke="#a8a8c0" strokeWidth="1.5" opacity="0.8"/>
-      {/* 小さい丸 */}
-      <circle cx="14" cy="44" r="4" fill="none" stroke="#c8b870" strokeWidth="1.3" opacity="0.7"/>
-      {/* 星っぽい */}
-      <path d="M50,40 L52,46 L58,46 L53,50 L55,56 L50,52 L45,56 L47,50 L42,46 L48,46 Z"
-        fill="none" stroke="#b89880" strokeWidth="1.2" opacity="0.65" transform="scale(0.55) translate(42,22)"/>
+      {/* 丸（左上） */}
+      <circle cx="18" cy="18" r="10" fill="none" stroke="#9ab89c" strokeWidth="1.8" opacity="0.85"/>
+      {/* 三角（右上） */}
+      <polygon points="46,8 56,26 36,26" fill="none" stroke="#b0a498" strokeWidth="1.8" opacity="0.85"/>
+      {/* 菱形（中央下） */}
+      <polygon points="32,34 43,46 32,58 21,46" fill="none" stroke="#a8a8c0" strokeWidth="1.8" opacity="0.85"/>
     </svg>
   );
 }
