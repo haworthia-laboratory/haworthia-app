@@ -10,6 +10,10 @@ export default function AccountPage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [nickname, setNickname] = useState("");
+  const [nickLoading, setNickLoading] = useState(false);
+  const [nickMessage, setNickMessage] = useState("");
+
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -23,10 +27,30 @@ export default function AccountPage() {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) { router.push("/login"); return; }
       setUser(session.user);
+      // ニックネーム読み込み
+      const { data: profile } = await supabase
+        .from("user_profiles")
+        .select("nickname")
+        .eq("user_id", session.user.id)
+        .single();
+      if (profile?.nickname) setNickname(profile.nickname);
       setLoading(false);
     };
     init();
   }, []);
+
+  const handleNickname = async (e) => {
+    e.preventDefault();
+    setNickLoading(true);
+    setNickMessage("");
+    await supabase.from("user_profiles").upsert({
+      user_id: user.id,
+      nickname: nickname.trim(),
+      updated_at: new Date().toISOString(),
+    });
+    setNickMessage("保存しました");
+    setNickLoading(false);
+  };
 
   const handlePasswordChange = async (e) => {
     e.preventDefault();
@@ -111,6 +135,27 @@ export default function AccountPage() {
               {user?.email}
             </div>
           </div>
+        </div>
+
+        <div style={{ marginTop: "1.5rem" }}>
+          <div className="diary-section-title">ニックネーム</div>
+          <form className="auth-form" onSubmit={handleNickname}>
+            <div className="auth-form-row">
+              <label className="auth-label">ニックネーム</label>
+              <input
+                className="auth-input"
+                type="text"
+                value={nickname}
+                onChange={e => setNickname(e.target.value)}
+                placeholder="例：めぐみ"
+                maxLength={20}
+              />
+            </div>
+            {nickMessage && <div className="auth-message">{nickMessage}</div>}
+            <button className="auth-submit-btn" type="submit" disabled={nickLoading}>
+              {nickLoading ? "保存中..." : "ニックネームを保存"}
+            </button>
+          </form>
         </div>
 
         <div style={{ marginTop: "1.5rem" }}>
