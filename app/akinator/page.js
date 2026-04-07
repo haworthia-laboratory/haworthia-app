@@ -774,7 +774,7 @@ export default function AkinatorPage() {
               ) : (
                 <p className="aki-result-label">
                   {(mode === "explore" || mode === "name" || mode === "impression")
-                    ? (candidates.length === 1 ? "この子がおすすめ♡" : `${candidates.length} 種がおすすめです♡`)
+                    ? (candidates.length === 1 ? "この子がおすすめ" : `${candidates.length} 種がおすすめです`)
                     : (candidates.length === 1 ? "これでは？" : `候補は ${candidates.length} 種あります`)}
                 </p>
               )}
