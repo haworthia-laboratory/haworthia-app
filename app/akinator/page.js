@@ -448,15 +448,6 @@ const NAME_CATEGORIES = [
       { label: "すべて見る", desc: "", filter: (s) => /[瑠璃晶玻璃翡翠琥珀碧]/.test(s.name) || /[砂糖蜜]/.test(s.name) || ["heki-ruri", "kyu-korisato", "shin-korisato", "kori-sato", "hybrid-amber"].some(k => s.id.includes(k)) },
     ],
   },
-  {
-    value: "foreign",
-    label: "🌍 外来語・学名系",
-    desc: "マーメイド・レッドブル・ノリピアなど",
-    filter: (s) => {
-      const katakana = (s.name.match(/[\u30A0-\u30FF]/g) || []).length;
-      return katakana >= 3 || ["redbull", "mermaid", "noribana"].some(k => s.id.includes(k));
-    },
-  },
 ];
 
 // 印象・雰囲気カテゴリ
