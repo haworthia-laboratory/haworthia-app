@@ -101,9 +101,10 @@ export default function ZukanPage() {
 
     const loadAll = async () => {
       const localOwned = JSON.parse(localStorage.getItem("owned") || "[]");
+      const thumbOverrides = JSON.parse(localStorage.getItem("plantThumbnails") || "{}");
       if (supabase) {
         const [{ data: plants }, { data: entries }] = await Promise.all([
-          supabase.from("plants").select("species_id"),
+          supabase.from("plants").select("id, species_id"),
           supabase.from("diary_entries").select("species_id, photos").not("species_id", "is", null),
         ]);
         const plantSpeciesIds = (plants || []).map(p => p.species_id).filter(Boolean);
@@ -114,14 +115,27 @@ export default function ZukanPage() {
             photoMap[e.species_id] = e.photos[0];
           }
         }
+        // ★で選んだ写真を優先
+        for (const p of (plants || [])) {
+          if (p.id && p.species_id && thumbOverrides[p.id]) {
+            photoMap[p.species_id] = thumbOverrides[p.id];
+          }
+        }
         setDiaryPhotos(photoMap);
       } else {
         setOwned(new Set(localOwned));
         const allEntries = JSON.parse(localStorage.getItem("diary") || "[]");
+        const allPlants = JSON.parse(localStorage.getItem("plants") || "[]");
         const photoMap = {};
         for (const e of allEntries) {
           if (e.species_id && e.photos?.length > 0 && !photoMap[e.species_id]) {
             photoMap[e.species_id] = e.photos[0];
+          }
+        }
+        // ★で選んだ写真を優先
+        for (const p of allPlants) {
+          if (p.id && p.species_id && thumbOverrides[p.id]) {
+            photoMap[p.species_id] = thumbOverrides[p.id];
           }
         }
         setDiaryPhotos(photoMap);
