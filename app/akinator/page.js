@@ -372,7 +372,7 @@ const NAME_CATEGORIES = [
       {
         label: "🏯 城・宮・宝",
         desc: "白帝城・宝城など",
-        filter: (s) => /[城宮殿宝楼].test(s.name) ||
+        filter: (s) => /[城宮殿宝楼]/.test(s.name) ||
           ["hakuteijo"].some(k => s.id.includes(k)),
       },
       { label: "すべて見る", desc: "", filter: (s) => /[龍竜鬼狐童仙妖神獣麒麟鳳凰玄武朱雀白虎]/.test(s.name) || ["kyubi", "ryujo", "shuten", "hakuteijo", "mermaid"].some(k => s.id.includes(k)) || s.name.includes("マーメイド") },
@@ -398,7 +398,7 @@ const NAME_CATEGORIES = [
       {
         label: "🏔️ 山・森・大地",
         desc: "山・森などの名を持つ品種",
-        filter: (s) => /[山森岳峰野原].test(s.name),
+        filter: (s) => /[山森岳峰野原]/.test(s.name),
       },
       { label: "すべて見る", desc: "", filter: (s) => /[氷雲嵐雪川滝海山森霧霜露空星月風雨]/.test(s.name) || ["hyoga", "murakumo", "suiran", "hikawa"].some(k => s.id.includes(k)) },
     ],
@@ -413,17 +413,17 @@ const NAME_CATEGORIES = [
       {
         label: "🌸 花・植物",
         desc: "花時計など",
-        filter: (s) => /[花桜梅菊蘭藤葵].test(s.name) || ["hanadokei"].some(k => s.id.includes(k)),
+        filter: (s) => /[花桜梅菊蘭藤葵]/.test(s.name) || ["hanadokei"].some(k => s.id.includes(k)),
       },
       {
         label: "💎 玉・宝石",
         desc: "氷川玉露など",
-        filter: (s) => /[玉珠璃宝].test(s.name) || ["hikawa-gyokuro"].some(k => s.id.includes(k)),
+        filter: (s) => /[玉珠璃宝]/.test(s.name) || ["hikawa-gyokuro"].some(k => s.id.includes(k)),
       },
       {
         label: "💃 舞・動き・情景",
         desc: "星雲の舞など",
-        filter: (s) => /[舞踊景色彩].test(s.name) || ["seiun"].some(k => s.id.includes(k)),
+        filter: (s) => /[舞踊景色彩]/.test(s.name) || ["seiun"].some(k => s.id.includes(k)),
       },
       { label: "すべて見る", desc: "", filter: (s) => /[玉花舞姫錦雅美麗華彩紫桜梅菊蘭]/.test(s.name) || ["hanadokei", "hikawa-gyokuro", "seiun"].some(k => s.id.includes(k)) },
     ],
@@ -438,12 +438,12 @@ const NAME_CATEGORIES = [
       {
         label: "💎 宝石・鉱物",
         desc: "碧瑠璃など",
-        filter: (s) => /[瑠璃晶玻璃翡翠琥珀碧].test(s.name) || ["heki-ruri"].some(k => s.id.includes(k)),
+        filter: (s) => /[瑠璃晶玻璃翡翠琥珀碧]/.test(s.name) || ["heki-ruri"].some(k => s.id.includes(k)),
       },
       {
         label: "🤍 白・淡い・甘い",
         desc: "氷砂糖・白鯨など",
-        filter: (s) => /[砂糖白鯨].test(s.name) || ["hakugei", "kori-sato"].some(k => s.id.includes(k)),
+        filter: (s) => /[砂糖白鯨]/.test(s.name) || ["hakugei", "kori-sato"].some(k => s.id.includes(k)),
       },
       { label: "すべて見る", desc: "", filter: (s) => /[砂糖瑠璃鯨宝晶玻璃珠翡翠琥珀碧]/.test(s.name) || ["hakugei", "heki-ruri", "kori-sato", "hakuteijo"].some(k => s.id.includes(k)) },
     ],
