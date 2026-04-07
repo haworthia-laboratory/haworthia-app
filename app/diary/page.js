@@ -220,6 +220,15 @@ export default function DiaryPage() {
     if (filterPlantId === id) setFilterPlantId(null);
   };
 
+  const togglePlantPublic = async (e, plant) => {
+    e.stopPropagation();
+    const next = !plant.is_public;
+    if (supabase) {
+      await supabase.from("plants").update({ is_public: next }).eq("id", plant.id);
+    }
+    setPlants(prev => prev.map(p => p.id === plant.id ? { ...p, is_public: next } : p));
+  };
+
   const filteredPlantSpecies = plantSpeciesQuery
     ? species.filter(s =>
         s.name.includes(plantSpeciesQuery) ||
@@ -604,6 +613,11 @@ export default function DiaryPage() {
                 </div>
               </div>
               <div className="diary-individual-actions" onClick={e => e.stopPropagation()}>
+                <button
+                  className={`diary-public-btn${plant.is_public ? " active" : ""}`}
+                  onClick={(e) => togglePlantPublic(e, plant)}
+                  title={plant.is_public ? "公開中" : "公開する"}
+                >{plant.is_public ? "🌿" : "公開"}</button>
                 <button className="diary-edit-btn" onClick={() => openEditPlant(plant)}>編集</button>
                 <button className="diary-delete-btn" onClick={() => setDeleteConfirm({ id: plant.id, label: plant.name })}>×</button>
               </div>

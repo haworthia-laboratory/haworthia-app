@@ -247,9 +247,12 @@ export default function Home() {
 
         </div>
 
-        <div style={{ textAlign: "center", marginTop: "2rem", paddingBottom: "1rem" }}>
+        <div style={{ textAlign: "center", marginTop: "2rem", paddingBottom: "1rem", display: "flex", justifyContent: "center", gap: "1.2rem" }}>
           <Link href="/contact" style={{ fontSize: "0.72rem", color: "#a0b8a2", textDecoration: "none" }}>
             お問い合わせ
+          </Link>
+          <Link href="/privacy" style={{ fontSize: "0.72rem", color: "#a0b8a2", textDecoration: "none" }}>
+            プライバシーポリシー
           </Link>
         </div>
       </div>

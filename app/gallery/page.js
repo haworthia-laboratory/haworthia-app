@@ -11,22 +11,39 @@ export default function GalleryPage() {
   useEffect(() => {
     const load = async () => {
       if (supabase) {
-        const { data } = await supabase
+        // 公開株の最新写真を取得
+        const { data: plants } = await supabase
+          .from("plants")
+          .select("id, name, species_name")
+          .eq("is_public", true);
+
+        if (!plants || plants.length === 0) {
+          setLoading(false);
+          return;
+        }
+
+        const plantIds = plants.map(p => p.id);
+        const { data: entries } = await supabase
           .from("diary_entries")
-          .select("id, date, photos, plant_name, species_name, note")
-          .eq("is_public", true)
+          .select("plant_id, date, photos, note")
+          .in("plant_id", plantIds)
           .order("date", { ascending: false });
 
         const flat = [];
-        for (const entry of (data || [])) {
+        const seen = new Set();
+        for (const entry of (entries || [])) {
           for (const src of (entry.photos || [])) {
-            flat.push({
-              src,
-              date: entry.date,
-              plantName: entry.plant_name,
-              speciesName: entry.species_name,
-              note: entry.note,
-            });
+            if (!seen.has(src)) {
+              seen.add(src);
+              const plant = plants.find(p => p.id === entry.plant_id);
+              flat.push({
+                src,
+                date: entry.date,
+                plantName: plant?.name,
+                speciesName: plant?.species_name,
+                note: entry.note,
+              });
+            }
           }
         }
         setPhotos(flat);
