@@ -355,7 +355,8 @@ const NAME_CATEGORIES = [
     label: "🐉 神話・伝説系",
     desc: "酒呑童子・九尾狐・龍城など",
     filter: (s) => /[龍竜鬼狐童仙妖神獣麒麟鳳凰玄武朱雀白虎]/.test(s.name) ||
-      ["kyubi", "ryujo", "shuten", "hakuteijo"].some(k => s.id.includes(k)),
+      ["kyubi", "ryujo", "shuten", "hakuteijo", "mermaid"].some(k => s.id.includes(k)) ||
+      s.name.includes("マーメイド"),
   },
   {
     value: "nature",
