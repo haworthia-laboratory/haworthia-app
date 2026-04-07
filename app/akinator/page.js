@@ -570,7 +570,7 @@ export default function AkinatorPage() {
               <span className="aki-mode-desc">かっこいい・可愛い・爽やかなど</span>
             </button>
           </div>
-        ) : mode === "name" && !done ? (
+        ) : mode === "name" && !done && !inExtra ? (
           <div className="aki-card">
             <div className="aki-question">名前の雰囲気で選んでください</div>
             <div className="aki-hint">ぴんとくるカテゴリを選ぶと該当品種を表示します</div>
@@ -584,7 +584,7 @@ export default function AkinatorPage() {
             </div>
             <button className="aki-back-btn" onClick={reset}>← モード選択に戻る</button>
           </div>
-        ) : mode === "impression" && !done ? (
+        ) : mode === "impression" && !done && !inExtra ? (
           <div className="aki-card">
             <div className="aki-question">どんな印象の品種を探していますか？</div>
             <div className="aki-hint">直感で選んでください</div>
