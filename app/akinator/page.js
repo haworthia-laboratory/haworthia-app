@@ -406,7 +406,7 @@ const NAME_CATEGORIES = [
   {
     value: "wabi",
     label: "🌸 和の情景系",
-    desc: "氷川玉露・花時計・星雲の舞など",
+    desc: "氷川玉露・花時計・青雲の舞など",
     filter: (s) => /[玉花舞姫錦雅美麗華彩紫桜梅菊蘭]/.test(s.name) ||
       ["hanadokei", "hikawa-gyokuro", "seiun"].some(k => s.id.includes(k)),
     sub: [
@@ -422,7 +422,7 @@ const NAME_CATEGORIES = [
       },
       {
         label: "💃 舞・動き・情景",
-        desc: "星雲の舞など",
+        desc: "青雲の舞など",
         filter: (s) => /[舞踊景色彩]/.test(s.name) || ["seiun"].some(k => s.id.includes(k)),
       },
       { label: "すべて見る", desc: "", filter: (s) => /[玉花舞姫錦雅美麗華彩紫桜梅菊蘭]/.test(s.name) || ["hanadokei", "hikawa-gyokuro", "seiun"].some(k => s.id.includes(k)) },
