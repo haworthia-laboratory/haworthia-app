@@ -72,6 +72,24 @@ export default function AccountPage() {
     router.push("/");
   };
 
+  const handleDeleteAccount = async () => {
+    if (!confirm("本当に退会しますか？\n日記・写真・登録データがすべて削除されます。この操作は取り消せません。")) return;
+    if (!confirm("最終確認：削除したデータは復元できません。退会してよろしいですか？")) return;
+
+    const { data: { session } } = await supabase.auth.getSession();
+    const res = await fetch("/api/delete-account", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: session.user.id }),
+    });
+    if (res.ok) {
+      await supabase.auth.signOut();
+      router.push("/");
+    } else {
+      alert("退会処理に失敗しました。お問い合わせフォームよりご連絡ください。");
+    }
+  };
+
   if (loading) return (
     <main><div className="container">
       <p style={{ marginTop: "2rem", color: "#7a9a7c", textAlign: "center" }}>読み込み中...</p>
@@ -148,10 +166,13 @@ export default function AccountPage() {
           </button>
         </div>
 
-        <div style={{ marginTop: "0.8rem", textAlign: "center" }}>
-          <Link href="/contact" style={{ fontSize: "0.72rem", color: "#c8a0a0", textDecoration: "none" }}>
-            アカウントの削除はお問い合わせフォームへ
-          </Link>
+        <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
+          <button
+            onClick={handleDeleteAccount}
+            style={{ fontSize: "0.72rem", color: "#c8a0a0", background: "none", border: "1px solid rgba(200,160,160,0.3)", borderRadius: "20px", padding: "0.4rem 1rem", cursor: "pointer" }}
+          >
+            退会する
+          </button>
         </div>
       </div>
     </main>
