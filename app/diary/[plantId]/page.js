@@ -167,6 +167,16 @@ export default function PlantTimelinePage() {
     cancel();
   };
 
+  const togglePublic = async (entry) => {
+    const next = !entry.is_public;
+    if (supabase) {
+      await supabase.from("diary_entries").update({ is_public: next }).eq("id", entry.id);
+    }
+    setEntries(prev => prev.map(e => e.id === entry.id ? { ...e, is_public: next } : e));
+    setToast(next ? "ギャラリーに公開しました" : "非公開にしました");
+    setTimeout(() => setToast(""), 2500);
+  };
+
   const deleteEntry = async (id) => {
     if (supabase) {
       await supabase.from("diary_entries").delete().eq("id", id);
@@ -323,6 +333,13 @@ export default function PlantTimelinePage() {
                     ))}
                   </div>
                 )}
+                <button
+                  className={`diary-public-btn${entry.is_public ? " active" : ""}`}
+                  onClick={() => togglePublic(entry)}
+                  title={entry.is_public ? "ギャラリーに公開中" : "ギャラリーに公開する"}
+                >
+                  {entry.is_public ? "🌿 公開中" : "公開する"}
+                </button>
                 {entry.note && <p className="diary-entry-note">{entry.note}</p>}
               </div>
             </div>

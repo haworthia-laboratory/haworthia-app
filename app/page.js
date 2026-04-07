@@ -97,6 +97,20 @@ function BookIcon() {
   );
 }
 
+function GalleryIcon() {
+  return (
+    <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="14" width="24" height="22" rx="3" fill="rgba(160,148,136,0.18)" stroke="#9a8e84" strokeWidth="1.6"/>
+      <rect x="34" y="14" width="24" height="22" rx="3" fill="rgba(160,148,136,0.18)" stroke="#9a8e84" strokeWidth="1.6"/>
+      <rect x="6" y="40" width="24" height="10" rx="3" fill="rgba(160,148,136,0.12)" stroke="#9a8e84" strokeWidth="1.4"/>
+      <rect x="34" y="40" width="24" height="10" rx="3" fill="rgba(160,148,136,0.12)" stroke="#9a8e84" strokeWidth="1.4"/>
+      <circle cx="14" cy="22" r="3" fill="rgba(200,178,138,0.4)" stroke="#b8a878" strokeWidth="1"/>
+      <polyline points="6,32 14,24 22,30 30,20" fill="none" stroke="#9a8e84" strokeWidth="1.2" strokeLinejoin="round"/>
+      <polyline points="34,32 42,22 50,28 58,18" fill="none" stroke="#9a8e84" strokeWidth="1.2" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
 function DiagnoseIcon() {
   return (
     <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
@@ -218,6 +232,15 @@ export default function Home() {
             <div className="home-nav-body">
               <div className="home-nav-title">図鑑</div>
               <div className="home-nav-desc">登録品種を検索・フィルター</div>
+            </div>
+            <div className="home-nav-arrow">›</div>
+          </Link>
+
+          <Link href="/gallery" className="home-nav-card">
+            <div className="home-nav-icon"><GalleryIcon /></div>
+            <div className="home-nav-body">
+              <div className="home-nav-title">ギャラリー</div>
+              <div className="home-nav-desc">みんなのハオルチア写真</div>
             </div>
             <div className="home-nav-arrow">›</div>
           </Link>

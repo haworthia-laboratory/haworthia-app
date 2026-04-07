@@ -2592,3 +2592,69 @@ header h1 {
   font-weight: 500;
   letter-spacing: 0.02em;
 }
+
+/* ギャラリー */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+}
+.gallery-item {
+  background: rgba(255,255,255,0.7);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(90,138,92,0.08);
+}
+.gallery-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+.gallery-item-body {
+  padding: 0.5rem 0.6rem 0.6rem;
+}
+.gallery-plant-name {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #2c4a2d;
+}
+.gallery-species-name {
+  font-size: 0.68rem;
+  color: #7a9a7c;
+}
+.gallery-date {
+  font-size: 0.65rem;
+  color: #a0b8a2;
+  margin-top: 0.2rem;
+}
+.gallery-note {
+  font-size: 0.7rem;
+  color: #5a7a5c;
+  margin-top: 0.3rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 公開ボタン */
+.diary-public-btn {
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid rgba(90,138,92,0.3);
+  background: transparent;
+  color: #7a9a7c;
+  font-size: 0.72rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+.diary-public-btn.active {
+  background: rgba(90,138,92,0.1);
+  border-color: rgba(90,138,92,0.5);
+  color: #3a6b3c;
+}
