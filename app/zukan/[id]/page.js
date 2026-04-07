@@ -159,8 +159,11 @@ export default function SpeciesPage({ params }) {
           )}
         </div>
 
-        <Link href="/diary" className="zukan-link" style={{ marginBottom: "2rem" }}>
+        <Link href="/diary" className="zukan-link" style={{ marginBottom: "0.6rem" }}>
           成長日記を記録する
+        </Link>
+        <Link href="/gallery" className="zukan-link" style={{ marginBottom: "2rem", background: "rgba(90,138,92,0.06)", color: "#5a8a5c" }}>
+          みんなのギャラリーを見る
         </Link>
 
       </div>
