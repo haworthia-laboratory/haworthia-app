@@ -69,8 +69,8 @@ export const species = [
       nishiki: "3,000〜20,000円",
       noribana: null,
     },
-    gallery: [  "/images/seiun-no-mai-top.png",
-  "/images/seiun-no-mai-side.png",],
+    gallery: [  "/images/seiun-no-mai-top.webp",
+  "/images/seiun-no-mai-side.webp",],
   },
   {
     id: "cymbiformis",
@@ -94,7 +94,7 @@ export const species = [
       nishiki: "1,000〜8,000円",
       noribana: "3,000〜15,000円",
     },
-    gallery: ["/images/cymbiformis-top.jpg", "/images/cymbiformis-side.jpg"],
+    gallery: ["/images/cymbiformis-top.webp", "/images/cymbiformis-side.webp"],
   },
   {
     id: "umbraticola",
@@ -118,7 +118,7 @@ export const species = [
       nishiki: "3,000〜20,000円",
       noribana: null,
     },
-    gallery: ["/images/umbraticola-top.png", "/images/umbraticola-side.png"],
+    gallery: ["/images/umbraticola-top.webp", "/images/umbraticola-side.webp"],
   },
   {
     id: "milky-cloud",
@@ -671,7 +671,7 @@ export const species = [
       nishiki: "3,000〜15,000円",
       noribana: null,
     },
-    gallery: ["/images/arachnoidea-top.png", "/images/arachnoidea-side.png"],
+    gallery: ["/images/arachnoidea-top.webp", "/images/arachnoidea-side.webp"],
   },
   {
     id: "cooperi-pilifera",
@@ -815,7 +815,7 @@ export const species = [
       nishiki: "3,000〜20,000円",
       noribana: null,
     },
-    gallery: ["/images/cooperi-gordoniana-top.png", "/images/cooperi-gordoniana-side.png"],
+    gallery: ["/images/cooperi-gordoniana-top.webp", "/images/cooperi-gordoniana-side.webp"],
   },
   {
     id: "herbacea",
@@ -1104,7 +1104,7 @@ export const species = [
       nishiki: "1,000〜8,000円",
       noribana: null,
     },
-    gallery: ["/images/attenuata-top.png", "/images/attenuata-side.png"],
+    gallery: ["/images/attenuata-top.webp", "/images/attenuata-side.webp"],
   },
   {
     id: "reinwardtii",
@@ -1128,7 +1128,7 @@ export const species = [
       nishiki: "2,000〜15,000円",
       noribana: null,
     },
-    gallery: ["/images/reinwardtii-top.png", "/images/reinwardtii-side.png"],
+    gallery: ["/images/reinwardtii-top.webp", "/images/reinwardtii-side.webp"],
   },
   {
     id: "coarctata",
@@ -1298,7 +1298,7 @@ export const species = [
       nishiki: "5,000〜30,000円",
       noribana: null,
     },
-    gallery: ["/images/redbull-top.png", "/images/redbull-side.png"],
+    gallery: ["/images/redbull-top.webp", "/images/redbull-side.webp"],
   },
   {
     id: "atrofusca-hybrid",
@@ -1322,7 +1322,7 @@ export const species = [
       nishiki: "5,000〜30,000円",
       noribana: null,
     },
-    gallery: ["/images/atrofusca-hybrid-top.png", "/images/atrofusca-hybrid-side.png"],
+    gallery: ["/images/atrofusca-hybrid-top.webp", "/images/atrofusca-hybrid-side.webp"],
   },
   {
     id: "picta",
@@ -2649,7 +2649,7 @@ export const species = [
     lightDesc: "1,500〜4,000 lux程度の明るい間接光が適する。芒が光を散乱させ輝きが増す。",
     breeding: null,
     price: { normal: "500〜5,000円", nishiki: "3,000〜20,000円", noribana: null },
-    gallery: ["/images/wimii-top.png", "/images/wimii-side.png"],
+    gallery: ["/images/wimii-top.webp", "/images/wimii-side.webp"],
   },
   {
     id: "green-jem",
@@ -2749,7 +2749,7 @@ export const species = [
     lightDesc: "1,000〜3,000 lux程度の柔らかい光が最適。強光は透明感を損なう。",
     breeding: null,
     price: { normal: "1,900〜5,000円", nishiki: null, noribana: "5,000〜20,000円" },
-    gallery: ["/images/kyubi-top.png", "/images/kyubi-side.png"],
+    gallery: ["/images/kyubi-top.webp", "/images/kyubi-side.webp"],
   },
   {
     id: "cooperi-hyb",
@@ -3249,7 +3249,7 @@ export const species = [
     lightDesc: "1,000〜4,000 lux程度の明るい半日陰が適切。強光で葉焼け・退色しやすい。",
     breeding: null,
     price: { normal: "1,000〜5,000円", nishiki: null, noribana: null },
-    gallery: ["/images/shizukuishi-top.jpg"],
+    gallery: ["/images/shizukuishi-top.webp"],
   },
   {
     id: "lockwoodii",

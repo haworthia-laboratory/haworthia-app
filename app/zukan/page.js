@@ -243,11 +243,6 @@ export default function ZukanPage() {
                   <div className="zukan-name">{s.name}</div>
                   <div className="zukan-scientific">{s.scientific}</div>
                 </div>
-                {(s.gallery?.[0] || diaryPhotos[s.id]) && (
-                  <div className="zukan-card-thumb">
-                    <img src={s.gallery?.[0] || diaryPhotos[s.id]} alt={s.name} />
-                  </div>
-                )}
                 <div className="zukan-card-marks">
                   <button
                     className={`mark-btn${owned.has(s.id) ? " active-check" : ""}`}
