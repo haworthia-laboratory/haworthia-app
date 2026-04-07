@@ -353,29 +353,29 @@ const NAME_CATEGORIES = [
   {
     value: "myth",
     label: "🐉 神話・伝説系",
-    desc: "酒呑童子・九尾狐・龍城など",
-    filter: (s) => /[龍竜鬼狐童仙妖神獣麒麟鳳凰玄武朱雀白虎]/.test(s.name) ||
-      ["kyubi", "ryujo", "shuten", "hakuteijo", "mermaid"].some(k => s.id.includes(k)) ||
+    desc: "酒呑童子・九尾狐・白蛇伝など",
+    filter: (s) => /[龍竜鬼狐童仙妖神獣麒麟鳳凰玄武朱雀白虎蛇]/.test(s.name) ||
+      ["kyubi", "ryujo", "shuten", "hakuteijo", "mermaid", "hakujaden", "hakugei"].some(k => s.id.includes(k)) ||
       s.name.includes("マーメイド"),
     sub: [
       {
         label: "🦊 和の霊獣・妖怪",
-        desc: "九尾狐・酒呑童子・龍城など",
-        filter: (s) => /[龍竜鬼狐童仙妖獣]/.test(s.name) ||
-          ["kyubi", "ryujo", "shuten"].some(k => s.id.includes(k)),
+        desc: "九尾狐・酒呑童子・白蛇伝など",
+        filter: (s) => /[龍竜鬼狐童仙妖獣蛇]/.test(s.name) ||
+          ["kyubi", "ryujo", "shuten", "hakujaden", "shiroko", "onigawara", "sennyokou"].some(k => s.id.includes(k)),
       },
       {
         label: "🧜 ファンタジー・幻想生物",
-        desc: "マーメイドなど",
-        filter: (s) => s.name.includes("マーメイド") || ["mermaid"].some(k => s.id.includes(k)),
+        desc: "マーメイド・白鯨など",
+        filter: (s) => s.name.includes("マーメイド") || s.name.includes("白鯨") || ["mermaid", "hakugei"].some(k => s.id.includes(k)),
       },
       {
         label: "🏯 幻の城・宮殿",
-        desc: "白帝城・宝城など",
+        desc: "白帝城・紫禁城・夢殿など",
         filter: (s) => /[城宮殿宝楼]/.test(s.name) ||
           ["hakuteijo"].some(k => s.id.includes(k)),
       },
-      { label: "すべて見る", desc: "", filter: (s) => /[龍竜鬼狐童仙妖神獣麒麟鳳凰玄武朱雀白虎]/.test(s.name) || ["kyubi", "ryujo", "shuten", "hakuteijo", "mermaid"].some(k => s.id.includes(k)) || s.name.includes("マーメイド") },
+      { label: "すべて見る", desc: "", filter: (s) => /[龍竜鬼狐童仙妖神獣麒麟鳳凰玄武朱雀白虎蛇]/.test(s.name) || ["kyubi", "ryujo", "shuten", "hakuteijo", "mermaid", "hakujaden", "hakugei"].some(k => s.id.includes(k)) || s.name.includes("マーメイド") },
     ],
   },
   {
