@@ -247,7 +247,10 @@ export default function Home() {
 
         </div>
 
-        <div style={{ textAlign: "center", marginTop: "2rem", paddingBottom: "1rem", display: "flex", justifyContent: "center", gap: "1.2rem" }}>
+        <div style={{ textAlign: "center", marginTop: "2rem", paddingBottom: "1rem", display: "flex", justifyContent: "center", gap: "1.2rem", flexWrap: "wrap" }}>
+          <Link href="/account" style={{ fontSize: "0.72rem", color: "#a0b8a2", textDecoration: "none" }}>
+            アカウント設定
+          </Link>
           <Link href="/contact" style={{ fontSize: "0.72rem", color: "#a0b8a2", textDecoration: "none" }}>
             お問い合わせ
           </Link>
