@@ -440,19 +440,37 @@ const IMPRESSION_CATEGORIES = [
   },
 ];
 
+// 名前の雰囲気アイコン：カラフルなインクがふわふわ混ざるイメージ
 function NameIcon() {
   return (
     <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
-      <text x="32" y="42" textAnchor="middle" fontSize="34" fontFamily="serif">名</text>
+      <defs>
+        <filter id="blur-ink"><feGaussianBlur stdDeviation="3.5" /></filter>
+      </defs>
+      {/* ふわふわ混ざるインク */}
+      <ellipse cx="26" cy="30" rx="13" ry="10" fill="rgba(130,180,220,0.55)" filter="url(#blur-ink)" />
+      <ellipse cx="38" cy="26" rx="11" ry="9" fill="rgba(190,140,210,0.55)" filter="url(#blur-ink)" />
+      <ellipse cx="32" cy="38" rx="10" ry="8" fill="rgba(120,200,160,0.55)" filter="url(#blur-ink)" />
+      <ellipse cx="22" cy="22" rx="8" ry="7" fill="rgba(240,180,120,0.45)" filter="url(#blur-ink)" />
     </svg>
   );
 }
 
+// 印象・雰囲気アイコン：いろんな形が混ざるイメージ
 function ImpressionIcon() {
   return (
     <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="32" cy="28" r="14" fill="rgba(180,160,200,0.25)" stroke="#b0a0c0" strokeWidth="1.8"/>
-      <path d="M20,44 Q32,54 44,44" fill="none" stroke="#b0a0c0" strokeWidth="1.8" strokeLinecap="round"/>
+      {/* 丸 */}
+      <circle cx="20" cy="20" r="8" fill="none" stroke="#9ab89c" strokeWidth="1.5" opacity="0.8"/>
+      {/* 三角 */}
+      <polygon points="44,12 52,26 36,26" fill="none" stroke="#b0a498" strokeWidth="1.5" opacity="0.8"/>
+      {/* 菱形 */}
+      <polygon points="32,36 40,44 32,52 24,44" fill="none" stroke="#a8a8c0" strokeWidth="1.5" opacity="0.8"/>
+      {/* 小さい丸 */}
+      <circle cx="14" cy="44" r="4" fill="none" stroke="#c8b870" strokeWidth="1.3" opacity="0.7"/>
+      {/* 星っぽい */}
+      <path d="M50,40 L52,46 L58,46 L53,50 L55,56 L50,52 L45,56 L47,50 L42,46 L48,46 Z"
+        fill="none" stroke="#b89880" strokeWidth="1.2" opacity="0.65" transform="scale(0.55) translate(42,22)"/>
     </svg>
   );
 }
