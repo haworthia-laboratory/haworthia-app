@@ -357,6 +357,26 @@ const NAME_CATEGORIES = [
     filter: (s) => /[龍竜鬼狐童仙妖神獣麒麟鳳凰玄武朱雀白虎]/.test(s.name) ||
       ["kyubi", "ryujo", "shuten", "hakuteijo", "mermaid"].some(k => s.id.includes(k)) ||
       s.name.includes("マーメイド"),
+    sub: [
+      {
+        label: "🦊 和の霊獣・妖怪",
+        desc: "九尾狐・酒呑童子・龍城など",
+        filter: (s) => /[龍竜鬼狐童仙妖獣]/.test(s.name) ||
+          ["kyubi", "ryujo", "shuten"].some(k => s.id.includes(k)),
+      },
+      {
+        label: "🧜 海・西洋の伝説",
+        desc: "マーメイドなど",
+        filter: (s) => s.name.includes("マーメイド") || ["mermaid"].some(k => s.id.includes(k)),
+      },
+      {
+        label: "🏯 城・宮・宝",
+        desc: "白帝城・宝城など",
+        filter: (s) => /[城宮殿宝楼].test(s.name) ||
+          ["hakuteijo"].some(k => s.id.includes(k)),
+      },
+      { label: "すべて見る", desc: "", filter: (s) => /[龍竜鬼狐童仙妖神獣麒麟鳳凰玄武朱雀白虎]/.test(s.name) || ["kyubi", "ryujo", "shuten", "hakuteijo", "mermaid"].some(k => s.id.includes(k)) || s.name.includes("マーメイド") },
+    ],
   },
   {
     value: "nature",
@@ -364,6 +384,24 @@ const NAME_CATEGORIES = [
     desc: "氷河・群雲・翠嵐など",
     filter: (s) => /[氷雲嵐雪川滝海山森霧霜露空星月風雨]/.test(s.name) ||
       ["hyoga", "murakumo", "suiran", "hikawa"].some(k => s.id.includes(k)),
+    sub: [
+      {
+        label: "❄️ 水・氷・雪",
+        desc: "氷河・氷川など",
+        filter: (s) => /[氷雪川滝海露霜]/.test(s.name) || ["hyoga", "hikawa"].some(k => s.id.includes(k)),
+      },
+      {
+        label: "🌫️ 空・雲・嵐",
+        desc: "群雲・翠嵐など",
+        filter: (s) => /[雲嵐霧空風星月]/.test(s.name) || ["murakumo", "suiran"].some(k => s.id.includes(k)),
+      },
+      {
+        label: "🏔️ 山・森・大地",
+        desc: "山・森などの名を持つ品種",
+        filter: (s) => /[山森岳峰野原].test(s.name),
+      },
+      { label: "すべて見る", desc: "", filter: (s) => /[氷雲嵐雪川滝海山森霧霜露空星月風雨]/.test(s.name) || ["hyoga", "murakumo", "suiran", "hikawa"].some(k => s.id.includes(k)) },
+    ],
   },
   {
     value: "wabi",
@@ -371,13 +409,44 @@ const NAME_CATEGORIES = [
     desc: "氷川玉露・花時計・星雲の舞など",
     filter: (s) => /[玉花舞姫錦雅美麗華彩紫桜梅菊蘭]/.test(s.name) ||
       ["hanadokei", "hikawa-gyokuro", "seiun"].some(k => s.id.includes(k)),
+    sub: [
+      {
+        label: "🌸 花・植物",
+        desc: "花時計など",
+        filter: (s) => /[花桜梅菊蘭藤葵].test(s.name) || ["hanadokei"].some(k => s.id.includes(k)),
+      },
+      {
+        label: "💎 玉・宝石",
+        desc: "氷川玉露など",
+        filter: (s) => /[玉珠璃宝].test(s.name) || ["hikawa-gyokuro"].some(k => s.id.includes(k)),
+      },
+      {
+        label: "💃 舞・動き・情景",
+        desc: "星雲の舞など",
+        filter: (s) => /[舞踊景色彩].test(s.name) || ["seiun"].some(k => s.id.includes(k)),
+      },
+      { label: "すべて見る", desc: "", filter: (s) => /[玉花舞姫錦雅美麗華彩紫桜梅菊蘭]/.test(s.name) || ["hanadokei", "hikawa-gyokuro", "seiun"].some(k => s.id.includes(k)) },
+    ],
   },
   {
     value: "fantasy",
     label: "✨ 幻想・宝石系",
     desc: "氷砂糖・白鯨・碧瑠璃など",
-    filter: (s) => /[砂糖瑠璃鯨宝晶玻璃珠玉翡翠琥珀白黒碧]/.test(s.name) ||
+    filter: (s) => /[砂糖瑠璃鯨宝晶玻璃珠翡翠琥珀碧]/.test(s.name) ||
       ["hakugei", "heki-ruri", "kori-sato", "hakuteijo"].some(k => s.id.includes(k)),
+    sub: [
+      {
+        label: "💎 宝石・鉱物",
+        desc: "碧瑠璃など",
+        filter: (s) => /[瑠璃晶玻璃翡翠琥珀碧].test(s.name) || ["heki-ruri"].some(k => s.id.includes(k)),
+      },
+      {
+        label: "🤍 白・淡い・甘い",
+        desc: "氷砂糖・白鯨など",
+        filter: (s) => /[砂糖白鯨].test(s.name) || ["hakugei", "kori-sato"].some(k => s.id.includes(k)),
+      },
+      { label: "すべて見る", desc: "", filter: (s) => /[砂糖瑠璃鯨宝晶玻璃珠翡翠琥珀碧]/.test(s.name) || ["hakugei", "heki-ruri", "kori-sato", "hakuteijo"].some(k => s.id.includes(k)) },
+    ],
   },
   {
     value: "foreign",
@@ -479,6 +548,7 @@ export default function AkinatorPage() {
   const [done, setDone] = useState(false);
   const [extraStep, setExtraStep] = useState(0);
   const [inExtra, setInExtra] = useState(false);
+  const [selectedCat, setSelectedCat] = useState(null); // サブカテゴリ表示用
 
   const activeQuestions = mode === "explore" ? EXPLORE_QUESTIONS : IDENTIFY_QUESTIONS;
 
@@ -513,8 +583,19 @@ export default function AkinatorPage() {
   };
 
   const selectNameCategory = (cat) => {
-    const results = species.filter(cat.filter);
+    if (cat.sub) {
+      setSelectedCat(cat);
+    } else {
+      const results = species.filter(cat.filter);
+      setCandidates(results);
+      setDone(true);
+    }
+  };
+
+  const selectSub = (subFilter) => {
+    const results = species.filter(subFilter);
     setCandidates(results);
+    setSelectedCat(null);
     setDone(true);
   };
 
@@ -532,6 +613,7 @@ export default function AkinatorPage() {
     setDone(false);
     setExtraStep(0);
     setInExtra(false);
+    setSelectedCat(null);
   };
 
   const totalQuestions = inExtra ? EXTRA_QUESTIONS.length : activeQuestions.length;
@@ -569,6 +651,20 @@ export default function AkinatorPage() {
               <span className="aki-mode-title">印象・雰囲気から探す</span>
               <span className="aki-mode-desc">かっこいい・可愛い・爽やかなど</span>
             </button>
+          </div>
+        ) : mode === "name" && !done && !inExtra && selectedCat ? (
+          <div className="aki-card">
+            <div className="aki-question">{selectedCat.label}</div>
+            <div className="aki-hint">さらに絞り込めます</div>
+            <div className="aki-options">
+              {selectedCat.sub.map(sub => (
+                <button key={sub.label} className="aki-option-btn" onClick={() => selectSub(sub.filter)}>
+                  <span>{sub.label}</span>
+                  {sub.desc && <span style={{ fontSize: "0.65rem", color: "#a0b8a2", display: "block", marginTop: "0.2rem" }}>{sub.desc}</span>}
+                </button>
+              ))}
+            </div>
+            <button className="aki-back-btn" onClick={() => setSelectedCat(null)}>← カテゴリ選択に戻る</button>
           </div>
         ) : mode === "name" && !done && !inExtra ? (
           <div className="aki-card">
