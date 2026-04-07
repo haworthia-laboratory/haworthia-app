@@ -348,8 +348,117 @@ const IDENTIFY_QUESTIONS = QUESTIONS.filter(q => q.id !== "group");
 // 「系統から探す」モード：グループ質問を先頭に、残りは好み寄りの質問
 const EXPLORE_QUESTIONS = QUESTIONS;
 
+// 名前の雰囲気カテゴリ
+const NAME_CATEGORIES = [
+  {
+    value: "myth",
+    label: "🐉 神話・伝説系",
+    desc: "酒呑童子・九尾狐・龍城など",
+    filter: (s) => /[龍竜鬼狐童仙妖神獣麒麟鳳凰玄武朱雀白虎]/.test(s.name) ||
+      ["kyubi", "ryujo", "shuten", "hakuteijo"].some(k => s.id.includes(k)),
+  },
+  {
+    value: "nature",
+    label: "🌊 自然・情景系",
+    desc: "氷河・群雲・翠嵐など",
+    filter: (s) => /[氷雲嵐雪川滝海山森霧霜露空星月風雨]/.test(s.name) ||
+      ["hyoga", "murakumo", "suiran", "hikawa"].some(k => s.id.includes(k)),
+  },
+  {
+    value: "wabi",
+    label: "🌸 和の美系",
+    desc: "氷川玉露・花時計・星雲の舞など",
+    filter: (s) => /[玉花舞姫錦雅美麗華彩紫桜梅菊蘭]/.test(s.name) ||
+      ["hanadokei", "hikawa-gyokuro", "seiun"].some(k => s.id.includes(k)),
+  },
+  {
+    value: "fantasy",
+    label: "✨ 幻想・宝石系",
+    desc: "氷砂糖・白鯨・碧瑠璃など",
+    filter: (s) => /[砂糖瑠璃鯨宝晶玻璃珠玉翡翠琥珀白黒碧]/.test(s.name) ||
+      ["hakugei", "heki-ruri", "kori-sato", "hakuteijo"].some(k => s.id.includes(k)),
+  },
+  {
+    value: "foreign",
+    label: "🌍 外来語・学名系",
+    desc: "マーメイド・レッドブル・ノリピアなど",
+    filter: (s) => {
+      const katakana = (s.name.match(/[\u30A0-\u30FF]/g) || []).length;
+      return katakana >= 3 || ["redbull", "mermaid", "noribana"].some(k => s.id.includes(k));
+    },
+  },
+];
+
+// 印象・雰囲気カテゴリ
+const IMPRESSION_CATEGORIES = [
+  {
+    value: "cool",
+    label: "🖤 かっこいい・神秘的",
+    desc: "暗い色・鋭い葉・存在感のある品種",
+    filter: (s) => ["black", "purple", "dark", "gray"].includes(s.colorGroup) ||
+      ["atrofusca", "shuten", "kyubi", "redbull", "murakumo"].some(k => s.id.includes(k)),
+  },
+  {
+    value: "cute",
+    label: "🌸 可愛い・やわらかい",
+    desc: "丸くてぷっくり・小ぶりな品種",
+    filter: (s) => {
+      const t = getTraits(s);
+      return t.isSoft && t.tipRound && !["comptoniana", "blackbeardiana"].some(k => s.id.includes(k));
+    },
+  },
+  {
+    value: "elegant",
+    label: "💎 美しい・上品",
+    desc: "窓模様・繊細な線・希少品種",
+    filter: (s) => ["maughanii", "truncata", "comptoniana", "picta", "splendens", "bayeri", "correcta"].some(k => s.id.includes(k)) ||
+      (s.group === "万象・玉扇系"),
+  },
+  {
+    value: "fresh",
+    label: "🌿 爽やか・清涼感",
+    desc: "青みがかった色・透明感のある葉",
+    filter: (s) => ["blue", "green", "white"].includes(s.colorGroup) &&
+      ["cooperi", "obtusa", "cymbiformis", "heki-ruri", "hyoga", "hikawa"].some(k => s.id.includes(k)),
+  },
+  {
+    value: "colorful",
+    label: "🌈 カラフル・個性的",
+    desc: "斑入り・変わった色・目を引く品種",
+    filter: (s) => s.type === "園芸種" || s.type === "選抜種" ||
+      s.id.includes("nishiki") || s.id.includes("variegata") ||
+      ["red", "purple", "blue"].includes(s.colorGroup),
+  },
+  {
+    value: "minimal",
+    label: "🤍 シンプル・ミニマル",
+    desc: "すっきりした形・定番で育てやすい品種",
+    filter: (s) => {
+      const t = getTraits(s);
+      return t.isCommon || (t.isHard && !t.isVariegated);
+    },
+  },
+];
+
+function NameIcon() {
+  return (
+    <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+      <text x="32" y="42" textAnchor="middle" fontSize="34" fontFamily="serif">名</text>
+    </svg>
+  );
+}
+
+function ImpressionIcon() {
+  return (
+    <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="32" cy="28" r="14" fill="rgba(180,160,200,0.25)" stroke="#b0a0c0" strokeWidth="1.8"/>
+      <path d="M20,44 Q32,54 44,44" fill="none" stroke="#b0a0c0" strokeWidth="1.8" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
 export default function AkinatorPage() {
-  const [mode, setMode] = useState(null); // "identify" | "explore"
+  const [mode, setMode] = useState(null); // "identify" | "explore" | "name" | "impression"
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [candidates, setCandidates] = useState(species);
@@ -389,6 +498,18 @@ export default function AkinatorPage() {
     setDone(false);
   };
 
+  const selectNameCategory = (cat) => {
+    const results = species.filter(cat.filter);
+    setCandidates(results);
+    setDone(true);
+  };
+
+  const selectImpressionCategory = (cat) => {
+    const results = species.filter(cat.filter);
+    setCandidates(results);
+    setDone(true);
+  };
+
   const reset = () => {
     setMode(null);
     setStep(0);
@@ -424,6 +545,44 @@ export default function AkinatorPage() {
               <span className="aki-mode-title">系統から探す</span>
               <span className="aki-mode-desc">好きな系統のおすすめを知りたい</span>
             </button>
+            <button className="aki-mode-btn" onClick={() => setMode("name")}>
+              <div className="aki-mode-icon"><NameIcon /></div>
+              <span className="aki-mode-title">名前の雰囲気から探す</span>
+              <span className="aki-mode-desc">神話・伝説・自然・宝石系など</span>
+            </button>
+            <button className="aki-mode-btn" onClick={() => setMode("impression")}>
+              <div className="aki-mode-icon"><ImpressionIcon /></div>
+              <span className="aki-mode-title">印象・雰囲気から探す</span>
+              <span className="aki-mode-desc">かっこいい・可愛い・爽やかなど</span>
+            </button>
+          </div>
+        ) : mode === "name" && !done ? (
+          <div className="aki-card">
+            <div className="aki-question">名前の雰囲気で選んでください</div>
+            <div className="aki-hint">ぴんとくるカテゴリを選ぶと該当品種を表示します</div>
+            <div className="aki-options">
+              {NAME_CATEGORIES.map(cat => (
+                <button key={cat.value} className="aki-option-btn" onClick={() => selectNameCategory(cat)}>
+                  <span>{cat.label}</span>
+                  <span style={{ fontSize: "0.65rem", color: "#a0b8a2", display: "block", marginTop: "0.2rem" }}>{cat.desc}</span>
+                </button>
+              ))}
+            </div>
+            <button className="aki-back-btn" onClick={reset}>← モード選択に戻る</button>
+          </div>
+        ) : mode === "impression" && !done ? (
+          <div className="aki-card">
+            <div className="aki-question">どんな印象の品種を探していますか？</div>
+            <div className="aki-hint">直感で選んでください</div>
+            <div className="aki-options">
+              {IMPRESSION_CATEGORIES.map(cat => (
+                <button key={cat.value} className="aki-option-btn" onClick={() => selectImpressionCategory(cat)}>
+                  <span>{cat.label}</span>
+                  <span style={{ fontSize: "0.65rem", color: "#a0b8a2", display: "block", marginTop: "0.2rem" }}>{cat.desc}</span>
+                </button>
+              ))}
+            </div>
+            <button className="aki-back-btn" onClick={reset}>← モード選択に戻る</button>
           </div>
         ) : !done ? (
           <>
