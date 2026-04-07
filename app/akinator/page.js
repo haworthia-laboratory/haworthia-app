@@ -460,12 +460,12 @@ function NameIcon() {
 function ImpressionIcon() {
   return (
     <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
-      {/* 丸（左） */}
-      <circle cx="16" cy="32" r="10" fill="none" stroke="#9ab89c" strokeWidth="1.8" opacity="0.85"/>
+      {/* 丸（左下） */}
+      <circle cx="22" cy="40" r="9" fill="none" stroke="#9ab89c" strokeWidth="1.8" opacity="0.85"/>
       {/* 三角（右上） */}
-      <polygon points="46,14 58,34 34,34" fill="none" stroke="#b0a498" strokeWidth="1.8" opacity="0.85"/>
+      <polygon points="42,10 54,30 30,30" fill="none" stroke="#b0a498" strokeWidth="1.8" opacity="0.85"/>
       {/* 菱形（右下） */}
-      <polygon points="46,38 54,48 46,58 38,48" fill="none" stroke="#a8a8c0" strokeWidth="1.8" opacity="0.85"/>
+      <polygon points="44,36 52,46 44,56 36,46" fill="none" stroke="#a8a8c0" strokeWidth="1.8" opacity="0.85"/>
     </svg>
   );
 }
