@@ -282,6 +282,23 @@ export default function Home() {
             <div className="home-nav-arrow">›</div>
           </Link>
 
+          <Link href="/column" className="home-nav-card">
+            <div className="home-nav-icon">
+              <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="8" width="44" height="48" rx="4" fill="rgba(160,148,136,0.18)" stroke="#9a8e84" strokeWidth="1.6"/>
+                <line x1="18" y1="22" x2="46" y2="22" stroke="#b8aca0" strokeWidth="1.2" strokeLinecap="round" opacity="0.7"/>
+                <line x1="18" y1="30" x2="46" y2="30" stroke="#b8aca0" strokeWidth="1.2" strokeLinecap="round" opacity="0.7"/>
+                <line x1="18" y1="38" x2="38" y2="38" stroke="#b8aca0" strokeWidth="1.2" strokeLinecap="round" opacity="0.5"/>
+                <rect x="18" y="12" width="12" height="6" rx="1" fill="rgba(160,148,136,0.3)" stroke="#9a8e84" strokeWidth="0.8"/>
+              </svg>
+            </div>
+            <div className="home-nav-body">
+              <div className="home-nav-title">コラム</div>
+              <div className="home-nav-desc">ハオルチアのある暮らし</div>
+            </div>
+            <div className="home-nav-arrow">›</div>
+          </Link>
+
         </div>
 
         <div style={{ textAlign: "center", marginTop: "2rem", paddingBottom: "1rem", display: "flex", justifyContent: "center", gap: "1.2rem", flexWrap: "wrap" }}>

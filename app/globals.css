@@ -2721,3 +2721,119 @@ header h1 {
   font-size: 1.1rem;
   color: #7a9a7c;
 }
+
+/* コラム一覧 */
+.column-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.column-card {
+  display: block;
+  background: rgba(255,255,255,0.7);
+  border-radius: 16px;
+  padding: 1.2rem 1.4rem;
+  text-decoration: none;
+  border: 1px solid rgba(160,184,162,0.2);
+  transition: box-shadow 0.2s;
+}
+
+.column-card:hover {
+  box-shadow: 0 4px 16px rgba(90,138,92,0.1);
+}
+
+.column-card-category {
+  font-size: 0.68rem;
+  color: #7a9a7c;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+
+.column-card-title {
+  font-size: 0.95rem;
+  color: #2c4a2d;
+  font-weight: 500;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.column-card-lead {
+  font-size: 0.78rem;
+  color: #5a6a5a;
+  line-height: 1.7;
+  margin-bottom: 0.6rem;
+}
+
+.column-card-date {
+  font-size: 0.65rem;
+  color: #a0b8a2;
+  letter-spacing: 0.05em;
+}
+
+/* コラム詳細 */
+.column-detail-category {
+  font-size: 0.7rem;
+  color: #7a9a7c;
+  letter-spacing: 0.1em;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.column-detail-title {
+  font-size: 1.15rem !important;
+  color: #2c4a2d !important;
+  font-weight: 500 !important;
+  line-height: 1.7 !important;
+  letter-spacing: 0.05em !important;
+  text-align: left !important;
+  margin-bottom: 0.4rem !important;
+}
+
+.column-detail-date {
+  font-size: 0.68rem;
+  color: #a0b8a2;
+  margin-bottom: 0;
+}
+
+.column-detail-lead {
+  font-size: 0.85rem;
+  color: #5a6a5a;
+  line-height: 1.9;
+  padding: 1.2rem 1.4rem;
+  background: rgba(160,184,162,0.1);
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  border-left: 2px solid rgba(120,160,122,0.4);
+}
+
+.column-body {
+  font-size: 0.88rem;
+  color: #3a4a3a;
+  line-height: 2;
+}
+
+.column-h2 {
+  font-size: 1rem;
+  color: #2c4a2d;
+  font-weight: 500;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(160,184,162,0.3);
+  letter-spacing: 0.05em;
+}
+
+.column-h3 {
+  font-size: 0.9rem;
+  color: #3a5a3c;
+  font-weight: 500;
+  margin-top: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.column-paragraph {
+  margin-bottom: 1.4rem;
+  line-height: 2.1;
+}
