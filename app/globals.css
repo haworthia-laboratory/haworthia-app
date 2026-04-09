@@ -2837,3 +2837,10 @@ header h1 {
   margin-bottom: 1.4rem;
   line-height: 2.1;
 }
+
+.column-species-link {
+  color: #5a8a5c;
+  text-decoration: underline;
+  text-decoration-color: rgba(90,138,92,0.4);
+  text-underline-offset: 3px;
+}
