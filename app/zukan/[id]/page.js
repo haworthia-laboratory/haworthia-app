@@ -150,6 +150,17 @@ export default function SpeciesPage({ params }) {
           )}
         </div>
 
+        {s.shopLinks && s.shopLinks.length > 0 && (
+          <>
+            <div className="detail-section-title">購入する</div>
+            <div style={{ marginBottom: "1.5rem" }}>
+              {s.shopLinks.map((link, i) => (
+                <div key={i} dangerouslySetInnerHTML={{ __html: link.html }} style={{ marginBottom: "0.8rem" }} />
+              ))}
+            </div>
+          </>
+        )}
+
         <Link href="/diary" className="zukan-link" style={{ marginBottom: "0.6rem" }}>
           成長日記を記録する
         </Link>
