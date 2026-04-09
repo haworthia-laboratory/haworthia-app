@@ -96,6 +96,25 @@ export default function ZukanPage() {
       setFromPhoto(true);
     }
 
+    // 戻ったときの状態復元
+    try {
+      const saved = sessionStorage.getItem("zukanState");
+      if (saved) {
+        const s = JSON.parse(saved);
+        if (s.sort) setSort(s.sort);
+        if (s.query) setQuery(s.query);
+        if (s.colorFilter && !color) setColorFilter(s.colorFilter);
+        if (s.typeFilter) setTypeFilter(s.typeFilter);
+        if (s.markFilter) setMarkFilter(s.markFilter);
+        if (s.groupFilter) setGroupFilter(s.groupFilter);
+        if (s.viewMode) setViewMode(s.viewMode);
+        sessionStorage.removeItem("zukanState");
+        // スクロール位置復元
+        if (s.scrollY) setTimeout(() => window.scrollTo(0, s.scrollY), 100);
+      }
+    } catch {}
+
+
     const w = JSON.parse(localStorage.getItem("wishlist") || "[]");
     setWishlist(new Set(w));
 
@@ -247,7 +266,16 @@ export default function ZukanPage() {
         {viewMode === "list" ? (
           <div className="zukan-grid">
             {sorted.map((s) => (
-              <Link key={s.id} href={`/zukan/${s.id}`} className="zukan-card" style={{ "--accent": s.accent }}>
+              <Link key={s.id} href={`/zukan/${s.id}`} className="zukan-card" style={{ "--accent": s.accent }}
+                onClick={() => {
+                  try {
+                    sessionStorage.setItem("zukanState", JSON.stringify({
+                      sort, query, colorFilter, typeFilter, markFilter, groupFilter, viewMode,
+                      scrollY: window.scrollY,
+                    }));
+                  } catch {}
+                }}
+              >
                 <div className="zukan-card-accent" />
                 <div className="zukan-card-body">
                   <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.4rem" }}>
@@ -275,7 +303,16 @@ export default function ZukanPage() {
         ) : (
           <div className="zukan-grid-view">
             {sorted.map((s) => (
-              <Link key={s.id} href={`/zukan/${s.id}`} className="zukan-grid-card" style={{ "--accent": s.accent }}>
+              <Link key={s.id} href={`/zukan/${s.id}`} className="zukan-grid-card" style={{ "--accent": s.accent }}
+                onClick={() => {
+                  try {
+                    sessionStorage.setItem("zukanState", JSON.stringify({
+                      sort, query, colorFilter, typeFilter, markFilter, groupFilter, viewMode,
+                      scrollY: window.scrollY,
+                    }));
+                  } catch {}
+                }}
+              >
                 <div className="zukan-grid-img-wrap">
                   {(s.gallery && s.gallery[0]) || diaryPhotos[s.id] ? (
                     <img src={s.gallery?.[0] || diaryPhotos[s.id]} alt={s.name} className="zukan-grid-img" />
