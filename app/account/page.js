@@ -103,8 +103,10 @@ export default function AccountPage() {
     const { data: { session } } = await supabase.auth.getSession();
     const res = await fetch("/api/delete-account", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: session.user.id }),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${session.access_token}`,
+      },
     });
     if (res.ok) {
       await supabase.auth.signOut();
