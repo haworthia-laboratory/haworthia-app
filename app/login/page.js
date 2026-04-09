@@ -14,6 +14,24 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
+  const handleResetPassword = async () => {
+    if (!email) {
+      setError("メールアドレスを入力してください");
+      return;
+    }
+    setLoading(true);
+    setError("");
+    const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    if (err) {
+      setError("送信に失敗しました：" + err.message);
+    } else {
+      setMessage("パスワード再設定メールを送信しました。メールをご確認ください。");
+    }
+    setLoading(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -40,7 +58,7 @@ export default function LoginPage() {
       if (err) {
         setError("メールアドレスかパスワードが違います");
       } else {
-        router.push("/diary");
+        router.push("/");
       }
     }
     setLoading(false);
@@ -98,6 +116,15 @@ export default function LoginPage() {
           <button className="auth-submit-btn" type="submit" disabled={loading}>
             {loading ? "処理中..." : mode === "login" ? "ログイン" : "アカウントを作成"}
           </button>
+          {mode === "login" && (
+            <button
+              type="button"
+              onClick={handleResetPassword}
+              style={{ marginTop: "0.8rem", fontSize: "0.78rem", color: "#a0b8a2", background: "none", border: "none", cursor: "pointer", textDecoration: "underline", width: "100%" }}
+            >
+              パスワードをお忘れの方
+            </button>
+          )}
         </form>
 
         <p className="auth-note">

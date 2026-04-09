@@ -150,10 +150,21 @@ export default function Home() {
   const [lightResult, setLightResult] = useState(null);
   const lightInputRef = useRef(null);
   const [session, setSession] = useState(undefined); // undefined=未確認, null=未ログイン
+  const [nickname, setNickname] = useState("");
 
   useEffect(() => {
     if (!supabase) { setSession(null); return; }
-    supabase.auth.getSession().then(({ data: { session } }) => setSession(session));
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      setSession(session);
+      if (session) {
+        const { data: profile } = await supabase
+          .from("user_profiles")
+          .select("nickname")
+          .eq("user_id", session.user.id)
+          .single();
+        if (profile?.nickname) setNickname(profile.nickname);
+      }
+    });
   }, []);
 
   const measureLight = (e) => {
@@ -213,7 +224,7 @@ export default function Home() {
             <Link href="/account" className="home-login-banner home-login-banner--loggedin">
               <div className="home-login-banner-text">
                 <span className="home-login-banner-title">ログイン中</span>
-                <span className="home-login-banner-desc">{session.user.email}</span>
+                <span className="home-login-banner-desc">{nickname || (() => { const [l, d] = session.user.email.split("@"); return l.slice(0, 2) + "×".repeat(Math.max(0, l.length - 2)) + "@" + d; })()}</span>
               </div>
               <span className="home-login-banner-arrow">›</span>
             </Link>
