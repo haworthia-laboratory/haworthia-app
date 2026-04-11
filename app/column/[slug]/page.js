@@ -22,6 +22,20 @@ export async function generateMetadata({ params }) {
   };
 }
 
+// 直後の文字が同じスクリプト種（カタカナ・ひらがな・漢字）なら単語の途中と判断
+function isWordBoundary(matchedName, nextChar) {
+  if (!nextChar) return true;
+  const last = matchedName.charCodeAt(matchedName.length - 1);
+  const next = nextChar.charCodeAt(0);
+  const isKatakana = (c) => c >= 0x30A0 && c <= 0x30FF;
+  const isHiragana = (c) => c >= 0x3040 && c <= 0x309F;
+  const isKanji    = (c) => (c >= 0x4E00 && c <= 0x9FAF) || (c >= 0x3400 && c <= 0x4DBF);
+  if (isKatakana(last) && isKatakana(next)) return false;
+  if (isHiragana(last) && isHiragana(next)) return false;
+  if (isKanji(last)    && isKanji(next))    return false;
+  return true;
+}
+
 // 品種名をリンクに変換
 function linkifySpecies(text) {
   const sorted = [...species].sort((a, b) => b.name.length - a.name.length);
@@ -33,6 +47,8 @@ function linkifySpecies(text) {
     for (const sp of sorted) {
       const idx = remaining.indexOf(sp.name);
       if (idx !== -1) {
+        const nextChar = remaining[idx + sp.name.length] ?? "";
+        if (!isWordBoundary(sp.name, nextChar)) continue;
         if (idx > 0) parts.push(remaining.slice(0, idx));
         parts.push(
           <Link key={`${sp.id}-${idx}-${parts.length}`} href={`/zukan/${sp.id}`} className="column-species-link">

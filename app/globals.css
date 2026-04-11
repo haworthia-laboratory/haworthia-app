@@ -3051,6 +3051,13 @@ header h1 {
   overflow-x: auto;
 }
 
+/* アフィリエイト画像を統一サイズ（コンパクト120px）に制限 */
+.column-affiliate-item img,
+.shop-links-wrap img {
+  max-width: 120px;
+  max-height: 120px;
+}
+
 /* 広告バナー */
 .ad-banner {
   margin: 1.5rem 0;

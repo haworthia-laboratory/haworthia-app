@@ -157,7 +157,7 @@ export default function SpeciesPage({ params }) {
         {sShopLinks.length > 0 && (
           <>
             <div className="detail-section-title">購入する</div>
-            <div style={{ marginBottom: "1.5rem" }}>
+            <div className="shop-links-wrap" style={{ marginBottom: "1.5rem" }}>
               {sShopLinks.map((link, i) => (
                 <div key={i} dangerouslySetInnerHTML={{ __html: link.html }} style={{ marginBottom: "0.8rem" }} />
               ))}
