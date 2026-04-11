@@ -2194,6 +2194,15 @@ header h1 {
   margin-top: 0.1rem;
 }
 
+.zukan-legend {
+  font-size: 0.72rem;
+  color: #9aaa9c;
+  margin-top: 0.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 .new-badge {
   display: inline-block;
   background: linear-gradient(135deg, #e8736a, #f0a070);

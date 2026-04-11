@@ -210,6 +210,7 @@ export default function ZukanPage() {
           <Link href="/" className="back-link">← 研究室に戻る</Link>
           <h1 style={{ marginTop: "0.8rem" }}>図鑑</h1>
           <p className="subtitle">登録品種 {species.length} 種</p>
+          <p className="zukan-legend"><span className="new-badge" style={{ fontSize: "0.65rem", padding: "1px 6px" }}>NEW</span> 新しく追加した品種</p>
         </header>
 
         <input
