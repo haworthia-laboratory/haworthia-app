@@ -43,6 +43,7 @@ export default function DiaryPage() {
   // フィルター・ソート
   const [filterPlantId, setFilterPlantId] = useState(null);
   const [plantSort, setPlantSort] = useState("species");
+  const [viewMode, setViewMode] = useState("list");
 
   // サムネイル上書き
   const [thumbOverrides, setThumbOverrides] = useState({});
@@ -436,15 +437,19 @@ export default function DiaryPage() {
         {/* 株一覧 */}
         <div className="diary-section-title">
           登録株
-          <div className="plant-sort-group">
-            <button
-              className={`plant-sort-btn${plantSort === "species" ? " active" : ""}`}
-              onClick={() => setPlantSort("species")}
-            >品種順</button>
-            <button
-              className={`plant-sort-btn${plantSort === "acquired" ? " active" : ""}`}
-              onClick={() => setPlantSort("acquired")}
-            >入手日順</button>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <div className="plant-sort-group">
+              <button
+                className={`plant-sort-btn${plantSort === "species" ? " active" : ""}`}
+                onClick={() => setPlantSort("species")}
+              >品種順</button>
+              <button
+                className={`plant-sort-btn${plantSort === "acquired" ? " active" : ""}`}
+                onClick={() => setPlantSort("acquired")}
+              >入手日順</button>
+            </div>
+            <button className={`view-btn${viewMode === "list" ? " active" : ""}`} onClick={() => setViewMode("list")}>☰</button>
+            <button className={`view-btn${viewMode === "grid" ? " active" : ""}`} onClick={() => setViewMode("grid")}>⊞</button>
           </div>
         </div>
 
@@ -587,47 +592,77 @@ export default function DiaryPage() {
         )}
 
 
-        <div className="diary-individual-list">
-          {!showPlantForm && (
-            <button className="diary-add-individual-btn" onClick={openNewPlant}>＋ 株を登録</button>
-          )}
-          {sortedPlants.map(plant => (
-            <div
-              key={plant.id}
-              className="diary-individual-card"
-              onClick={() => router.push(`/diary/${plant.id}`)}
-              style={{ cursor: "pointer" }}
-            >
-              <div className="diary-individual-thumb">
-                {thumbByPlant[plant.id]
-                  ? <img src={thumbByPlant[plant.id]} alt={plant.name} />
-                  : <span className="diary-individual-placeholder">🌿</span>
-                }
-              </div>
-              <div className="diary-individual-info">
-                <div className="diary-individual-name">{plant.name}</div>
-                {plant.species_name && (
-                  plant.species_id
-                    ? <Link href={`/zukan/${plant.species_id}`} className="diary-individual-species diary-species-link" onClick={e => e.stopPropagation()}>{plant.species_name} →</Link>
-                    : <div className="diary-individual-species">{plant.species_name}</div>
-                )}
-                <div className="diary-individual-last">
-                  {plant.acquired_date && `${acquiredTypeLabel(plant.acquired_type)} ${plant.acquired_date.replace(/-/g, ".")}`}
-                  {lastDateByPlant[plant.id] && ` · 最終記録 ${lastDateByPlant[plant.id].replace(/-/g, ".")}`}
+        {viewMode === "grid" ? (
+          <div>
+            {!showPlantForm && (
+              <button className="diary-add-individual-btn" onClick={openNewPlant}>＋ 株を登録</button>
+            )}
+            <div className="diary-plant-grid">
+              {sortedPlants.map(plant => (
+                <div
+                  key={plant.id}
+                  className="diary-plant-grid-card"
+                  onClick={() => router.push(`/diary/${plant.id}`)}
+                >
+                  <div className="diary-plant-grid-img-wrap">
+                    {thumbByPlant[plant.id]
+                      ? <img src={thumbByPlant[plant.id]} alt={plant.name} className="diary-plant-grid-img" />
+                      : <div className="diary-plant-grid-placeholder">🌿</div>
+                    }
+                  </div>
+                  <div className="diary-plant-grid-body">
+                    <div className="diary-plant-grid-name">{plant.name}</div>
+                    {plant.species_name && plant.species_name !== plant.name && (
+                      <div className="diary-plant-grid-species">{plant.species_name}</div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="diary-individual-list">
+            {!showPlantForm && (
+              <button className="diary-add-individual-btn" onClick={openNewPlant}>＋ 株を登録</button>
+            )}
+            {sortedPlants.map(plant => (
+              <div
+                key={plant.id}
+                className="diary-individual-card"
+                onClick={() => router.push(`/diary/${plant.id}`)}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="diary-individual-thumb">
+                  {thumbByPlant[plant.id]
+                    ? <img src={thumbByPlant[plant.id]} alt={plant.name} />
+                    : <span className="diary-individual-placeholder">🌿</span>
+                  }
+                </div>
+                <div className="diary-individual-info">
+                  <div className="diary-individual-name">{plant.name}</div>
+                  {plant.species_name && (
+                    plant.species_id
+                      ? <Link href={`/zukan/${plant.species_id}`} className="diary-individual-species diary-species-link" onClick={e => e.stopPropagation()}>{plant.species_name} →</Link>
+                      : <div className="diary-individual-species">{plant.species_name}</div>
+                  )}
+                  <div className="diary-individual-last">
+                    {plant.acquired_date && `${acquiredTypeLabel(plant.acquired_type)} ${plant.acquired_date.replace(/-/g, ".")}`}
+                    {lastDateByPlant[plant.id] && ` · 最終記録 ${lastDateByPlant[plant.id].replace(/-/g, ".")}`}
+                  </div>
+                </div>
+                <div className="diary-individual-actions" onClick={e => e.stopPropagation()}>
+                  <button
+                    className={`diary-public-btn${plant.is_public ? " active" : ""}`}
+                    onClick={(e) => togglePlantPublic(e, plant)}
+                    title={plant.is_public ? "公開中" : "公開する"}
+                  >{plant.is_public ? "🌿" : "公開"}</button>
+                  <button className="diary-edit-btn" onClick={() => openEditPlant(plant)}>編集</button>
+                  <button className="diary-delete-btn" onClick={() => setDeleteConfirm({ id: plant.id, label: plant.name })}>×</button>
                 </div>
               </div>
-              <div className="diary-individual-actions" onClick={e => e.stopPropagation()}>
-                <button
-                  className={`diary-public-btn${plant.is_public ? " active" : ""}`}
-                  onClick={(e) => togglePlantPublic(e, plant)}
-                  title={plant.is_public ? "公開中" : "公開する"}
-                >{plant.is_public ? "🌿" : "公開"}</button>
-                <button className="diary-edit-btn" onClick={() => openEditPlant(plant)}>編集</button>
-                <button className="diary-delete-btn" onClick={() => setDeleteConfirm({ id: plant.id, label: plant.name })}>×</button>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* 光量マップ */}
         {plants.length > 0 && (() => {
