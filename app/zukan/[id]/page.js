@@ -47,11 +47,9 @@ export default function SpeciesPage({ params }) {
           <div className="detail-accent-bar" />
           <div className="detail-title-wrap">
             <span className="zukan-type-badge">{s.type}</span>
-            <h1 className="detail-name">{s.name}</h1>
+            <h1 className="detail-name">{s.aliases?.[0] ?? s.name}</h1>
+            {s.aliases?.[0] && <p className="detail-yomi">（{s.name}）</p>}
             {s.yomi && <p className="detail-yomi">（{s.yomi}）</p>}
-            {s.aliases && s.aliases.length > 0 && (
-              <p className="detail-yomi">別名：{s.aliases.join("・")}</p>
-            )}
             <p className="detail-scientific">{s.scientific}</p>
           </div>
           {s.gallery && s.gallery[0] && (

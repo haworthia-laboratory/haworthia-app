@@ -202,9 +202,11 @@ export default function ZukanPage() {
     return true;
   });
 
+  const displayName = (s) => s.aliases?.[0] || s.name;
+
   const sorted = [...filtered].sort((a, b) => {
-    if (sort === "name-asc") return a.name.localeCompare(b.name, "ja");
-    if (sort === "name-desc") return b.name.localeCompare(a.name, "ja");
+    if (sort === "name-asc") return displayName(a).localeCompare(displayName(b), "ja");
+    if (sort === "name-desc") return displayName(b).localeCompare(displayName(a), "ja");
     if (sort === "sci-asc") return a.scientific.localeCompare(b.scientific);
     if (sort === "sci-desc") return b.scientific.localeCompare(a.scientific);
     return 0;
@@ -292,9 +294,9 @@ export default function ZukanPage() {
                     {s.isNew && <span className="new-badge">NEW</span>}
                   </div>
                   <div className="zukan-name">
-                    {s.name}
-                    {s.aliases && s.aliases.length > 0 && (
-                      <span className="zukan-alias"> / {s.aliases.join(" / ")}</span>
+                    {s.aliases?.[0] ?? s.name}
+                    {s.aliases?.[0] && (
+                      <span className="zukan-alias">（{s.name}）</span>
                     )}
                   </div>
                   <div className="zukan-scientific">{s.scientific}</div>
@@ -340,9 +342,9 @@ export default function ZukanPage() {
                 <div className="zukan-grid-body">
                   <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
                     <div className="zukan-grid-name">
-                      {s.name}
-                      {s.aliases && s.aliases.length > 0 && (
-                        <span className="zukan-alias"> / {s.aliases.join(" / ")}</span>
+                      {s.aliases?.[0] ?? s.name}
+                      {s.aliases?.[0] && (
+                        <span className="zukan-alias">（{s.name}）</span>
                       )}
                     </div>
                     {s.isNew && <span className="new-badge">NEW</span>}
