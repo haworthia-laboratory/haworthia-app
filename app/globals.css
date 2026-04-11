@@ -2812,6 +2812,28 @@ header h1 {
   overflow: hidden;
 }
 
+/* ギャラリー並び替え */
+.gallery-sort-group {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0.6rem 0 0.2rem;
+}
+.gallery-sort-btn {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid #c8d8c8;
+  background: rgba(255,255,255,0.6);
+  font-size: 0.72rem;
+  color: #7a9a7c;
+  cursor: pointer;
+}
+.gallery-sort-btn.active {
+  background: rgba(122,154,124,0.15);
+  border-color: #7a9a7c;
+  color: #3a6a3c;
+  font-weight: 500;
+}
+
 /* ギャラリー追加 */
 .gallery-img-wrap {
   position: relative;

@@ -6,9 +6,10 @@ import { useState, useEffect } from "react";
 export default function GalleryPage() {
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [openStrip, setOpenStrip] = useState(null); // plantId or key
-  const [selectedPhoto, setSelectedPhoto] = useState({}); // key -> src
-  const [lightbox, setLightbox] = useState(null); // src
+  const [sortOrder, setSortOrder] = useState("date"); // "date" | "species"
+  const [openStrip, setOpenStrip] = useState(null);
+  const [selectedPhoto, setSelectedPhoto] = useState({});
+  const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => {
     fetch("/api/gallery")
@@ -16,6 +17,13 @@ export default function GalleryPage() {
       .then(data => { setGroups(data); setLoading(false); })
       .catch(() => setLoading(false));
   }, []);
+
+  const sortedGroups = [...groups].sort((a, b) => {
+    if (sortOrder === "species") {
+      return (a.speciesName || a.plantName || "").localeCompare(b.speciesName || b.plantName || "", "ja");
+    }
+    return (b.latestDate || "").localeCompare(a.latestDate || "");
+  });
 
   const getKey = (g) => g.plantId || `${g.plantName}_${g.speciesName}`;
 
@@ -61,8 +69,19 @@ export default function GalleryPage() {
             <p>まだ公開された写真がありません</p>
           </div>
         ) : (
+          <>
+          <div className="gallery-sort-group">
+            <button
+              className={`gallery-sort-btn${sortOrder === "date" ? " active" : ""}`}
+              onClick={() => setSortOrder("date")}
+            >投稿順</button>
+            <button
+              className={`gallery-sort-btn${sortOrder === "species" ? " active" : ""}`}
+              onClick={() => setSortOrder("species")}
+            >品種順</button>
+          </div>
           <div className="gallery-grid">
-            {groups.map((g) => {
+            {sortedGroups.map((g) => {
               const key = getKey(g);
               const currentSrc = getCurrentPhoto(g);
               const isStripOpen = openStrip === key;
@@ -105,6 +124,7 @@ export default function GalleryPage() {
               );
             })}
           </div>
+          </>
         )}
       </div>
 
