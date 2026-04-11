@@ -3580,7 +3580,7 @@ export const species = [
     colorGroup: "green",
     name: "宝草",
     scientific: "Haworthia cymbiformis var. obtusa",
-    type: "原種変種",
+    type: "原種",
     accent: "#a8d8a8",
     description: "シンビフォルミスの変種で、葉がより丸くぷっくりしているのが特徴。「宝草」の名は縁起の良さから付けられ、昔から多肉植物の入門品種として親しまれてきた。丈夫で増えやすく初心者にも最適。斑入り（錦）個体は特に人気が高い。",
     water: "春・秋は週1回程度。水を比較的好むが過湿は禁物。",
