@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { species } from "../data";
+import { shopLinks } from "../shop-links";
 import { notFound } from "next/navigation";
 import { supabase } from "../../../lib/supabase";
 
 export default function SpeciesPage({ params }) {
   const s = species.find((sp) => sp.id === params.id);
+  const sShopLinks = shopLinks[params.id] || [];
   const [userGallery, setUserGallery] = useState([]);
 
   useEffect(() => {
@@ -151,11 +153,11 @@ export default function SpeciesPage({ params }) {
           )}
         </div>
 
-        {s.shopLinks && s.shopLinks.length > 0 && (
+        {sShopLinks.length > 0 && (
           <>
             <div className="detail-section-title">購入する</div>
             <div style={{ marginBottom: "1.5rem" }}>
-              {s.shopLinks.map((link, i) => (
+              {sShopLinks.map((link, i) => (
                 <div key={i} dangerouslySetInnerHTML={{ __html: link.html }} style={{ marginBottom: "0.8rem" }} />
               ))}
             </div>
