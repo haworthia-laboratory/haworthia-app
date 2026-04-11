@@ -209,7 +209,7 @@ export default function ZukanPage() {
         <header>
           <Link href="/" className="back-link">← 研究室に戻る</Link>
           <h1 style={{ marginTop: "0.8rem" }}>図鑑</h1>
-          <p className="subtitle">登録品種 {species.length}種</p>
+          <p className="subtitle">登録品種 {species.length} 種</p>
         </header>
 
         <input
