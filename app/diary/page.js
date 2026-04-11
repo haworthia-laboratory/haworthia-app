@@ -61,24 +61,19 @@ export default function DiaryPage() {
 
     const init = async () => {
       if (supabase) {
-        // セッション確認と株データ取得を並列で実行
-        const [{ data: { session } }, { data: p }] = await Promise.all([
+        // セッション確認・株・日記エントリーを全部並列取得
+        const [{ data: { session } }, { data: p }, { data: e }] = await Promise.all([
           supabase.auth.getSession(),
           supabase.from("plants").select("*").order("created_at", { ascending: true }),
+          supabase.from("diary_entries").select("id, date, plant_id, photos").order("date", { ascending: false }),
         ]);
         if (!session) { router.push("/login"); return; }
         setPlants(p || []);
-        setLoading(false);
-        // 日記エントリーは必要なカラムだけ後から取得
-        const { data: e } = await supabase
-          .from("diary_entries")
-          .select("id, date, plant_id, photos")
-          .order("date", { ascending: false });
-        // photosは1枚目だけ使う（サムネイル用）
         setEntries((e || []).map(entry => ({
           ...entry,
           photos: entry.photos?.slice(0, 1) || [],
         })));
+        setLoading(false);
       } else {
         try { setEntries(JSON.parse(localStorage.getItem("diary") || "[]")); } catch { setEntries([]); }
         try { setPlants(JSON.parse(localStorage.getItem("plants") || "[]")); } catch { setPlants([]); }
