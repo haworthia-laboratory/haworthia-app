@@ -88,7 +88,7 @@ export default function GalleryPage() {
               return (
                 <div key={key} className="gallery-item">
                   <div className="gallery-img-wrap" onClick={() => setLightbox(currentSrc)}>
-                    <img src={currentSrc} alt={g.plantName || "ハオルチア"} className="gallery-img" />
+                    <img src={currentSrc} alt={g.plantName || "ハオルチア"} className="gallery-img" loading="lazy" decoding="async" />
                     <div className="gallery-expand-hint">🔍</div>
                   </div>
                   <div className="gallery-item-body">
@@ -115,6 +115,8 @@ export default function GalleryPage() {
                             className={`gallery-photo-option${currentSrc === src ? " selected" : ""}`}
                             onClick={() => handlePhotoSelect(g, src)}
                             alt={`写真 ${i + 1}`}
+                            loading="lazy"
+                            decoding="async"
                           />
                         ))}
                       </div>
