@@ -13,7 +13,10 @@ export default function SpeciesPage({ params }) {
   const [userGallery, setUserGallery] = useState([]);
 
   useEffect(() => {
-    const imgs = JSON.parse(localStorage.getItem(`gallery_${params.id}`) || "[]");
+    const allIds = [params.id, ...(s?.mergedFrom || [])];
+    const imgs = allIds.flatMap(id =>
+      JSON.parse(localStorage.getItem(`gallery_${id}`) || "[]")
+    );
 
     const loadDiaryPhotos = async () => {
       let diaryPhotos = [];
@@ -21,12 +24,12 @@ export default function SpeciesPage({ params }) {
         const { data } = await supabase
           .from("diary_entries")
           .select("photos")
-          .eq("species_id", params.id);
+          .in("species_id", allIds);
         diaryPhotos = (data || []).flatMap(e => e.photos || []);
       } else {
         const allEntries = JSON.parse(localStorage.getItem("diary") || "[]");
         diaryPhotos = allEntries
-          .filter(e => e.species_id === params.id)
+          .filter(e => allIds.includes(e.species_id))
           .flatMap(e => e.photos || []);
       }
       setUserGallery([...imgs, ...diaryPhotos]);
