@@ -2,12 +2,12 @@ import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const supabaseAdmin = createClient(
+  const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   );
 
-  const { data: plants } = await supabaseAdmin
+  const { data: plants } = await supabase
     .from("plants")
     .select("id, name, species_name")
     .eq("is_public", true);
@@ -17,7 +17,7 @@ export async function GET() {
   }
 
   const plantIds = plants.map(p => p.id);
-  const { data: entries } = await supabaseAdmin
+  const { data: entries } = await supabase
     .from("diary_entries")
     .select("plant_id, date, photos, note")
     .in("plant_id", plantIds)
