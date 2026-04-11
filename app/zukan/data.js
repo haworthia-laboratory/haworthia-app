@@ -3032,7 +3032,7 @@ export const species = [
     group: "クーペリー系",
     colorGroup: "white",
     name: "ピリフェラ錦",
-    aliases: ["Ice Sprite", "ミルキークラウド", "アイススプライト", "白水晶"],
+    aliases: ["アイススプライト", "シルバースワール", "白水晶", "ミルキークラウド", "水晶玉"],
     scientific: "Haworthia cooperi var. pilifera f. variegata",
     type: "園芸種",
     accent: "#c8e0c8",
