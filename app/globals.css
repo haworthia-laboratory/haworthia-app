@@ -3074,6 +3074,65 @@ header h1 {
   object-fit: cover;
 }
 
+/* ホーム セクションラベル */
+.home-section-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #a0b8a2;
+  text-transform: uppercase;
+  margin: 1.4rem 0 0.5rem 0.2rem;
+}
+
+/* ホーム 2列グリッド */
+.home-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.2rem;
+}
+
+/* ホーム 3列グリッド */
+.home-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.2rem;
+}
+
+/* グリッドカード */
+.home-grid-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(90,138,92,0.1);
+  border-radius: 14px;
+  padding: 1rem 0.5rem 0.9rem;
+  text-decoration: none;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+.home-grid-card:hover {
+  box-shadow: 0 2px 10px rgba(90,138,92,0.1);
+  border-color: rgba(90,138,92,0.25);
+}
+.home-grid-icon {
+  opacity: 0.85;
+}
+.home-grid-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #555;
+  text-align: center;
+}
+.home-grid-desc {
+  font-size: 0.68rem;
+  color: #aaa;
+  text-align: center;
+  line-height: 1.4;
+}
+
 /* グローバルメニュー */
 .global-menu-btn {
   position: fixed;

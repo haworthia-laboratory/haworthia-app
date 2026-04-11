@@ -231,6 +231,8 @@ export default function Home() {
             </Link>
           )}
 
+          {/* 記録する */}
+          <div className="home-section-label">記録する</div>
           <Link href="/diary" className="home-nav-card">
             <div className="home-nav-icon"><IconDiary size={48} /></div>
             <div className="home-nav-body">
@@ -239,7 +241,6 @@ export default function Home() {
             </div>
             <div className="home-nav-arrow">›</div>
           </Link>
-
           <div className="home-nav-card home-nav-card--light" onClick={() => lightInputRef.current.click()} style={{ cursor: "pointer" }}>
             <div className="home-nav-icon"><IconLight size={48} /></div>
             <div className="home-nav-body">
@@ -248,13 +249,7 @@ export default function Home() {
             </div>
             <div className="home-nav-arrow">›</div>
           </div>
-          <input
-            ref={lightInputRef}
-            type="file"
-            accept="image/*"
-            onChange={measureLight}
-            style={{ display: "none" }}
-          />
+          <input ref={lightInputRef} type="file" accept="image/*" onChange={measureLight} style={{ display: "none" }} />
           {lightResult && (
             <div className="light-result">
               <div className="light-result-label">{lightResult.label}</div>
@@ -266,50 +261,40 @@ export default function Home() {
             </div>
           )}
 
-          <Link href="/zukan" className="home-nav-card">
-            <div className="home-nav-icon"><IconZukan size={48} /></div>
-            <div className="home-nav-body">
-              <div className="home-nav-title">図鑑</div>
-              <div className="home-nav-desc">登録品種を検索・フィルター</div>
-            </div>
-            <div className="home-nav-arrow">›</div>
-          </Link>
+          {/* 調べる */}
+          <div className="home-section-label">調べる</div>
+          <div className="home-grid-2">
+            <Link href="/zukan" className="home-grid-card">
+              <div className="home-grid-icon"><IconZukan size={36} /></div>
+              <div className="home-grid-title">品種図鑑</div>
+              <div className="home-grid-desc">171品種を検索</div>
+            </Link>
+            <Link href="/akinator" className="home-grid-card">
+              <div className="home-grid-icon"><IconDiagnose size={36} /></div>
+              <div className="home-grid-title">品種診断</div>
+              <div className="home-grid-desc">質問で絞り込む</div>
+            </Link>
+          </div>
 
-          <Link href="/akinator" className="home-nav-card">
-            <div className="home-nav-icon"><IconDiagnose size={48} /></div>
-            <div className="home-nav-body">
-              <div className="home-nav-title">品種診断</div>
-              <div className="home-nav-desc">質問に答えて品種を絞り込む</div>
-            </div>
-            <div className="home-nav-arrow">›</div>
-          </Link>
-
-          <Link href="/column" className="home-nav-card">
-            <div className="home-nav-icon"><IconColumn size={48} /></div>
-            <div className="home-nav-body">
-              <div className="home-nav-title">コラム</div>
-              <div className="home-nav-desc">ハオルチアのある暮らし</div>
-            </div>
-            <div className="home-nav-arrow">›</div>
-          </Link>
-
-          <Link href="/gallery" className="home-nav-card">
-            <div className="home-nav-icon"><IconGallery size={48} /></div>
-            <div className="home-nav-body">
-              <div className="home-nav-title">みんなのギャラリー</div>
-              <div className="home-nav-desc">ユーザー投稿の写真を見る</div>
-            </div>
-            <div className="home-nav-arrow">›</div>
-          </Link>
-
-          <Link href="/board" className="home-nav-card">
-            <div className="home-nav-icon"><IconBoard size={48} /></div>
-            <div className="home-nav-body">
-              <div className="home-nav-title">掲示板</div>
-              <div className="home-nav-desc">質問・雑談・情報交換</div>
-            </div>
-            <div className="home-nav-arrow">›</div>
-          </Link>
+          {/* 読む・つながる */}
+          <div className="home-section-label">読む・つながる</div>
+          <div className="home-grid-3">
+            <Link href="/column" className="home-grid-card">
+              <div className="home-grid-icon"><IconColumn size={36} /></div>
+              <div className="home-grid-title">コラム</div>
+              <div className="home-grid-desc">育て方・豆知識</div>
+            </Link>
+            <Link href="/gallery" className="home-grid-card">
+              <div className="home-grid-icon"><IconGallery size={36} /></div>
+              <div className="home-grid-title">ギャラリー</div>
+              <div className="home-grid-desc">みんなの写真</div>
+            </Link>
+            <Link href="/board" className="home-grid-card">
+              <div className="home-grid-icon"><IconBoard size={36} /></div>
+              <div className="home-grid-title">掲示板</div>
+              <div className="home-grid-desc">質問・雑談</div>
+            </Link>
+          </div>
 
         </div>
 
