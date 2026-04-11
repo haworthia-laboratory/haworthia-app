@@ -231,26 +231,6 @@ export default function Home() {
             </Link>
           )}
 
-          {/* 調べる */}
-          <div className="home-section-label">調べる</div>
-          <div className="home-grid-3">
-            <Link href="/zukan" className="home-grid-card">
-              <div className="home-grid-icon"><IconZukan size={36} /></div>
-              <div className="home-grid-title">品種図鑑</div>
-              <div className="home-grid-desc">171品種を検索</div>
-            </Link>
-            <Link href="/akinator" className="home-grid-card">
-              <div className="home-grid-icon"><IconDiagnose size={36} /></div>
-              <div className="home-grid-title">品種診断</div>
-              <div className="home-grid-desc">質問で絞り込む</div>
-            </Link>
-            <Link href="/column" className="home-grid-card">
-              <div className="home-grid-icon"><IconColumn size={36} /></div>
-              <div className="home-grid-title">コラム</div>
-              <div className="home-grid-desc">育て方・豆知識</div>
-            </Link>
-          </div>
-
           {/* 記録する */}
           <div className="home-section-label">記録する</div>
           <Link href="/diary" className="home-nav-card">
@@ -280,6 +260,26 @@ export default function Home() {
               <div className="light-guide">{lightResult.guide}</div>
             </div>
           )}
+
+          {/* 調べる */}
+          <div className="home-section-label">調べる</div>
+          <div className="home-grid-3">
+            <Link href="/zukan" className="home-grid-card">
+              <div className="home-grid-icon"><IconZukan size={36} /></div>
+              <div className="home-grid-title">品種図鑑</div>
+              <div className="home-grid-desc">171品種を検索</div>
+            </Link>
+            <Link href="/akinator" className="home-grid-card">
+              <div className="home-grid-icon"><IconDiagnose size={36} /></div>
+              <div className="home-grid-title">品種診断</div>
+              <div className="home-grid-desc">質問で絞り込む</div>
+            </Link>
+            <Link href="/column" className="home-grid-card">
+              <div className="home-grid-icon"><IconColumn size={36} /></div>
+              <div className="home-grid-title">コラム</div>
+              <div className="home-grid-desc">育て方・豆知識</div>
+            </Link>
+          </div>
 
           {/* つながる */}
           <div className="home-section-label">つながる</div>

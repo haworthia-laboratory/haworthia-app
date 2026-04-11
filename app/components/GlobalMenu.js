@@ -9,10 +9,10 @@ import {
 
 const MENU_ITEMS = [
   { href: "/",         label: "研究室トップ",       Icon: IconHome },
+  { href: "/diary",    label: "成長日記",           Icon: IconDiary },
   { href: "/zukan",    label: "品種図鑑",           Icon: IconZukan },
   { href: "/akinator", label: "品種診断",           Icon: IconDiagnose },
   { href: "/column",   label: "コラム",             Icon: IconColumn },
-  { href: "/diary",    label: "成長日記",           Icon: IconDiary },
   { href: "/gallery",  label: "みんなのギャラリー", Icon: IconGallery },
   { href: "/board",    label: "掲示板",             Icon: IconBoard },
   { href: "/contact",  label: "お問い合わせ",       Icon: IconContact },
