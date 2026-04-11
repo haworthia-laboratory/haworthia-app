@@ -611,9 +611,12 @@ export default function DiaryPage() {
                 <div
                   key={plant.id}
                   className="diary-plant-grid-card"
-                  onClick={() => { setOpenPhotoSelect(null); router.push(`/diary/${plant.id}`); }}
                 >
-                  <div className="diary-plant-grid-img-wrap">
+                  <div
+                    className="diary-plant-grid-img-wrap"
+                    onClick={() => { setOpenPhotoSelect(null); router.push(`/diary/${plant.id}`); }}
+                    style={{ cursor: "pointer" }}
+                  >
                     {thumbByPlant[plant.id]
                       ? <img src={thumbByPlant[plant.id]} alt={plant.name} className="diary-plant-grid-img" />
                       : <div className="diary-plant-grid-placeholder">🌿</div>
