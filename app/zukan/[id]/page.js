@@ -46,6 +46,7 @@ export default function SpeciesPage({ params }) {
           <div className="detail-title-wrap">
             <span className="zukan-type-badge">{s.type}</span>
             <h1 className="detail-name">{s.name}</h1>
+            {s.yomi && <p className="detail-yomi">（{s.yomi}）</p>}
             <p className="detail-scientific">{s.scientific}</p>
           </div>
           {s.gallery && s.gallery[0] && (

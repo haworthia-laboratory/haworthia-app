@@ -606,7 +606,11 @@ export default function DiaryPage() {
               </div>
               <div className="diary-individual-info">
                 <div className="diary-individual-name">{plant.name}</div>
-                {plant.species_name && <div className="diary-individual-species">{plant.species_name}</div>}
+                {plant.species_name && (
+                  plant.species_id
+                    ? <Link href={`/zukan/${plant.species_id}`} className="diary-individual-species diary-species-link" onClick={e => e.stopPropagation()}>{plant.species_name} →</Link>
+                    : <div className="diary-individual-species">{plant.species_name}</div>
+                )}
                 <div className="diary-individual-last">
                   {plant.acquired_date && `${acquiredTypeLabel(plant.acquired_type)} ${plant.acquired_date.replace(/-/g, ".")}`}
                   {lastDateByPlant[plant.id] && ` · 最終記録 ${lastDateByPlant[plant.id].replace(/-/g, ".")}`}

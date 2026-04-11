@@ -1088,6 +1088,17 @@ header h1 {
   letter-spacing: 0.05em;
 }
 
+.light-guide {
+  margin-top: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  background: rgba(90, 138, 92, 0.07);
+  border-left: 3px solid #5a8a5c;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.78rem;
+  color: #4a7a4c;
+  line-height: 1.6;
+}
+
 /* 写真識別結果 */
 .identify-result {
   margin-top: 0.8rem;
@@ -1686,6 +1697,13 @@ header h1 {
   letter-spacing: 0.03em;
 }
 
+.detail-yomi {
+  font-size: 0.85rem;
+  color: #8aab8c;
+  margin: 0.1rem 0 0.2rem;
+  letter-spacing: 0.05em;
+}
+
 .detail-section-title {
   font-size: 0.68rem;
   letter-spacing: 0.2em;
@@ -2165,6 +2183,28 @@ header h1 {
   font-size: 0.75rem;
   color: #7a9b7c;
   margin-top: 0.1rem;
+}
+
+.diary-species-link {
+  display: inline-block;
+  color: #5a8a5c;
+  text-decoration: underline;
+  text-decoration-color: rgba(90,138,92,0.4);
+  font-size: 0.75rem;
+  margin-top: 0.1rem;
+}
+
+.new-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #e8736a, #f0a070);
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 1px 5px;
+  border-radius: 4px;
+  line-height: 1.4;
+  vertical-align: middle;
 }
 
 .diary-individual-last {

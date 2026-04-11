@@ -186,10 +186,10 @@ export default function Home() {
         }
         const brightness = sum / 10000;
         let level;
-        if (brightness > 200) level = { label: "非常に良い", desc: "ハオルチアに最適な明るさです", bar: 100 };
-        else if (brightness > 140) level = { label: "良い", desc: "十分な光量があります", bar: 75 };
-        else if (brightness > 80) level = { label: "普通", desc: "もう少し明るい場所が理想的です", bar: 50 };
-        else level = { label: "足りない", desc: "光が不足しています。窓辺に移動しましょう", bar: 25 };
+        if (brightness > 200) level = { label: "非常に良い", desc: "ハオルチアに最適な明るさです", bar: 100, guide: "万象・玉扇・硬葉系など、やや強めの光を好む品種も問題なく育てられます。直射日光が当たる場合はレースカーテン越しにしましょう。" };
+        else if (brightness > 140) level = { label: "良い", desc: "十分な光量があります", bar: 75, guide: "オブツーサ系・シンビフォルミスなど多くの軟葉系品種に最適な環境です。ほとんどの品種を育てられます。" };
+        else if (brightness > 80) level = { label: "普通", desc: "もう少し明るい場所が理想的です", bar: 50, guide: "耐陰性の高い品種（宝草・シンビフォルミスなど）なら育てられますが、窓に近づけるとより元気に育ちます。" };
+        else level = { label: "足りない", desc: "光が不足しています。窓辺に移動しましょう", bar: 25, guide: "この明るさでは多くの品種が徒長してしまいます。できるだけ窓辺に移動するか、植物育成ライトの使用を検討してみてください。" };
         setLightResult(level);
         e.target.value = "";
       };
@@ -261,6 +261,7 @@ export default function Home() {
                 <div className="light-bar" style={{ width: `${lightResult.bar}%` }} />
               </div>
               <div className="light-desc">{lightResult.desc}</div>
+              <div className="light-guide">{lightResult.guide}</div>
             </div>
           )}
 

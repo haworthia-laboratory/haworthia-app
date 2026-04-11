@@ -281,6 +281,7 @@ export default function ZukanPage() {
                   <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.4rem" }}>
                     <span className="zukan-type-badge" style={{ margin: 0 }}>{s.type}</span>
                     <span className="card-color-dot" style={{ background: COLOR_DOT_MAP[getColorGroup(s)] }} />
+                    {s.isNew && <span className="new-badge">NEW</span>}
                   </div>
                   <div className="zukan-name">{s.name}</div>
                   <div className="zukan-scientific">{s.scientific}</div>
@@ -324,7 +325,10 @@ export default function ZukanPage() {
                   )}
                 </div>
                 <div className="zukan-grid-body">
-                  <div className="zukan-grid-name">{s.name}</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <div className="zukan-grid-name">{s.name}</div>
+                    {s.isNew && <span className="new-badge">NEW</span>}
+                  </div>
                   <div className="zukan-grid-scientific">{s.scientific}</div>
                 </div>
                 <div className="zukan-grid-marks">

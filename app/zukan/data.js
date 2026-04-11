@@ -1,6 +1,7 @@
 export const species = [
   {
     id: "kyu-korisato",
+    yomi: "きゅうこおりざとう",
     group: "軟葉系",
     colorGroup: "white",
     name: "旧氷砂糖",
@@ -25,6 +26,7 @@ export const species = [
   },
   {
     id: "shin-korisato",
+    yomi: "しんこおりざとう",
     group: "軟葉系",
     colorGroup: "white",
     name: "新氷砂糖",
@@ -49,6 +51,7 @@ export const species = [
   },
   {
     id: "seiun-no-mai",
+    yomi: "せいうんのまい",
     group: "軟葉系",
     colorGroup: "green",
     name: "青雲の舞",
@@ -79,6 +82,7 @@ export const species = [
   },
   {
     id: "cymbiformis",
+    yomi: "シンビフォルミス",
     group: "軟葉系",
     colorGroup: "green",
     name: "シンビフォルミス",
@@ -350,6 +354,7 @@ export const species = [
   },
   {
     id: "truncata",
+    yomi: "トゥルンカータ",
     group: "万象・玉扇系",
     colorGroup: "green",
     name: "玉扇",
@@ -374,6 +379,7 @@ export const species = [
   },
   {
     id: "maughanii",
+    yomi: "マウガニー",
     group: "万象・玉扇系",
     colorGroup: "green",
     name: "万象",
@@ -446,6 +452,7 @@ export const species = [
   },
   {
     id: "comptoniana",
+    yomi: "コンプトニアナ",
     group: "コンプトニアナ系",
     colorGroup: "green",
     name: "コンプトニアナ",
@@ -1071,6 +1078,7 @@ export const species = [
   // ==================== 硬葉系 原種 ====================
   {
     id: "fasciata",
+    yomi: "ファシアータ",
     group: "硬葉系",
     colorGroup: "green",
     name: "十二の巻",
@@ -1095,6 +1103,7 @@ export const species = [
   },
   {
     id: "attenuata",
+    yomi: "アッテヌアータ",
     group: "硬葉系",
     colorGroup: "green",
     name: "アッテヌアータ",
@@ -2443,6 +2452,8 @@ export const species = [
   },
   {
     id: "dodson-ob1",
+    isNew: true,
+    yomi: "ドドソンむらさきオブツーサ",
     group: "オブツーサ系",
     colorGroup: "purple",
     name: "ドドソン紫オブツーサ（OB-1）",
@@ -2473,6 +2484,8 @@ export const species = [
   },
   {
     id: "black-obtusa",
+    isNew: true,
+    yomi: "ブラックオブツーサ",
     group: "オブツーサ系",
     colorGroup: "black",
     name: "ブラックオブツーサ",
@@ -2990,6 +3003,7 @@ export const species = [
   },
   {
     id: "hakuteijo",
+    yomi: "はくていじょう",
     group: "交配種",
     colorGroup: "purple",
     name: "白帝城",
@@ -3236,6 +3250,7 @@ export const species = [
   },
   {
     id: "suiran",
+    yomi: "すいらん",
     group: "ボエルゲリー系",
     colorGroup: "green",
     name: "翠嵐",
@@ -3262,6 +3277,7 @@ export const species = [
   },
   {
     id: "shizukuishi",
+    yomi: "しずくいし",
     group: "オブツーサ系",
     colorGroup: "green",
     name: "雫石",
@@ -3342,6 +3358,8 @@ export const species = [
   },
   {
     id: "tsukikage",
+    isNew: true,
+    yomi: "つきかげ",
     group: "軟葉系",
     colorGroup: "green",
     name: "月影",
@@ -3368,6 +3386,8 @@ export const species = [
   },
   {
     id: "deep-purple",
+    isNew: true,
+    yomi: "ディープパープル",
     group: "オブツーサ系",
     colorGroup: "purple",
     name: "ディープパープル",
@@ -3394,6 +3414,8 @@ export const species = [
   },
   {
     id: "hakusuisho",
+    isNew: true,
+    yomi: "はくすいしょう",
     group: "クーペリー系",
     colorGroup: "white",
     name: "白水晶",
@@ -3420,6 +3442,7 @@ export const species = [
   },
   {
     id: "obtusa-truncata",
+    isNew: true,
     group: "オブツーサ系",
     colorGroup: "green",
     name: "オブツーサ トゥルンカータ",
@@ -3446,6 +3469,8 @@ export const species = [
   },
   {
     id: "ice-sprite",
+    isNew: true,
+    yomi: "アイススプライト",
     group: "オブツーサ系",
     colorGroup: "white",
     name: "アイススプライト",
@@ -3472,6 +3497,8 @@ export const species = [
   },
   {
     id: "midori-suisho",
+    isNew: true,
+    yomi: "みどりすいしょう",
     group: "オブツーサ系",
     colorGroup: "green",
     name: "緑水晶",
@@ -3498,6 +3525,8 @@ export const species = [
   },
   {
     id: "haku-ojo",
+    isNew: true,
+    yomi: "はくおうじょう",
     group: "軟葉系",
     colorGroup: "white",
     name: "白王城",
@@ -3524,6 +3553,8 @@ export const species = [
   },
   {
     id: "shirayuki-emaki",
+    isNew: true,
+    yomi: "しらゆきえまき",
     group: "軟葉系",
     colorGroup: "white",
     name: "白雪絵巻",
@@ -3550,6 +3581,8 @@ export const species = [
   },
   {
     id: "ao-suisho",
+    isNew: true,
+    yomi: "あおすいしょう",
     group: "オブツーサ系",
     colorGroup: "green",
     name: "青水晶",
@@ -3576,6 +3609,8 @@ export const species = [
   },
   {
     id: "takarakusa",
+    isNew: true,
+    yomi: "たからくさ",
     group: "軟葉系",
     colorGroup: "green",
     name: "宝草",
@@ -3606,6 +3641,8 @@ export const species = [
   },
   {
     id: "blue-lens",
+    isNew: true,
+    yomi: "ブルーレンズ",
     group: "軟葉系",
     colorGroup: "green",
     name: "ブルーレンズ",
@@ -3632,6 +3669,8 @@ export const species = [
   },
   {
     id: "hula-dance",
+    isNew: true,
+    yomi: "フラダンス",
     group: "交配種",
     colorGroup: "green",
     name: "フラダンス",
