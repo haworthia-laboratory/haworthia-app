@@ -3016,3 +3016,52 @@ header h1 {
   text-decoration-color: rgba(90,138,92,0.4);
   text-underline-offset: 3px;
 }
+
+/* コラム記事下部：紹介した品種・おすすめ商品 */
+.column-affiliate-section {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(90,138,92,0.15);
+}
+
+.column-affiliate-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #7a9a7c;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.column-affiliate-label {
+  font-size: 0.8rem;
+  color: #5a8a5c;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.column-affiliate-note {
+  font-size: 0.72rem;
+  color: #aaa;
+  margin-bottom: 0.8rem;
+}
+
+.column-affiliate-item {
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+
+/* 広告バナー */
+.ad-banner {
+  margin: 1.5rem 0;
+  text-align: center;
+  overflow-x: auto;
+}
+
+.ad-banner-section {
+  margin: 2rem 0;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(90,138,92,0.1);
+  border-bottom: 1px solid rgba(90,138,92,0.1);
+  text-align: center;
+}
