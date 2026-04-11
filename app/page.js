@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "../lib/supabase";
+import { IconDiary, IconLight, IconZukan, IconDiagnose, IconColumn, IconGallery, IconBoard } from "./components/Icons";
 
 function HaworthiaIcon() {
   return (
@@ -231,7 +232,7 @@ export default function Home() {
           )}
 
           <Link href="/diary" className="home-nav-card">
-            <div className="home-nav-icon"><NoteIcon /></div>
+            <div className="home-nav-icon"><IconDiary size={48} /></div>
             <div className="home-nav-body">
               <div className="home-nav-title">成長日記</div>
               <div className="home-nav-desc">株の登録・写真記録・成長メモ</div>
@@ -240,7 +241,7 @@ export default function Home() {
           </Link>
 
           <div className="home-nav-card home-nav-card--light" onClick={() => lightInputRef.current.click()} style={{ cursor: "pointer" }}>
-            <div className="home-nav-icon"><LightIcon /></div>
+            <div className="home-nav-icon"><IconLight size={48} /></div>
             <div className="home-nav-body">
               <div className="home-nav-title">照度チェック</div>
               <div className="home-nav-desc">置き場所の明るさを写真で確認</div>
@@ -266,7 +267,7 @@ export default function Home() {
           )}
 
           <Link href="/zukan" className="home-nav-card">
-            <div className="home-nav-icon"><BookIcon /></div>
+            <div className="home-nav-icon"><IconZukan size={48} /></div>
             <div className="home-nav-body">
               <div className="home-nav-title">図鑑</div>
               <div className="home-nav-desc">登録品種を検索・フィルター</div>
@@ -275,7 +276,7 @@ export default function Home() {
           </Link>
 
           <Link href="/akinator" className="home-nav-card">
-            <div className="home-nav-icon"><DiagnoseIcon /></div>
+            <div className="home-nav-icon"><IconDiagnose size={48} /></div>
             <div className="home-nav-body">
               <div className="home-nav-title">品種診断</div>
               <div className="home-nav-desc">質問に答えて品種を絞り込む</div>
@@ -284,18 +285,28 @@ export default function Home() {
           </Link>
 
           <Link href="/column" className="home-nav-card">
-            <div className="home-nav-icon">
-              <svg viewBox="0 0 64 64" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
-                <rect x="10" y="8" width="44" height="48" rx="4" fill="rgba(160,148,136,0.18)" stroke="#9a8e84" strokeWidth="1.6"/>
-                <line x1="18" y1="22" x2="46" y2="22" stroke="#b8aca0" strokeWidth="1.2" strokeLinecap="round" opacity="0.7"/>
-                <line x1="18" y1="30" x2="46" y2="30" stroke="#b8aca0" strokeWidth="1.2" strokeLinecap="round" opacity="0.7"/>
-                <line x1="18" y1="38" x2="38" y2="38" stroke="#b8aca0" strokeWidth="1.2" strokeLinecap="round" opacity="0.5"/>
-                <rect x="18" y="12" width="12" height="6" rx="1" fill="rgba(160,148,136,0.3)" stroke="#9a8e84" strokeWidth="0.8"/>
-              </svg>
-            </div>
+            <div className="home-nav-icon"><IconColumn size={48} /></div>
             <div className="home-nav-body">
               <div className="home-nav-title">コラム</div>
               <div className="home-nav-desc">ハオルチアのある暮らし</div>
+            </div>
+            <div className="home-nav-arrow">›</div>
+          </Link>
+
+          <Link href="/gallery" className="home-nav-card">
+            <div className="home-nav-icon"><IconGallery size={48} /></div>
+            <div className="home-nav-body">
+              <div className="home-nav-title">みんなのギャラリー</div>
+              <div className="home-nav-desc">ユーザー投稿の写真を見る</div>
+            </div>
+            <div className="home-nav-arrow">›</div>
+          </Link>
+
+          <Link href="/board" className="home-nav-card">
+            <div className="home-nav-icon"><IconBoard size={48} /></div>
+            <div className="home-nav-body">
+              <div className="home-nav-title">掲示板</div>
+              <div className="home-nav-desc">質問・雑談・情報交換</div>
             </div>
             <div className="home-nav-arrow">›</div>
           </Link>
