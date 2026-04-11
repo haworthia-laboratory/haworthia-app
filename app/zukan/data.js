@@ -3033,7 +3033,7 @@ export const species = [
     colorGroup: "white",
     name: "ピリフェラ錦",
     aliases: ["アイススプライト", "シルバースワール", "白水晶", "ミルキークラウド", "水晶玉"],
-    scientific: "Haworthia cooperi var. pilifera f. variegata",
+    scientific: "Haworthia cooperi var. pilifera f. variegata（Ice Sprite / Silver Swirl / Hakusuisho / Milky Cloud / Suishoudama）",
     type: "園芸種",
     accent: "#c8e0c8",
     description: "クーペリー var.ピリフェラの斑入り個体。白い斑が葉全体に入り、ピリフェラ特有の葉先の長い毛と相まって非常に繊細で優美な印象を与える。斑のパターンは個体によって異なり、白斑・糊斑・黄斑などさまざまな表情がある。成長はやや緩やかだが、その分希少性が高い。「白水晶」の名で流通する個体はこの品種の銘品として特に知られる。",
