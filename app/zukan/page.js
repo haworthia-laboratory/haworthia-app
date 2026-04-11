@@ -191,6 +191,7 @@ export default function ZukanPage() {
       const hit = s.name.includes(query)
         || s.scientific.toLowerCase().includes(q)
         || (s.yomi && s.yomi.includes(query))
+        || (s.kana && s.kana.includes(q))
         || (s.aliases || []).some(a => a.includes(query));
       if (!hit) return false;
     }
