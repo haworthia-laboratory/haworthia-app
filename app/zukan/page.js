@@ -186,7 +186,14 @@ export default function ZukanPage() {
   };
 
   const filtered = species.filter((s) => {
-    if (query && !s.name.includes(query) && !s.scientific.toLowerCase().includes(query.toLowerCase())) return false;
+    if (query) {
+      const q = query.toLowerCase();
+      const hit = s.name.includes(query)
+        || s.scientific.toLowerCase().includes(q)
+        || (s.yomi && s.yomi.includes(query))
+        || (s.aliases || []).some(a => a.includes(query));
+      if (!hit) return false;
+    }
     if (colorFilter !== "all" && getColorGroup(s) !== colorFilter) return false;
     if (typeFilter !== "all" && s.type !== typeFilter) return false;
     if (groupFilter !== "all" && s.group !== groupFilter) return false;
@@ -284,7 +291,12 @@ export default function ZukanPage() {
                     <span className="card-color-dot" style={{ background: COLOR_DOT_MAP[getColorGroup(s)] }} />
                     {s.isNew && <span className="new-badge">NEW</span>}
                   </div>
-                  <div className="zukan-name">{s.name}</div>
+                  <div className="zukan-name">
+                    {s.name}
+                    {s.aliases && s.aliases.length > 0 && (
+                      <span className="zukan-alias"> / {s.aliases.join(" / ")}</span>
+                    )}
+                  </div>
                   <div className="zukan-scientific">{s.scientific}</div>
                 </div>
                 <div className="zukan-card-marks">
@@ -327,7 +339,12 @@ export default function ZukanPage() {
                 </div>
                 <div className="zukan-grid-body">
                   <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                    <div className="zukan-grid-name">{s.name}</div>
+                    <div className="zukan-grid-name">
+                      {s.name}
+                      {s.aliases && s.aliases.length > 0 && (
+                        <span className="zukan-alias"> / {s.aliases.join(" / ")}</span>
+                      )}
+                    </div>
                     {s.isNew && <span className="new-badge">NEW</span>}
                   </div>
                   <div className="zukan-grid-scientific">{s.scientific}</div>

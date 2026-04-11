@@ -1648,6 +1648,13 @@ header h1 {
   letter-spacing: 0.03em;
 }
 
+.zukan-alias {
+  font-size: 0.85em;
+  color: #7a9a7c;
+  font-weight: 300;
+  letter-spacing: 0;
+}
+
 /* 品種詳細ページ */
 .detail-header {
   margin: 1.2rem 0 1rem;
