@@ -3181,10 +3181,13 @@ header h1 {
   color: #5a8a5c;
 }
 .global-menu-icon {
-  font-size: 1rem;
-  width: 1.4rem;
-  text-align: center;
-  filter: grayscale(0.3);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0.85;
 }
 
 /* 掲示板 */
