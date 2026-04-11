@@ -44,6 +44,7 @@ export default function DiaryPage() {
   const [filterPlantId, setFilterPlantId] = useState(null);
   const [plantSort, setPlantSort] = useState("species");
   const [viewMode, setViewMode] = useState("list");
+  const [openPhotoSelect, setOpenPhotoSelect] = useState(null);
 
   // サムネイル上書き
   const [thumbOverrides, setThumbOverrides] = useState({});
@@ -392,6 +393,14 @@ export default function DiaryPage() {
 
   const acquiredTypeLabel = (type) => ACQUIRED_TYPES.find(t => t.id === type)?.label || "";
 
+  const photosByPlant = {};
+  entries.forEach(e => {
+    if (e.plant_id && e.photos?.length > 0) {
+      if (!photosByPlant[e.plant_id]) photosByPlant[e.plant_id] = [];
+      photosByPlant[e.plant_id].push(...e.photos);
+    }
+  });
+
   return (
     <main>
       {deleteConfirm && (
@@ -602,7 +611,7 @@ export default function DiaryPage() {
                 <div
                   key={plant.id}
                   className="diary-plant-grid-card"
-                  onClick={() => router.push(`/diary/${plant.id}`)}
+                  onClick={() => { setOpenPhotoSelect(null); router.push(`/diary/${plant.id}`); }}
                 >
                   <div className="diary-plant-grid-img-wrap">
                     {thumbByPlant[plant.id]
@@ -611,9 +620,30 @@ export default function DiaryPage() {
                     }
                   </div>
                   <div className="diary-plant-grid-body">
-                    <div className="diary-plant-grid-name">{plant.name}</div>
+                    <div style={{ display: "flex", alignItems: "flex-start", gap: "0.3rem" }}>
+                      <div className="diary-plant-grid-name" style={{ flex: 1 }}>{plant.name}</div>
+                      {photosByPlant[plant.id]?.length > 1 && (
+                        <button
+                          className={`diary-grid-photo-toggle${openPhotoSelect === plant.id ? " open" : ""}`}
+                          onClick={e => { e.stopPropagation(); setOpenPhotoSelect(openPhotoSelect === plant.id ? null : plant.id); }}
+                          title="表示する写真を選ぶ"
+                        >⊞</button>
+                      )}
+                    </div>
                     {plant.species_name && plant.species_name !== plant.name && (
                       <div className="diary-plant-grid-species">{plant.species_name}</div>
+                    )}
+                    {openPhotoSelect === plant.id && (
+                      <div className="diary-grid-photo-strip" onClick={e => e.stopPropagation()}>
+                        {photosByPlant[plant.id].map((src, i) => (
+                          <img
+                            key={i}
+                            src={src}
+                            className={`diary-grid-photo-option${thumbByPlant[plant.id] === src ? " selected" : ""}`}
+                            onClick={() => { setThumbnail(plant.id, src); setOpenPhotoSelect(null); }}
+                          />
+                        ))}
+                      </div>
                     )}
                   </div>
                 </div>
