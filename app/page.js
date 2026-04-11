@@ -203,11 +203,14 @@ export default function Home() {
     <main>
       <div className="container">
         <header style={{ marginBottom: "2rem" }}>
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.8rem" }}>
-            <HaworthiaIcon />
+          <div className="home-hero">
+            <div className="home-hero-bg" />
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.8rem" }}>
+              <HaworthiaIcon />
+            </div>
+            <h1>ハオルチア研究室</h1>
+            <p className="subtitle">～ あなただけの育成記録 ～</p>
           </div>
-          <h1>ハオルチア研究室</h1>
-          <p className="subtitle">～ あなただけの育成記録 ～</p>
         </header>
 
         <div className="home-nav">

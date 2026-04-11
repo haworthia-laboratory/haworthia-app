@@ -55,37 +55,51 @@ export default function DiaryPage() {
   const [deleteConfirm, setDeleteConfirm] = useState(null); // { id, label }
 
   useEffect(() => {
+    try {
+      setThumbOverrides(JSON.parse(localStorage.getItem("plantThumbnails") || "{}"));
+    } catch { setThumbOverrides({}); }
+
     const init = async () => {
       if (supabase) {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session) {
-          router.push("/login");
-          return;
-        }
+        // セッション確認と株データ取得を並列で実行
+        const [{ data: { session } }, { data: p }] = await Promise.all([
+          supabase.auth.getSession(),
+          supabase.from("plants").select("*").order("created_at", { ascending: true }),
+        ]);
+        if (!session) { router.push("/login"); return; }
+        setPlants(p || []);
+        setLoading(false);
+        // 日記エントリーは必要なカラムだけ後から取得
+        const { data: e } = await supabase
+          .from("diary_entries")
+          .select("id, date, plant_id, photos")
+          .order("date", { ascending: false });
+        // photosは1枚目だけ使う（サムネイル用）
+        setEntries((e || []).map(entry => ({
+          ...entry,
+          photos: entry.photos?.slice(0, 1) || [],
+        })));
+      } else {
+        try { setEntries(JSON.parse(localStorage.getItem("diary") || "[]")); } catch { setEntries([]); }
+        try { setPlants(JSON.parse(localStorage.getItem("plants") || "[]")); } catch { setPlants([]); }
+        setLoading(false);
       }
-      fetchAll();
-      try {
-        setThumbOverrides(JSON.parse(localStorage.getItem("plantThumbnails") || "{}"));
-      } catch { setThumbOverrides({}); }
     };
     init();
   }, []);
 
   const fetchAll = async () => {
-    setLoading(true);
     if (supabase) {
       const [{ data: e }, { data: p }] = await Promise.all([
-        supabase.from("diary_entries").select("*").order("date", { ascending: false }),
+        supabase.from("diary_entries").select("id, date, plant_id, photos").order("date", { ascending: false }),
         supabase.from("plants").select("*").order("created_at", { ascending: true }),
       ]);
-      // RLSが設定済みなら自動的に自分のデータだけ返る
-      setEntries(e || []);
+      setEntries((e || []).map(entry => ({ ...entry, photos: entry.photos?.slice(0, 1) || [] })));
       setPlants(p || []);
     } else {
       try { setEntries(JSON.parse(localStorage.getItem("diary") || "[]")); } catch { setEntries([]); }
       try { setPlants(JSON.parse(localStorage.getItem("plants") || "[]")); } catch { setPlants([]); }
     }
-    setLoading(false);
   };
 
   // ---- 株 CRUD ----
@@ -418,8 +432,11 @@ export default function DiaryPage() {
       <div className="container">
         <header>
           <Link href="/" className="back-link">← 研究室に戻る</Link>
-          <h1 style={{ marginTop: "0.8rem" }}>成長日記</h1>
-          <p className="subtitle">{loading ? "読み込み中..." : `${entries.length}件の記録`}</p>
+          <div className="home-hero" style={{ marginTop: "0.8rem" }}>
+            <div className="home-hero-bg" />
+            <h1>成長日記</h1>
+            <p className="subtitle">{loading ? "読み込み中..." : `${plants.length}株 · ${entries.length}件の記録`}</p>
+          </div>
         </header>
 
         {/* はじめかたガイド */}
