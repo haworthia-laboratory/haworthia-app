@@ -10,6 +10,7 @@ export default function sitemap() {
     { url: `${BASE_URL}/column`, priority: 0.9 },
     { url: `${BASE_URL}/akinator`, priority: 0.8 },
     { url: `${BASE_URL}/gallery`, priority: 0.7 },
+    { url: `${BASE_URL}/board`, priority: 0.7 },
     { url: `${BASE_URL}/terms`, priority: 0.4 },
     { url: `${BASE_URL}/privacy`, priority: 0.4 },
     { url: `${BASE_URL}/contact`, priority: 0.5 },

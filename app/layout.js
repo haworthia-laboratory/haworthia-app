@@ -1,4 +1,5 @@
 import './globals.css'
+import GlobalMenu from './components/GlobalMenu'
 
 export const metadata = {
   title: {
@@ -25,7 +26,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ja">
-      <body>{children}</body>
+      <body>
+        <GlobalMenu />
+        {children}
+      </body>
     </html>
   )
 }

@@ -3048,14 +3048,335 @@ header h1 {
 
 .column-affiliate-item {
   margin-bottom: 1rem;
-  overflow-x: auto;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* アフィリエイトのテーブルをレスポンシブに */
+.column-affiliate-item table,
+.shop-links-wrap table {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+.column-affiliate-item td,
+.shop-links-wrap td {
+  width: auto !important;
+  max-width: 100%;
 }
 
 /* アフィリエイト画像を統一サイズ（コンパクト120px）に制限 */
 .column-affiliate-item img,
 .shop-links-wrap img {
-  max-width: 120px;
-  max-height: 120px;
+  max-width: 120px !important;
+  max-height: 120px !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: cover;
+}
+
+/* グローバルメニュー */
+.global-menu-btn {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 1000;
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(90,138,92,0.2);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  transition: background 0.15s;
+}
+.global-menu-btn:hover {
+  background: rgba(90,138,92,0.08);
+}
+.global-menu-btn span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: #5a8a5c;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.global-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1100;
+  backdrop-filter: blur(2px);
+}
+
+.global-menu-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 240px;
+  max-width: 80vw;
+  background: #fff;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 0 24px rgba(0,0,0,0.12);
+  animation: drawerIn 0.22s ease;
+}
+@keyframes drawerIn {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
+}
+
+.global-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1rem 0.8rem;
+  border-bottom: 1px solid rgba(90,138,92,0.12);
+}
+.global-menu-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #5a8a5c;
+  letter-spacing: 0.04em;
+}
+.global-menu-close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #aaa;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  line-height: 1;
+}
+.global-menu-close:hover { background: #f5f5f5; color: #666; }
+
+.global-menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  overflow-y: auto;
+  flex: 1;
+}
+.global-menu-link {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.75rem 1.2rem;
+  font-size: 0.88rem;
+  color: #444;
+  text-decoration: none;
+  transition: background 0.12s;
+}
+.global-menu-link:hover {
+  background: rgba(90,138,92,0.07);
+  color: #5a8a5c;
+}
+.global-menu-icon {
+  font-size: 1rem;
+  width: 1.4rem;
+  text-align: center;
+  filter: grayscale(0.3);
+}
+
+/* 掲示板 */
+.board-new-btn {
+  background: #5a8a5c;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.84rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.board-new-btn:hover { background: #4a7a4c; }
+
+.board-form {
+  background: rgba(90,138,92,0.04);
+  border: 1px solid rgba(90,138,92,0.15);
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.board-form-row {
+  margin-bottom: 0.8rem;
+}
+.board-form-label {
+  display: block;
+  font-size: 0.78rem;
+  color: #7a9a7c;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+.board-form-input {
+  width: 100%;
+  border: 1px solid rgba(90,138,92,0.25);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  background: #fff;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.board-form-input:focus { border-color: #5a8a5c; }
+.board-form-textarea {
+  width: 100%;
+  border: 1px solid rgba(90,138,92,0.25);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  background: #fff;
+  box-sizing: border-box;
+  outline: none;
+  resize: vertical;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+.board-form-textarea:focus { border-color: #5a8a5c; }
+.board-submit-btn {
+  background: #5a8a5c;
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.board-submit-btn:hover { background: #4a7a4c; }
+.board-submit-btn:disabled { background: #aaa; cursor: default; }
+
+.board-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.board-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.board-card {
+  display: block;
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid rgba(90,138,92,0.12);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+.board-card:hover {
+  box-shadow: 0 2px 10px rgba(90,138,92,0.12);
+  border-color: rgba(90,138,92,0.3);
+}
+.board-card-title {
+  font-size: 0.95rem;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+.board-card-meta {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.board-card-name {
+  font-size: 0.76rem;
+  color: #5a8a5c;
+  font-weight: 500;
+}
+.board-card-date {
+  font-size: 0.74rem;
+  color: #bbb;
+}
+.board-card-replies {
+  font-size: 0.74rem;
+  color: #7a9a7c;
+  background: rgba(90,138,92,0.07);
+  padding: 1px 8px;
+  border-radius: 10px;
+}
+
+/* 掲示板詳細 */
+.board-post-card {
+  background: #fff;
+  border: 1px solid rgba(90,138,92,0.18);
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+}
+.board-post-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+.board-post-meta {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+  flex-wrap: wrap;
+}
+.board-post-body {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.board-replies {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.board-reply-card {
+  background: rgba(90,138,92,0.03);
+  border: 1px solid rgba(90,138,92,0.1);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+}
+.board-reply-num {
+  font-size: 0.72rem;
+  color: #aaa;
+  margin-bottom: 0.3rem;
+}
+.board-reply-meta {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+.board-reply-body {
+  font-size: 0.88rem;
+  color: #555;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.board-reply-form-wrap {
+  border-top: 1px solid rgba(90,138,92,0.12);
+  padding-top: 1.2rem;
+  margin-top: 0.5rem;
+}
+.board-reply-form-title {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #7a9a7c;
+  margin-bottom: 0.8rem;
 }
 
 /* 広告バナー */
