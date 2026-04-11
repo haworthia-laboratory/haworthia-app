@@ -18,22 +18,32 @@ export async function GET() {
     return NextResponse.json([]);
   }
 
-  const flat = [];
-  const seen = new Set();
+  // plant_id ごとにグループ化
+  const plantMap = new Map();
   for (const entry of entries) {
+    const key = entry.plant_id || `${entry.plant_name}_${entry.species_name}`;
+    if (!plantMap.has(key)) {
+      plantMap.set(key, {
+        plantId: entry.plant_id,
+        plantName: entry.plant_name,
+        speciesName: entry.species_name,
+        photos: [],
+        latestDate: entry.date,
+        latestNote: entry.note,
+      });
+    }
+    const group = plantMap.get(key);
     for (const src of (entry.photos || [])) {
-      if (!seen.has(src)) {
-        seen.add(src);
-        flat.push({
-          src,
-          date: entry.date,
-          plantName: entry.plant_name,
-          speciesName: entry.species_name,
-          note: entry.note,
-        });
+      if (!group.photos.includes(src)) {
+        group.photos.push(src);
       }
+    }
+    // 最新の日付・メモを保持
+    if (entry.date > group.latestDate) {
+      group.latestDate = entry.date;
+      group.latestNote = entry.note;
     }
   }
 
-  return NextResponse.json(flat);
+  return NextResponse.json([...plantMap.values()]);
 }

@@ -2812,6 +2812,96 @@ header h1 {
   overflow: hidden;
 }
 
+/* ギャラリー追加 */
+.gallery-img-wrap {
+  position: relative;
+  cursor: zoom-in;
+  overflow: hidden;
+}
+.gallery-expand-hint {
+  position: absolute;
+  bottom: 6px;
+  right: 8px;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.gallery-img-wrap:hover .gallery-expand-hint {
+  opacity: 1;
+}
+.gallery-more-btn {
+  display: block;
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.3rem 0;
+  background: none;
+  border: none;
+  font-size: 0.65rem;
+  color: #7a9a7c;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.gallery-more-btn.open {
+  color: #5a7a5c;
+}
+.gallery-photo-strip {
+  display: flex;
+  gap: 0.3rem;
+  overflow-x: auto;
+  margin-top: 0.4rem;
+  padding-bottom: 0.2rem;
+  scrollbar-width: none;
+}
+.gallery-photo-strip::-webkit-scrollbar { display: none; }
+.gallery-photo-option {
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+  cursor: pointer;
+  border: 2px solid transparent;
+  opacity: 0.75;
+  transition: opacity 0.15s, border-color 0.15s;
+}
+.gallery-photo-option:hover { opacity: 1; }
+.gallery-photo-option.selected {
+  border-color: #7a9a7c;
+  opacity: 1;
+}
+
+/* ライトボックス */
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gallery-lightbox-img {
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 10px;
+}
+.gallery-lightbox-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.8);
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 0.3rem;
+  line-height: 1;
+}
+
 /* 公開ボタン */
 .diary-public-btn {
   margin-top: 0.5rem;
