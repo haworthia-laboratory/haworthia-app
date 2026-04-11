@@ -2,10 +2,10 @@ import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  // サービスロールキーがあればRLS無視、なければ匿名キーで試みる
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabase = createClient(url, key);
 
   // plants.is_public = true の株を取得
   const { data: plants, error: plantErr } = await supabase
@@ -19,7 +19,7 @@ export async function GET() {
 
   const plantIds = plants.map(p => p.id);
 
-  // その株の全日記エントリを取得
+  // その株の全日記エントリを取得（写真あり）
   const { data: entries } = await supabase
     .from("diary_entries")
     .select("plant_id, date, photos, note")
