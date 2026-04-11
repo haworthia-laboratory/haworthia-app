@@ -4,151 +4,92 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "../../lib/supabase";
 
-export default function BoardPage() {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [session, setSession] = useState(null);
+const CATEGORIES = [
+  {
+    slug: "soudan",
+    name: "ハオルチア相談室",
+    desc: "うちの子が元気ない、この品種の育て方は？気軽に質問してください",
+  },
+  {
+    slug: "hao-info",
+    name: "買えるハオ・入荷情報",
+    desc: "おすすめの通販株、掘り出し物、レア品種の入荷情報などをシェアしましょう",
+  },
+];
+
+function timeAgo(str) {
+  if (!str) return "";
+  const diff = Date.now() - new Date(str).getTime();
+  const mins = Math.floor(diff / 60000);
+  const hours = Math.floor(diff / 3600000);
+  const days = Math.floor(diff / 86400000);
+  if (mins < 1) return "たった今";
+  if (mins < 60) return `${mins}分前`;
+  if (hours < 24) return `${hours}時間前`;
+  if (days < 30) return `${days}日前`;
+  const d = new Date(str);
+  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+}
+
+export default function CommunityPage() {
+  const [counts, setCounts] = useState({});
+  const [latests, setLatests] = useState({});
 
   useEffect(() => {
-    if (supabase) {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session);
-        if (session) {
-          supabase.from("user_profiles").select("nickname").eq("user_id", session.user.id).single()
-            .then(({ data }) => { if (data?.nickname) setDisplayName(data.nickname); });
-        }
+    if (!supabase) return;
+    Promise.all(
+      CATEGORIES.map((cat) =>
+        Promise.all([
+          supabase
+            .from("forum_topics")
+            .select("id", { count: "exact", head: true })
+            .eq("category_slug", cat.slug),
+          supabase
+            .from("forum_topics")
+            .select("title, created_at, display_name")
+            .eq("category_slug", cat.slug)
+            .order("created_at", { ascending: false })
+            .limit(1)
+            .maybeSingle(),
+        ])
+      )
+    ).then((results) => {
+      const c = {};
+      const l = {};
+      CATEGORIES.forEach((cat, i) => {
+        c[cat.slug] = results[i][0].count || 0;
+        l[cat.slug] = results[i][1].data || null;
       });
-    }
-    loadPosts();
+      setCounts(c);
+      setLatests(l);
+    });
   }, []);
-
-  async function loadPosts() {
-    setLoading(true);
-    if (supabase) {
-      const { data } = await supabase
-        .from("board_posts")
-        .select("id, title, display_name, created_at, reply_count")
-        .order("created_at", { ascending: false });
-      setPosts(data || []);
-    }
-    setLoading(false);
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (!title.trim() || !body.trim()) return;
-    setSubmitting(true);
-    if (supabase) {
-      const { error } = await supabase.from("board_posts").insert({
-        title: title.trim(),
-        body: body.trim(),
-        display_name: displayName.trim() || "名無しさん",
-        user_id: session?.user?.id || null,
-      });
-      if (!error) {
-        setTitle("");
-        setBody("");
-        setShowForm(false);
-        await loadPosts();
-      }
-    }
-    setSubmitting(false);
-  }
-
-  function formatDate(str) {
-    const d = new Date(str);
-    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
-  }
 
   return (
     <main>
       <div className="container">
         <header>
           <Link href="/" className="back-link">← 研究室に戻る</Link>
-          <h1 style={{ marginTop: "0.8rem" }}>掲示板</h1>
-          <p className="subtitle">質問・雑談・情報交換はこちら</p>
+          <h1 style={{ marginTop: "0.8rem" }}>コミュニティ</h1>
+          <p className="subtitle">ハオルチア愛好家の集まる場所</p>
         </header>
 
-        <div style={{ textAlign: "right", marginBottom: "1rem" }}>
-          <button
-            className="board-new-btn"
-            onClick={() => setShowForm(!showForm)}
-          >
-            {showForm ? "キャンセル" : "＋ 新しいスレッドを立てる"}
-          </button>
+        <div className="forum-categories">
+          {CATEGORIES.map((cat) => (
+            <Link key={cat.slug} href={`/board/${cat.slug}`} className="forum-category-card">
+              <div className="forum-category-name">{cat.name}</div>
+              <div className="forum-category-desc">{cat.desc}</div>
+              <div className="forum-category-footer">
+                <span className="forum-category-count">{counts[cat.slug] || 0} 件の投稿</span>
+                {latests[cat.slug] && (
+                  <span className="forum-category-latest">
+                    {latests[cat.slug].display_name} · {timeAgo(latests[cat.slug].created_at)}
+                  </span>
+                )}
+              </div>
+            </Link>
+          ))}
         </div>
-
-        {showForm && (
-          <form className="board-form" onSubmit={handleSubmit}>
-            <div className="board-form-row">
-              <label className="board-form-label">なまえ</label>
-              <input
-                className="board-form-input"
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                placeholder="名無しさん"
-                maxLength={20}
-              />
-            </div>
-            <div className="board-form-row">
-              <label className="board-form-label">タイトル <span style={{ color: "#c87a7a" }}>*</span></label>
-              <input
-                className="board-form-input"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="例：オブツーサの葉が赤くなってきました"
-                maxLength={60}
-                required
-              />
-            </div>
-            <div className="board-form-row">
-              <label className="board-form-label">本文 <span style={{ color: "#c87a7a" }}>*</span></label>
-              <textarea
-                className="board-form-textarea"
-                value={body}
-                onChange={(e) => setBody(e.target.value)}
-                placeholder="質問や情報をどうぞ。"
-                maxLength={1000}
-                required
-                rows={5}
-              />
-            </div>
-            <div style={{ textAlign: "right" }}>
-              <button className="board-submit-btn" type="submit" disabled={submitting}>
-                {submitting ? "送信中…" : "投稿する"}
-              </button>
-            </div>
-          </form>
-        )}
-
-        {loading ? (
-          <p style={{ textAlign: "center", color: "#aaa", marginTop: "2rem" }}>読み込み中…</p>
-        ) : posts.length === 0 ? (
-          <div className="board-empty">
-            <p>まだスレッドがありません。</p>
-            <p style={{ fontSize: "0.82rem", color: "#aaa" }}>最初の投稿をしてみましょう！</p>
-          </div>
-        ) : (
-          <div className="board-list">
-            {posts.map((post) => (
-              <Link key={post.id} href={`/board/${post.id}`} className="board-card">
-                <div className="board-card-title">{post.title}</div>
-                <div className="board-card-meta">
-                  <span className="board-card-name">{post.display_name || "名無しさん"}</span>
-                  <span className="board-card-date">{formatDate(post.created_at)}</span>
-                  {post.reply_count > 0 && (
-                    <span className="board-card-replies">返信 {post.reply_count}</span>
-                  )}
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
       </div>
     </main>
   );

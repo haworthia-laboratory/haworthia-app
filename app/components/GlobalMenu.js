@@ -14,7 +14,7 @@ const MENU_ITEMS = [
   { href: "/akinator", label: "品種診断",           Icon: IconDiagnose },
   { href: "/column",   label: "コラム",             Icon: IconColumn },
   { href: "/gallery",  label: "みんなのギャラリー", Icon: IconGallery },
-  { href: "/board",    label: "掲示板",             Icon: IconBoard },
+  { href: "/board",    label: "コミュニティ",         Icon: IconBoard },
   { href: "/contact",  label: "お問い合わせ",       Icon: IconContact },
 ];
 

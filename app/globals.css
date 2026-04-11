@@ -3567,3 +3567,362 @@ header h1 {
   border-bottom: 1px solid rgba(90,138,92,0.1);
   text-align: center;
 }
+
+/* ===== コミュニティ / フォーラム ===== */
+
+.forum-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.forum-category-card {
+  display: block;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(90,138,92,0.15);
+  border-radius: 1rem;
+  padding: 1rem 1.2rem;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.forum-category-card:hover {
+  box-shadow: 0 4px 16px rgba(90,138,92,0.1);
+  transform: translateY(-1px);
+}
+.forum-category-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #3a6a3c;
+  margin-bottom: 0.3rem;
+}
+.forum-category-desc {
+  font-size: 0.82rem;
+  color: #6a8a6c;
+  line-height: 1.5;
+  margin-bottom: 0.6rem;
+}
+.forum-category-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #a0b8a2;
+}
+.forum-category-count {
+  font-weight: 600;
+}
+.forum-category-latest {
+  font-size: 0.72rem;
+}
+
+/* トピック一覧 */
+.forum-topics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+.forum-topic-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(90,138,92,0.12);
+  border-radius: 0.9rem;
+  padding: 0.85rem 1rem;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s;
+}
+.forum-topic-card:hover {
+  box-shadow: 0 3px 12px rgba(90,138,92,0.1);
+}
+.forum-topic-avatar {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a8d5aa, #6aab6c);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.forum-topic-content {
+  flex: 1;
+  min-width: 0;
+}
+.forum-topic-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #2a4a2c;
+  margin-bottom: 0.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.forum-topic-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: #a0b8a2;
+}
+.forum-topic-name {
+  font-weight: 600;
+  color: #6a8a6c;
+}
+.forum-topic-time {}
+.forum-topic-stat {
+  background: rgba(90,138,92,0.08);
+  border-radius: 20px;
+  padding: 0 0.5rem;
+  line-height: 1.6;
+}
+
+/* 投稿フォーム */
+.forum-new-btn {
+  background: #4a8a4c;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.forum-new-btn:hover { background: #3a7a3c; }
+
+.forum-login-prompt {
+  font-size: 0.85rem;
+  color: #6a8a6c;
+  text-decoration: underline;
+}
+
+.forum-form {
+  background: rgba(255,255,255,0.8);
+  border: 1px solid rgba(90,138,92,0.15);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.forum-form-name {
+  font-size: 0.78rem;
+  color: #6a8a6c;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+}
+.forum-form-input {
+  width: 100%;
+  border: 1px solid rgba(90,138,92,0.2);
+  border-radius: 0.6rem;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.9rem;
+  background: rgba(255,255,255,0.9);
+  margin-bottom: 0.6rem;
+  box-sizing: border-box;
+  outline: none;
+}
+.forum-form-input:focus {
+  border-color: #4a8a4c;
+}
+.forum-form-textarea {
+  width: 100%;
+  border: 1px solid rgba(90,138,92,0.2);
+  border-radius: 0.6rem;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.88rem;
+  background: rgba(255,255,255,0.9);
+  margin-bottom: 0.6rem;
+  box-sizing: border-box;
+  outline: none;
+  resize: vertical;
+  line-height: 1.6;
+}
+.forum-form-textarea:focus {
+  border-color: #4a8a4c;
+}
+.forum-submit-btn {
+  background: #4a8a4c;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 0.45rem 1.3rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.forum-submit-btn:disabled { opacity: 0.6; }
+
+.forum-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #a0b8a2;
+  font-size: 0.9rem;
+}
+
+/* トピック詳細 */
+.forum-post-card {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(90,138,92,0.15);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.forum-post-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.7rem;
+}
+.forum-post-avatar {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a8d5aa, #6aab6c);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.forum-reply-avatar {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c8e0ca, #8ab88c);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.forum-post-author-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.forum-post-author {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #3a6a3c;
+}
+.forum-post-time {
+  font-size: 0.72rem;
+  color: #a0b8a2;
+}
+.forum-post-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2a4a2c;
+  margin-bottom: 0.6rem;
+  line-height: 1.4;
+}
+.forum-post-body {
+  font-size: 0.9rem;
+  color: #3a4a3c;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.forum-post-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(90,138,92,0.08);
+}
+.forum-like-btn {
+  background: none;
+  border: 1px solid rgba(90,138,92,0.2);
+  border-radius: 20px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  color: #a0b8a2;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.forum-like-btn:hover:not(:disabled) {
+  border-color: #e87a8a;
+  color: #e87a8a;
+}
+.forum-like-btn.liked {
+  border-color: #e87a8a;
+  color: #e87a8a;
+  background: rgba(232,122,138,0.08);
+}
+.forum-like-btn:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+.forum-delete-btn {
+  background: none;
+  border: none;
+  font-size: 0.72rem;
+  color: #c8a0a0;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  margin-left: auto;
+}
+.forum-delete-btn:hover { color: #c87a7a; }
+
+/* 返信 */
+.forum-replies {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.forum-reply-card {
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(90,138,92,0.1);
+  border-radius: 0.8rem;
+  padding: 0.85rem 1rem;
+}
+.forum-reply-body {
+  font-size: 0.88rem;
+  color: #3a4a3c;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.forum-reply-form-wrap {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(90,138,92,0.15);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+.forum-reply-form-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #4a6a4c;
+  margin-bottom: 0.7rem;
+}
+
+.forum-login-cta {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.88rem;
+}
+.forum-login-cta a {
+  color: #4a8a4c;
+  text-decoration: underline;
+}
