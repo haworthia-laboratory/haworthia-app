@@ -20,7 +20,7 @@ export default function GalleryPage() {
 
   const sortedGroups = [...groups].sort((a, b) => {
     if (sortOrder === "species") {
-      return (a.speciesName || a.plantName || "").localeCompare(b.speciesName || b.plantName || "", "ja");
+      return (a.speciesName || "").localeCompare(b.speciesName || "", "ja");
     }
     return (b.latestDate || "").localeCompare(a.latestDate || "");
   });
@@ -92,10 +92,7 @@ export default function GalleryPage() {
                     <div className="gallery-expand-hint">🔍</div>
                   </div>
                   <div className="gallery-item-body">
-                    {g.plantName && <div className="gallery-plant-name">{g.plantName}</div>}
-                    {g.speciesName && g.speciesName !== g.plantName && (
-                      <div className="gallery-species-name">{g.speciesName}</div>
-                    )}
+                    {g.speciesName && <div className="gallery-plant-name">{g.speciesName}</div>}
                     <div className="gallery-date">{g.latestDate?.replace(/-/g, ".")}</div>
                     {g.latestNote && <div className="gallery-note">{g.latestNote}</div>}
                     {g.photos.length > 1 && (

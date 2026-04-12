@@ -6,10 +6,10 @@ export async function GET() {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const supabase = createClient(url, key);
 
-  // is_public = true の植物を取得
+  // 公開中の植物IDを取得
   const { data: publicPlants, error: plantsError } = await supabase
     .from("plants")
-    .select("id, name, species_name")
+    .select("id, species_id, species_name")
     .eq("is_public", true);
 
   if (plantsError || !publicPlants || publicPlants.length === 0) {
@@ -17,37 +17,34 @@ export async function GET() {
   }
 
   const publicPlantIds = publicPlants.map(p => p.id);
-  const plantMap = new Map(publicPlants.map(p => [p.id, p]));
 
-  // 各植物の最新エントリを1件ずつ取得（photos全体ではなく1枚目だけ）
-  const results = await Promise.all(
-    publicPlantIds.map(plantId =>
-      supabase
-        .from("diary_entries")
-        .select("plant_id, date, note, photos->0")
-        .eq("plant_id", plantId)
-        .order("date", { ascending: false })
-        .limit(1)
-        .single()
-    )
-  );
+  // 公開株のエントリを日付降順で取得（1枚目のみ）
+  const { data: entries, error } = await supabase
+    .from("diary_entries")
+    .select("plant_id, date, note, species_id, species_name, photos->0")
+    .in("plant_id", publicPlantIds)
+    .order("date", { ascending: false });
 
-  const groups = results
-    .map(({ data }) => {
-      if (!data) return null;
-      const photo = data["photos->0"] || data.photos;
-      if (!photo) return null;
-      const plant = plantMap.get(data.plant_id);
-      return {
-        plantId: data.plant_id,
-        plantName: plant?.name,
-        speciesName: plant?.species_name,
+  if (error || !entries || entries.length === 0) {
+    return NextResponse.json([]);
+  }
+
+  // 品種ごとに最新1件だけ残す
+  const speciesMap = new Map();
+  for (const entry of entries) {
+    const photo = entry["photos->0"] || entry.photos;
+    if (!photo) continue;
+    const key = entry.species_id || entry.species_name || entry.plant_id;
+    if (!speciesMap.has(key)) {
+      speciesMap.set(key, {
+        speciesId: entry.species_id,
+        speciesName: entry.species_name,
         photos: [photo],
-        latestDate: data.date,
-        latestNote: data.note,
-      };
-    })
-    .filter(Boolean);
+        latestDate: entry.date,
+        latestNote: entry.note,
+      });
+    }
+  }
 
-  return NextResponse.json(groups);
+  return NextResponse.json([...speciesMap.values()]);
 }
