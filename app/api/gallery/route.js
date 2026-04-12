@@ -6,11 +6,24 @@ export async function GET() {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const supabase = createClient(url, key);
 
-  // diary_entries.is_public = true のエントリを取得
+  // is_public = true の植物IDを取得
+  const { data: publicPlants } = await supabase
+    .from("plants")
+    .select("id, name, species_name, species_id")
+    .eq("is_public", true);
+
+  if (!publicPlants || publicPlants.length === 0) {
+    return NextResponse.json([]);
+  }
+
+  const publicPlantIds = publicPlants.map(p => p.id);
+  const plantMap = new Map(publicPlants.map(p => [p.id, p]));
+
+  // 公開植物のエントリを取得
   const { data: entries, error } = await supabase
     .from("diary_entries")
     .select("plant_id, date, photos, note, plant_name, species_name")
-    .eq("is_public", true)
+    .in("plant_id", publicPlantIds)
     .order("date", { ascending: false });
 
   if (error || !entries || entries.length === 0) {
@@ -18,20 +31,21 @@ export async function GET() {
   }
 
   // plant_id ごとにグループ化
-  const plantMap = new Map();
+  const groupMap = new Map();
   for (const entry of entries) {
-    const key = entry.plant_id || `${entry.plant_name}_${entry.species_name}`;
-    if (!plantMap.has(key)) {
-      plantMap.set(key, {
-        plantId: entry.plant_id,
-        plantName: entry.plant_name,
-        speciesName: entry.species_name,
+    const key = entry.plant_id;
+    if (!groupMap.has(key)) {
+      const plant = plantMap.get(key);
+      groupMap.set(key, {
+        plantId: key,
+        plantName: plant?.name || entry.plant_name,
+        speciesName: plant?.species_name || entry.species_name,
         photos: [],
         latestDate: entry.date,
         latestNote: entry.note,
       });
     }
-    const group = plantMap.get(key);
+    const group = groupMap.get(key);
     for (const src of (entry.photos || [])) {
       if (!group.photos.includes(src)) {
         group.photos.push(src);
@@ -43,5 +57,5 @@ export async function GET() {
     }
   }
 
-  return NextResponse.json([...plantMap.values()].filter(g => g.photos.length > 0));
+  return NextResponse.json([...groupMap.values()].filter(g => g.photos.length > 0));
 }
