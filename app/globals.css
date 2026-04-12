@@ -61,7 +61,7 @@ header h1 {
   z-index: 0;
   border-radius: 1.2rem;
 }
-.home-hero > * {
+.home-hero > *:not(.home-hero-bg) {
   position: relative;
   z-index: 1;
 }
