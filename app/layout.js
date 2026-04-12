@@ -1,8 +1,8 @@
 import './globals.css'
 import GlobalMenu from './components/GlobalMenu'
-import { M_PLUS_Rounded_1c } from 'next/font/google'
+import { Zen_Maru_Gothic } from 'next/font/google'
 
-const mPlusRounded = M_PLUS_Rounded_1c({
+const zenMaru = Zen_Maru_Gothic({
   weight: ['400', '700'],
   subsets: ['latin'],
   variable: '--font-rounded',
@@ -33,7 +33,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ja" className={mPlusRounded.variable}>
+    <html lang="ja" className={zenMaru.variable}>
       <body>
         <GlobalMenu />
         {children}
