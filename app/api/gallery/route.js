@@ -6,57 +6,48 @@ export async function GET() {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   const supabase = createClient(url, key);
 
-  // is_public = true の植物IDを取得
+  // is_public = true の植物を取得
   const { data: publicPlants, error: plantsError } = await supabase
     .from("plants")
-    .select("id, name, species_name, species_id")
+    .select("id, name, species_name")
     .eq("is_public", true);
 
-  if (plantsError) return NextResponse.json({ debug: "plants error", error: plantsError.message });
-  if (!publicPlants || publicPlants.length === 0) {
-    return NextResponse.json({ debug: "no public plants", count: publicPlants?.length });
+  if (plantsError || !publicPlants || publicPlants.length === 0) {
+    return NextResponse.json([]);
   }
 
   const publicPlantIds = publicPlants.map(p => p.id);
   const plantMap = new Map(publicPlants.map(p => [p.id, p]));
 
-  // 公開植物のエントリを取得
-  const { data: entries, error } = await supabase
-    .from("diary_entries")
-    .select("plant_id, date, photos, note, plant_name, species_name")
-    .in("plant_id", publicPlantIds)
-    .order("date", { ascending: false });
+  // 各植物の最新エントリを1件ずつ取得（photos全体ではなく1枚目だけ）
+  const results = await Promise.all(
+    publicPlantIds.map(plantId =>
+      supabase
+        .from("diary_entries")
+        .select("plant_id, date, note, photos->0")
+        .eq("plant_id", plantId)
+        .order("date", { ascending: false })
+        .limit(1)
+        .single()
+    )
+  );
 
-  if (error || !entries || entries.length === 0) {
-    return NextResponse.json({ debug: "no entries", error: error?.message, plantsCount: publicPlants.length });
-  }
+  const groups = results
+    .map(({ data }) => {
+      if (!data) return null;
+      const photo = data["photos->0"] || data.photos;
+      if (!photo) return null;
+      const plant = plantMap.get(data.plant_id);
+      return {
+        plantId: data.plant_id,
+        plantName: plant?.name,
+        speciesName: plant?.species_name,
+        photos: [photo],
+        latestDate: data.date,
+        latestNote: data.note,
+      };
+    })
+    .filter(Boolean);
 
-  // plant_id ごとにグループ化
-  const groupMap = new Map();
-  for (const entry of entries) {
-    const key = entry.plant_id;
-    if (!groupMap.has(key)) {
-      const plant = plantMap.get(key);
-      groupMap.set(key, {
-        plantId: key,
-        plantName: plant?.name || entry.plant_name,
-        speciesName: plant?.species_name || entry.species_name,
-        photos: [],
-        latestDate: entry.date,
-        latestNote: entry.note,
-      });
-    }
-    const group = groupMap.get(key);
-    for (const src of (entry.photos || [])) {
-      if (!group.photos.includes(src)) {
-        group.photos.push(src);
-      }
-    }
-    if (entry.date > group.latestDate) {
-      group.latestDate = entry.date;
-      group.latestNote = entry.note;
-    }
-  }
-
-  return NextResponse.json([...groupMap.values()].filter(g => g.photos.length > 0));
+  return NextResponse.json(groups);
 }
