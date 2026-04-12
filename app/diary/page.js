@@ -53,6 +53,7 @@ export default function DiaryPage() {
   const [entryError, setEntryError] = useState("");
   const [plantError, setPlantError] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState(null); // { id, label }
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     try {
@@ -67,6 +68,7 @@ export default function DiaryPage() {
           supabase.from("plants").select("*").order("created_at", { ascending: true }),
         ]);
         if (!session) { router.push("/login"); return; }
+        setUserId(session.user.id);
         setPlants(p || []);
         setLoading(false);
         // 写真は後からバックグラウンドで取得（サムネイル用に1枚目だけ）
@@ -144,8 +146,6 @@ export default function DiaryPage() {
     };
 
     if (supabase) {
-      const { data: { user } } = await supabase.auth.getUser();
-      const userId = user?.id;
       if (editingPlantId) {
         const { error } = await supabase.from("plants").update(payload).eq("id", editingPlantId);
         if (error) { setPlantError(`保存に失敗しました：${error.message}`); return; }
@@ -328,8 +328,7 @@ export default function DiaryPage() {
 
     if (supabase) {
       if (!editingEntryId) {
-        const { data: { user } } = await supabase.auth.getUser();
-        payload.user_id = user?.id;
+        payload.user_id = userId;
       }
       const { error } = editingEntryId
         ? await supabase.from("diary_entries").update(payload).eq("id", editingEntryId)
