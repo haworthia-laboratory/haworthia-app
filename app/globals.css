@@ -3265,29 +3265,33 @@ header h1 {
   flex-direction: column;
   align-items: center;
   gap: 0.35rem;
-  background: rgba(255,255,255,0.85);
-  border: 1px solid rgba(90,138,92,0.1);
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 2px 12px rgba(44, 74, 45, 0.07), inset 0 1px 0 rgba(255,255,255,0.7);
   border-radius: 14px;
   padding: 1rem 0.5rem 0.9rem;
   text-decoration: none;
-  transition: box-shadow 0.15s, border-color 0.15s;
+  transition: box-shadow 0.15s, background 0.15s;
 }
 .home-grid-card:hover {
-  box-shadow: 0 2px 10px rgba(90,138,92,0.1);
-  border-color: rgba(90,138,92,0.25);
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: 0 4px 18px rgba(44, 74, 45, 0.12);
 }
 .home-grid-icon {
   opacity: 0.85;
 }
 .home-grid-title {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #555;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #2c4a2d;
   text-align: center;
+  letter-spacing: 0.04em;
 }
 .home-grid-desc {
   font-size: 0.68rem;
-  color: #aaa;
+  color: #6a8a6c;
   text-align: center;
   line-height: 1.4;
 }
