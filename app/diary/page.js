@@ -215,7 +215,7 @@ export default function DiaryPage() {
           const canvas = document.createElement("canvas");
           canvas.width = width; canvas.height = height;
           canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-          setPlantForm(f => ({ ...f, photos: [...f.photos, canvas.toDataURL("image/jpeg", 0.8)] }));
+          setPlantForm(f => ({ ...f, photos: [...f.photos, canvas.toDataURL("image/webp", 0.75)] }));
         };
         img.src = reader.result;
       };
@@ -296,7 +296,7 @@ export default function DiaryPage() {
           const canvas = document.createElement("canvas");
           canvas.width = width; canvas.height = height;
           canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-          setEntryForm(f => ({ ...f, photos: [...f.photos, canvas.toDataURL("image/jpeg", 0.8)] }));
+          setEntryForm(f => ({ ...f, photos: [...f.photos, canvas.toDataURL("image/webp", 0.75)] }));
         };
         img.src = reader.result;
       };
