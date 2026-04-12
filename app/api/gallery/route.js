@@ -7,13 +7,14 @@ export async function GET() {
   const supabase = createClient(url, key);
 
   // is_public = true の植物IDを取得
-  const { data: publicPlants } = await supabase
+  const { data: publicPlants, error: plantsError } = await supabase
     .from("plants")
     .select("id, name, species_name, species_id")
     .eq("is_public", true);
 
+  if (plantsError) return NextResponse.json({ debug: "plants error", error: plantsError.message });
   if (!publicPlants || publicPlants.length === 0) {
-    return NextResponse.json([]);
+    return NextResponse.json({ debug: "no public plants", count: publicPlants?.length });
   }
 
   const publicPlantIds = publicPlants.map(p => p.id);
@@ -27,7 +28,7 @@ export async function GET() {
     .order("date", { ascending: false });
 
   if (error || !entries || entries.length === 0) {
-    return NextResponse.json([]);
+    return NextResponse.json({ debug: "no entries", error: error?.message, plantsCount: publicPlants.length });
   }
 
   // plant_id ごとにグループ化
