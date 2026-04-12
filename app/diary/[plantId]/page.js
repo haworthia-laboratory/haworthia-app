@@ -138,8 +138,10 @@ export default function PlantTimelinePage() {
     };
     if (supabase) {
       if (!editingId) {
-        const { data: { session: s } } = await supabase.auth.getSession();
-        payload.user_id = s?.user?.id;
+        try {
+          const { data } = await supabase.auth.getSession();
+          payload.user_id = data?.session?.user?.id;
+        } catch {}
       }
       const { error: err } = editingId
         ? await supabase.from("diary_entries").update(payload).eq("id", editingId)

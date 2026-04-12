@@ -328,8 +328,10 @@ export default function DiaryPage() {
 
     if (supabase) {
       if (!editingEntryId) {
-        const { data: { session: s } } = await supabase.auth.getSession();
-        payload.user_id = s?.user?.id || userId;
+        try {
+          const { data } = await supabase.auth.getSession();
+          payload.user_id = data?.session?.user?.id || userId;
+        } catch { payload.user_id = userId; }
       }
       const { error } = editingEntryId
         ? await supabase.from("diary_entries").update(payload).eq("id", editingEntryId)
