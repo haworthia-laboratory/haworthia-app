@@ -1,5 +1,13 @@
 import './globals.css'
 import GlobalMenu from './components/GlobalMenu'
+import { M_PLUS_Rounded_1c } from 'next/font/google'
+
+const mPlusRounded = M_PLUS_Rounded_1c({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  variable: '--font-rounded',
+  display: 'swap',
+})
 
 export const metadata = {
   title: {
@@ -25,7 +33,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={mPlusRounded.variable}>
       <body>
         <GlobalMenu />
         {children}
