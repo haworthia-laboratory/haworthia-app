@@ -137,6 +137,10 @@ export default function PlantTimelinePage() {
       photos: form.photos,
     };
     if (supabase) {
+      if (!editingId) {
+        const { data: { session: s } } = await supabase.auth.getSession();
+        payload.user_id = s?.user?.id;
+      }
       const { error: err } = editingId
         ? await supabase.from("diary_entries").update(payload).eq("id", editingId)
         : await supabase.from("diary_entries").insert(payload);
