@@ -61,19 +61,25 @@ export default function DiaryPage() {
 
     const init = async () => {
       if (supabase) {
-        // セッション確認・株・日記エントリーを全部並列取得
-        const [{ data: { session } }, { data: p }, { data: e }] = await Promise.all([
+        // セッション確認と株データを並列取得→先に表示
+        const [{ data: { session } }, { data: p }] = await Promise.all([
           supabase.auth.getSession(),
           supabase.from("plants").select("*").order("created_at", { ascending: true }),
-          supabase.from("diary_entries").select("id, date, plant_id, photos").order("date", { ascending: false }),
         ]);
         if (!session) { router.push("/login"); return; }
         setPlants(p || []);
-        setEntries((e || []).map(entry => ({
-          ...entry,
-          photos: entry.photos?.slice(0, 1) || [],
-        })));
         setLoading(false);
+        // 写真は後からバックグラウンドで取得（サムネイル用に1枚目だけ）
+        supabase
+          .from("diary_entries")
+          .select("id, date, plant_id, photos")
+          .order("date", { ascending: false })
+          .then(({ data: e }) => {
+            setEntries((e || []).map(entry => ({
+              ...entry,
+              photos: entry.photos?.slice(0, 1) || [],
+            })));
+          });
       } else {
         try { setEntries(JSON.parse(localStorage.getItem("diary") || "[]")); } catch { setEntries([]); }
         try { setPlants(JSON.parse(localStorage.getItem("plants") || "[]")); } catch { setPlants([]); }
