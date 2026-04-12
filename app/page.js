@@ -205,10 +205,8 @@ export default function Home() {
         <header style={{ marginBottom: "2rem" }}>
           <div className="home-hero">
             <div className="home-hero-bg" />
-            <div className="home-hero-text">
-              <h1>ハオルチア研究室</h1>
-              <p className="subtitle">～ あなただけの育成記録 ～</p>
-            </div>
+            <h1>ハオルチア研究室</h1>
+            <p className="subtitle">～ あなただけの育成記録 ～</p>
           </div>
         </header>
 
