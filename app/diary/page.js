@@ -400,7 +400,7 @@ export default function DiaryPage() {
       lastDateByPlant[e.plant_id] = e.date;
     }
   });
-  [...entries].reverse().forEach(e => {
+  entries.forEach(e => {
     if (e.plant_id && e.photos?.length > 0 && !thumbByPlant[e.plant_id]) {
       thumbByPlant[e.plant_id] = e.photos[0];
     }
