@@ -65,13 +65,13 @@ header h1 {
   position: relative;
   z-index: 1;
 }
-.home-hero h1 {
-  color: #fff;
-  text-shadow: 0 1px 6px rgba(0,0,0,0.55), 0 0px 2px rgba(0,0,0,0.3);
-}
-.home-hero .subtitle {
-  color: rgba(255,255,255,0.92);
-  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+.home-hero-text {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 0.8rem 1.6rem;
+  border-radius: 0.8rem;
 }
 
 /* ステップ */
