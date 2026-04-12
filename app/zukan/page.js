@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { species } from "./data";
 import { supabase } from "../../lib/supabase";
 
@@ -87,6 +87,7 @@ export default function ZukanPage() {
   const [fromPhoto, setFromPhoto] = useState(false);
   const [diaryPhotos, setDiaryPhotos] = useState({});
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [imgErrors, setImgErrors] = useState({});
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -333,11 +334,23 @@ export default function ZukanPage() {
                 <div className="zukan-grid-img-wrap">
                   {(s.gallery && s.gallery[0]) || diaryPhotos[s.id] ? (
                     <img src={s.gallery?.[0] || diaryPhotos[s.id]} alt={s.name} className="zukan-grid-img" />
-                  ) : (
+                  ) : imgErrors[s.id] ? (
                     <svg className="zukan-grid-placeholder" viewBox="0 0 100 100" fill="none">
-                      <circle cx="50" cy="40" r="28" stroke="#5a8a5c" strokeWidth="2"/>
-                      <ellipse cx="50" cy="75" rx="18" ry="8" stroke="#5a8a5c" strokeWidth="1.5"/>
+                      {[0,45,90,135,180,225,270,315].map((a, i) => (
+                        <g key={i} transform={`rotate(${a} 50 50)`}>
+                          <path d="M50,44 C45,38 43,26 46,14 Q49,9 50,8 Q51,9 54,14 C57,26 55,38 50,44Z"
+                            fill="none" stroke="#5a8a5c" strokeWidth="1.5" opacity="0.7"/>
+                        </g>
+                      ))}
+                      <circle cx="50" cy="50" r="3" fill="#5a8a5c" opacity="0.5"/>
                     </svg>
+                  ) : (
+                    <img
+                      src={`/images/${s.id}-top.webp`}
+                      alt={s.name}
+                      className="zukan-grid-img"
+                      onError={() => setImgErrors(prev => ({ ...prev, [s.id]: true }))}
+                    />
                   )}
                 </div>
                 <div className="zukan-grid-body">

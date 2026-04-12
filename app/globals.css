@@ -11,7 +11,7 @@ body {
     radial-gradient(ellipse at 80% 80%, rgba(180, 215, 225, 0.4) 0%, transparent 50%),
     radial-gradient(ellipse at 60% 10%, rgba(240, 248, 235, 0.6) 0%, transparent 40%),
     linear-gradient(160deg, #eaf0ea 0%, #f4f8f2 50%, #e4eceb 100%);
-  font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+  font-family: var(--font-rounded), 'Hiragino Maru Gothic ProN', 'Hiragino Kaku Gothic ProN', sans-serif;
 }
 
 .container {
@@ -47,8 +47,9 @@ header h1 {
   position: relative;
   border-radius: 0 0 1.4rem 1.4rem;
   overflow: hidden;
-  padding: 2.5rem 1rem 2rem;
+  padding: 3.5rem 1rem 2rem;
   text-align: center;
+  margin-top: -2.5rem;
   margin-bottom: 0.5rem;
   margin-left: -1.5rem;
   margin-right: -1.5rem;
@@ -79,8 +80,9 @@ header h1 {
 }
 .home-hero .subtitle {
   color: #fff;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 700;
+  letter-spacing: 0.12em;
   font-family: var(--font-rounded), 'Hiragino Maru Gothic ProN', sans-serif;
   text-shadow:
     0 1px 8px rgba(0,0,0,0.9),
