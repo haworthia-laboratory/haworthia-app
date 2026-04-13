@@ -623,10 +623,11 @@ export default function AkinatorPage() {
   return (
     <main>
       <div className="container">
-        <header>
-          <Link href="/" className="back-link">← 研究室に戻る</Link>
+        <div className="home-hero">
+          <div className="home-hero-bg" style={{ backgroundImage: "url('/images/akinator-hero.webp')", opacity: 0.35 }} />
+          <Link href="/" className="back-link" style={{ color: "#fff", textShadow: "0 1px 6px rgba(0,0,0,1), 0 0 12px rgba(0,0,0,0.8)", fontWeight: "700", background: "rgba(0,0,0,0.25)", padding: "2px 10px", borderRadius: "20px" }}>← 研究室に戻る</Link>
           <h1 style={{ marginTop: "0.8rem" }}>品種診断</h1>
-        </header>
+        </div>
 
         {/* モード選択 */}
         {!mode ? (
