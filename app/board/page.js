@@ -9,12 +9,12 @@ const CATEGORIES = [
   {
     slug: "soudan",
     name: "ハオルチア相談室",
-    desc: "うちの子が元気ない、この品種の育て方は？気軽に質問してください",
+    desc: "うちの子が元気ない、この品種の育て方は？\n気軽に質問してください",
   },
   {
     slug: "hao-info",
     name: "通販リンクまとめ",
-    desc: "オンラインショップの入荷情報を随時載せています。お気に入りのハオと出会えるかも...!",
+    desc: "オンラインショップの入荷情報を随時載せています。\nお気に入りのハオと出会えるかも...!",
   },
 ];
 
@@ -79,7 +79,7 @@ export default function CommunityPage() {
           {CATEGORIES.map((cat) => (
             <Link key={cat.slug} href={`/board/${cat.slug}`} className="forum-category-card">
               <div className="forum-category-name">{cat.name}</div>
-              <div className="forum-category-desc">{cat.desc}</div>
+              <div className="forum-category-desc" style={{ whiteSpace: "pre-line" }}>{cat.desc}</div>
               <div className="forum-category-footer">
                 <span className="forum-category-count">
                   {cat.slug === "hao-info"
