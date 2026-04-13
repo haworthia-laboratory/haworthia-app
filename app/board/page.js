@@ -69,11 +69,12 @@ export default function CommunityPage() {
   return (
     <main>
       <div className="container">
-        <header>
-          <Link href="/" className="back-link">← 研究室に戻る</Link>
+        <div className="home-hero">
+          <div className="home-hero-bg" style={{ backgroundImage: "url('/images/community-hero.webp')", opacity: 0.35 }} />
+          <Link href="/" className="back-link" style={{ color: "#fff", textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}>← 研究室に戻る</Link>
           <h1 style={{ marginTop: "0.8rem" }}>コミュニティ</h1>
           <p className="subtitle">ハオルチア愛好家の集まる場所</p>
-        </header>
+        </div>
 
         <div className="forum-categories">
           {CATEGORIES.map((cat) => (
