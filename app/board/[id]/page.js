@@ -9,7 +9,7 @@ import { species } from "../../zukan/data";
 
 const CATEGORIES = {
   soudan: "ハオルチア相談室",
-  "hao-info": "買えるハオ・入荷情報",
+  "hao-info": "通販リンクまとめ",
 };
 
 const PLACEHOLDERS = {
