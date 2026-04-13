@@ -129,9 +129,12 @@ const EXTRA_QUESTIONS = [
     filter: (s, v) => {
       if (v === "unknown") return true;
       const text = s.name + s.description;
-      if (v === "purple") return text.includes("紫") || text.includes("黒") || text.includes("ブラック");
-      if (v === "red") return text.includes("赤") || text.includes("紅") || text.includes("ピンク");
-      if (v === "stable") return !text.includes("紫") && !text.includes("黒") && !text.includes("赤") && !text.includes("紅");
+      const isPurple = text.includes("紫") || text.includes("黒") || text.includes("ブラック") || text.includes("赤紫") || text.includes("赤〜紫");
+      const isRed = (text.includes("赤") || text.includes("紅") || text.includes("ピンク")) && !isPurple;
+      const isStable = !isPurple && !isRed;
+      if (v === "purple") return isPurple;
+      if (v === "red") return isRed;
+      if (v === "stable") return isStable;
       return true;
     },
   },
@@ -187,9 +190,12 @@ const EXTRA_QUESTIONS_EXPLORE = [
     filter: (s, v) => {
       if (v === "unknown") return true;
       const text = s.name + s.description;
-      if (v === "purple") return text.includes("紫") || text.includes("黒") || text.includes("ブラック");
-      if (v === "red") return text.includes("赤") || text.includes("紅") || text.includes("ピンク");
-      if (v === "stable") return !text.includes("紫") && !text.includes("黒") && !text.includes("赤") && !text.includes("紅");
+      const isPurple = text.includes("紫") || text.includes("黒") || text.includes("ブラック") || text.includes("赤紫") || text.includes("赤〜紫");
+      const isRed = (text.includes("赤") || text.includes("紅") || text.includes("ピンク")) && !isPurple;
+      const isStable = !isPurple && !isRed;
+      if (v === "purple") return isPurple;
+      if (v === "red") return isRed;
+      if (v === "stable") return isStable;
       return true;
     },
   },
