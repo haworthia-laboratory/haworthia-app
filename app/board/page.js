@@ -9,7 +9,7 @@ const CATEGORIES = [
   {
     slug: "soudan",
     name: "ハオルチア相談室",
-    desc: "うちの子が元気ない、この品種の育て方は？\n気軽に質問してください",
+    desc: "うちの子が元気ない、この品種どう思う？\nみんなで一緒に考えましょう",
   },
   {
     slug: "hao-info",
