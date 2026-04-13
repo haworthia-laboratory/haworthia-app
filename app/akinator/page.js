@@ -13,15 +13,21 @@ function getTraits(s) {
     text.includes("船形") || text.includes("窓") ||
     ["obtusa", "cymbiformis", "truncata", "maughanii", "cooperi", "turgida", "bayeri",
      "comptoniana", "emelyae", "pygmaea", "splendens", "picta", "retusa", "mutica",
-     "correcta", "springbok", "mirabilis"].some(k => id.includes(k)) ||
-    s.type === "交配種" || s.type === "選抜種";
+     "correcta", "springbok", "mirabilis", "lockwoodii", "maraisii", "nortieri",
+     "soubi", "suichuu", "shizukuishi", "badin", "badia", "wimii", "green-jem",
+     "hakujaden", "shiroko", "hakugei", "tiger-pig", "red-flash", "shiro-usagi",
+     "black-magic", "murasaki-botan", "mikaeri-bijin", "hakuseijo", "emerald-flash",
+     "kikka-no-mai", "hagoromo", "magnifica"].some(k => id.includes(k)) ||
+    s.type === "交配種" || s.type === "選抜種" || s.type === "園芸種";
 
+  // 硬葉系：軟葉系と重複する品種は除外
   const isHard =
-    text.includes("硬葉") || text.includes("硬め") || text.includes("とげ") || text.includes("三角") ||
+    (text.includes("硬葉") || text.includes("硬め") || text.includes("とげ") ||
     ["fasciata", "attenuata", "reinwardtii", "coarctata", "viscosa", "pumila", "maxima",
      "arachnoidea", "bolusii", "blackbeardiana", "serrata", "bruynsii", "koelmaniorum",
-     "nitidula", "floribunda", "tessellata", "angustifolia", "translucens", "herbacea",
-     "chloracantha", "wittebergensis", "glauca", "decipiens"].some(k => id.includes(k));
+     "nitidula", "floribunda", "tessellata", "angustifolia", "translucens",
+     "chloracantha", "wittebergensis", "glauca", "decipiens"].some(k => id.includes(k))) &&
+    !isSoft;
 
   // 葉の並び方
   const isFanShape = ["truncata"].some(k => id.includes(k)); // 扇形二列
