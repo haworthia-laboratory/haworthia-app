@@ -71,7 +71,7 @@ export default function GalleryPage() {
           </div>
         ) : (
           <>
-          <div className="gallery-sort-group">
+          <div className="gallery-sort-group" style={{ marginTop: "1.2rem" }}>
             <button
               className={`gallery-sort-btn${sortOrder === "date" ? " active" : ""}`}
               onClick={() => setSortOrder("date")}

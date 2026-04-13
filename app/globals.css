@@ -2833,6 +2833,7 @@ header h1 {
 }
 .gallery-item-body {
   padding: 0.5rem 0.6rem 0.6rem;
+  min-height: 5rem;
 }
 .gallery-plant-name {
   font-size: 0.8rem;
