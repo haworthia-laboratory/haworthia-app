@@ -111,15 +111,17 @@ export default function CategoryPage() {
           <h1 style={{ marginTop: "0.8rem" }}>{categoryName}</h1>
         </header>
 
-        <div style={{ marginBottom: "1rem", textAlign: "right" }}>
-          {session ? (
-            <button className="forum-new-btn" onClick={() => setShowForm(!showForm)}>
-              {showForm ? "キャンセル" : "＋ 投稿する"}
-            </button>
-          ) : (
-            <Link href="/login" className="forum-login-prompt">ログインして投稿する →</Link>
-          )}
-        </div>
+        {categorySlug !== "hao-info" && (
+          <div style={{ marginBottom: "1rem", textAlign: "right" }}>
+            {session ? (
+              <button className="forum-new-btn" onClick={() => setShowForm(!showForm)}>
+                {showForm ? "キャンセル" : "＋ 投稿する"}
+              </button>
+            ) : (
+              <Link href="/login" className="forum-login-prompt">ログインして投稿する →</Link>
+            )}
+          </div>
+        )}
 
         {showForm && (
           <form className="forum-form" onSubmit={handleSubmit}>
