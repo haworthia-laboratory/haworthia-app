@@ -96,7 +96,7 @@ function getTraits(s) {
   };
 }
 
-// 全問終了後に出す追加質問
+// 全問終了後に出す追加質問（品種特定モード用・シビア）
 const EXTRA_QUESTIONS = [
   {
     id: "size",
@@ -113,7 +113,7 @@ const EXTRA_QUESTIONS = [
       const id = s.id;
       if (v === "tiny") return ["pygmaea", "bruynsii", "cooperi-doldii", "cooperi-gordoniana"].some(k => id.includes(k));
       if (v === "large") return ["comptoniana", "blackbeardiana", "pumila", "maxima", "bolusii"].some(k => id.includes(k));
-      return true; // medium は大多数なので絞らない
+      return true;
     },
   },
   {
@@ -147,10 +147,49 @@ const EXTRA_QUESTIONS = [
     filter: (s, v) => {
       if (v === "unknown") return true;
       const id = s.id;
-      // 子株が出にくい品種（万象・玉扇）
       if (v === "no") return ["maughanii", "truncata"].some(k => id.includes(k));
-      // 子株が出やすい品種（走出枝系・クーペリー系）
       if (v === "yes") return ["tessellata", "cooperi", "cymbiformis", "turgida"].some(k => id.includes(k));
+      return true;
+    },
+  },
+];
+
+// おすすめ探しモード用追加質問（好み・雰囲気ベース）
+const EXTRA_QUESTIONS_EXPLORE = [
+  {
+    id: "size-pref",
+    text: "どのくらいの\nサイズが好き？",
+    hint: "育てるスペースや好みのサイズ感で",
+    options: [
+      { label: "小さくてかわいい（ミニサイズ）", value: "tiny" },
+      { label: "手のひらにのる、ちょうどいいサイズ", value: "medium" },
+      { label: "どっしり大きめの存在感がほしい", value: "large" },
+      { label: "こだわらない", value: "unknown" },
+    ],
+    filter: (s, v) => {
+      if (v === "unknown") return true;
+      const id = s.id;
+      if (v === "tiny") return ["pygmaea", "bruynsii", "cooperi-doldii", "cooperi-gordoniana"].some(k => id.includes(k));
+      if (v === "large") return ["comptoniana", "blackbeardiana", "pumila", "maxima", "bolusii"].some(k => id.includes(k));
+      return true;
+    },
+  },
+  {
+    id: "color-pref",
+    text: "どんな色に\n変化する子が好き？",
+    hint: "秋〜冬の光を浴びたときの姿",
+    options: [
+      { label: "紫・黒に染まる神秘的な子", value: "purple" },
+      { label: "赤・ピンクに色づく華やかな子", value: "red" },
+      { label: "一年中安定した緑でいてほしい", value: "stable" },
+      { label: "どちらでも", value: "unknown" },
+    ],
+    filter: (s, v) => {
+      if (v === "unknown") return true;
+      const text = s.name + s.description;
+      if (v === "purple") return text.includes("紫") || text.includes("黒") || text.includes("ブラック");
+      if (v === "red") return text.includes("赤") || text.includes("紅") || text.includes("ピンク");
+      if (v === "stable") return !text.includes("紫") && !text.includes("黒") && !text.includes("赤") && !text.includes("紅");
       return true;
     },
   },
@@ -548,8 +587,8 @@ export default function AkinatorPage() {
   const [selectedCat, setSelectedCat] = useState(null); // サブカテゴリ表示用
 
   const activeQuestions = mode === "explore" ? EXPLORE_QUESTIONS : IDENTIFY_QUESTIONS;
-  const activeExtraQuestions = (mode === "name" || mode === "impression")
-    ? EXTRA_QUESTIONS.filter(q => q.id !== "size")
+  const activeExtraQuestions = (mode === "explore" || mode === "name" || mode === "impression")
+    ? EXTRA_QUESTIONS_EXPLORE
     : EXTRA_QUESTIONS;
 
   const handleAnswer = (value) => {
