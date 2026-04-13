@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "../../lib/supabase";
+import { shopLinks } from "../zukan/shop-links";
 
 const CATEGORIES = [
   {
@@ -80,7 +81,11 @@ export default function CommunityPage() {
               <div className="forum-category-name">{cat.name}</div>
               <div className="forum-category-desc">{cat.desc}</div>
               <div className="forum-category-footer">
-                <span className="forum-category-count">{counts[cat.slug] || 0} 件の投稿</span>
+                <span className="forum-category-count">
+                  {cat.slug === "hao-info"
+                    ? `${Object.values(shopLinks).filter(l => l && l.length > 0).length} 件のリンク`
+                    : `${counts[cat.slug] || 0} 件の投稿`}
+                </span>
                 {latests[cat.slug] && (
                   <span className="forum-category-latest">
                     {latests[cat.slug].display_name} · {timeAgo(latests[cat.slug].created_at)}

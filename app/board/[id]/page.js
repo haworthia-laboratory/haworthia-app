@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { supabase } from "../../../lib/supabase";
+import { shopLinks } from "../../zukan/shop-links";
+import { species } from "../../zukan/data";
 
 const CATEGORIES = {
   soudan: "ハオルチア相談室",
@@ -147,15 +149,51 @@ export default function CategoryPage() {
           </form>
         )}
 
+        {categorySlug === "hao-info" && (() => {
+          const linkedSpecies = Object.entries(shopLinks)
+            .filter(([, links]) => links && links.length > 0)
+            .map(([id, links]) => {
+              const s = species.find((sp) => sp.id === id);
+              return { id, name: s?.name || id, links };
+            });
+          if (linkedSpecies.length === 0) return null;
+          return (
+            <div style={{ marginBottom: "2rem" }}>
+              <p style={{ fontSize: "0.78rem", color: "#8aaa8c", marginBottom: "0.8rem", letterSpacing: "0.05em" }}>
+                ── 運営セレクト ──
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+                {linkedSpecies.map(({ id, name, links }) => (
+                  <div key={id} style={{ background: "rgba(255,255,255,0.6)", borderRadius: "1rem", padding: "0.8rem 1rem", border: "1px solid rgba(255,255,255,0.8)" }}>
+                    <div style={{ fontSize: "0.82rem", fontWeight: "600", color: "#2c4a2d", marginBottom: "0.5rem" }}>
+                      <Link href={`/zukan/${id}`} style={{ color: "inherit", textDecoration: "none" }}>{name}</Link>
+                    </div>
+                    {links.map((link, i) => (
+                      <div key={i} dangerouslySetInnerHTML={{ __html: link.html }} />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
+
         {loading ? (
           <p style={{ textAlign: "center", color: "#aaa", marginTop: "2rem" }}>読み込み中…</p>
         ) : topics.length === 0 ? (
-          <div className="forum-empty">
-            <p>まだ投稿がありません</p>
-            <p style={{ fontSize: "0.82rem", color: "#aaa" }}>最初の投稿をしてみましょう！</p>
-          </div>
+          categorySlug !== "hao-info" ? (
+            <div className="forum-empty">
+              <p>まだ投稿がありません</p>
+              <p style={{ fontSize: "0.82rem", color: "#aaa" }}>最初の投稿をしてみましょう！</p>
+            </div>
+          ) : null
         ) : (
           <div className="forum-topics">
+            {categorySlug === "hao-info" && (
+              <p style={{ fontSize: "0.78rem", color: "#8aaa8c", marginBottom: "0.8rem", letterSpacing: "0.05em" }}>
+                ── みんなの情報 ──
+              </p>
+            )}
             {topics.map((topic) => (
               <Link key={topic.id} href={`/board/${categorySlug}/${topic.id}`} className="forum-topic-card">
                 <div className="forum-topic-avatar">{topic.display_name.charAt(0)}</div>
