@@ -133,17 +133,36 @@ export default function CategoryPage() {
           <h1 style={{ marginTop: "0.8rem" }}>{categoryName}</h1>
         </header>
 
-        {categorySlug === "hao-info" && (
-          <aside className="supplies-sidebar">
-            {supplyGroups.map((group) => (
-              <div key={group.label} className="supplies-group">
-                <p className="supplies-group-label">{group.label}</p>
-                <div className="supplies-group-row">
-                  <div
-                    className="supplies-group-track"
-                    ref={el => { trackRefs.current[group.label] = el; }}
-                  >
-                    {group.items.map(s => (
+        {categorySlug === "hao-info" && supplyGroups.length > 0 && (() => {
+          const careGroup = supplyGroups[0];
+          const setGroup = supplyGroups[1];
+          return (
+            <aside className="supplies-sidebar">
+              <div className="supplies-main-row">
+                <div className="supplies-care-section">
+                  <p className="supplies-group-label">{careGroup.label}</p>
+                  <div className="supplies-care-row">
+                    <div
+                      className="supplies-group-track"
+                      ref={el => { trackRefs.current["care"] = el; }}
+                    >
+                      {careGroup.items.map(s => (
+                        <a key={s.id} href={s.href} target="_blank" rel="nofollow sponsored noopener" className="supplies-card">
+                          <img src={s.img} alt={s.label} className="supplies-card-img" />
+                          <div className="supplies-card-label">{s.label}</div>
+                          <div className="supplies-card-category">{s.category}</div>
+                        </a>
+                      ))}
+                    </div>
+                    {careGroup.items.length > 3 && (
+                      <button className="supplies-arrow" onClick={() => handleSlide("care")}>›</button>
+                    )}
+                  </div>
+                </div>
+                {setGroup && (
+                  <div className="supplies-set-section">
+                    <p className="supplies-group-label">{setGroup.label}</p>
+                    {setGroup.items.map(s => (
                       <a key={s.id} href={s.href} target="_blank" rel="nofollow sponsored noopener" className="supplies-card">
                         <img src={s.img} alt={s.label} className="supplies-card-img" />
                         <div className="supplies-card-label">{s.label}</div>
@@ -151,14 +170,11 @@ export default function CategoryPage() {
                       </a>
                     ))}
                   </div>
-                  {group.items.length > 3 && (
-                    <button className="supplies-arrow" onClick={() => handleSlide(group.label)}>›</button>
-                  )}
-                </div>
+                )}
               </div>
-            ))}
-          </aside>
-        )}
+            </aside>
+          );
+        })()}
 
         {categorySlug !== "hao-info" && (
           <div style={{ marginBottom: "1rem", textAlign: "right" }}>
