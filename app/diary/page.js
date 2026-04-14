@@ -12,11 +12,11 @@ const emptyEntryForm = () => ({ date: today(), plantId: "", note: "", photos: []
 const emptyPlantForm = () => ({ name: "", speciesIds: [], acquiredDate: today(), acquiredType: "purchase", memo: "", photos: [] });
 
 const ACQUIRED_TYPES = [
-  { id: "purchase", label: "購入" },
-  { id: "divide", label: "株分け" },
-  { id: "gift", label: "もらった" },
-  { id: "seed", label: "実生" },
-  { id: "other", label: "その他" },
+  { id: "purchase", label: "購入–Purchase–" },
+  { id: "divide", label: "株分け–Division–" },
+  { id: "gift", label: "もらった–Gift–" },
+  { id: "seed", label: "実生–Seed grown–" },
+  { id: "other", label: "その他–Other–" },
 ];
 
 export default function DiaryPage() {
@@ -485,7 +485,7 @@ export default function DiaryPage() {
         {showPlantForm && (
           <div className="diary-form-card">
             <div className="diary-form-row">
-              <label className="diary-form-label">株の名前</label>
+              <label className="diary-form-label">個体名</label>
               <input
                 type="text"
                 className="diary-date-input"
@@ -624,7 +624,7 @@ export default function DiaryPage() {
         {viewMode === "grid" ? (
           <div>
             {!showPlantForm && (
-              <button className="diary-add-individual-btn" onClick={openNewPlant}>＋ 株を登録</button>
+              <button className="diary-add-individual-btn" onClick={openNewPlant}>＋ 新規品種登録 –Register New Specimen–</button>
             )}
             <div className="diary-plant-grid">
               {sortedPlants.map(plant => (
@@ -676,7 +676,7 @@ export default function DiaryPage() {
         ) : (
           <div className="diary-individual-list">
             {!showPlantForm && (
-              <button className="diary-add-individual-btn" onClick={openNewPlant}>＋ 株を登録</button>
+              <button className="diary-add-individual-btn" onClick={openNewPlant}>＋ 新規品種登録 –Register New Specimen–</button>
             )}
             {sortedPlants.map(plant => (
               <div

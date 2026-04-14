@@ -10,11 +10,11 @@ function today() { return new Date().toISOString().slice(0, 10); }
 const emptyEntryForm = () => ({ date: today(), note: "", photos: [], isFlowering: false });
 
 const ACQUIRED_TYPES = [
-  { id: "purchase", label: "購入" },
-  { id: "divide", label: "株分け" },
-  { id: "gift", label: "もらった" },
-  { id: "seed", label: "実生" },
-  { id: "other", label: "その他" },
+  { id: "purchase", label: "購入–Purchase–" },
+  { id: "divide", label: "株分け–Division–" },
+  { id: "gift", label: "もらった–Gift–" },
+  { id: "seed", label: "実生–Seed grown–" },
+  { id: "other", label: "その他–Other–" },
 ];
 
 export default function PlantTimelinePage() {
