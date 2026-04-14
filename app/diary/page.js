@@ -472,7 +472,7 @@ export default function DiaryPage() {
 
         {/* 株一覧 */}
         <div className="diary-section-title">
-          登録個体 –Registered Specimens–
+          登録個体<br /><span style={{ fontSize: "0.72rem", fontWeight: "400", color: "#8aaa8c", letterSpacing: "0.04em" }}>–Registered Specimens–</span>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <div className="plant-sort-group">
               <button
