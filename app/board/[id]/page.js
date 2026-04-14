@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { supabase } from "../../../lib/supabase";
 import { shopLinks } from "../../zukan/shop-links";
 import { species } from "../../zukan/data";
+import { supplies } from "../supplies";
 
 const CATEGORIES = {
   soudan: "ハオルチア相談室",
@@ -105,6 +106,18 @@ export default function CategoryPage() {
 
   return (
     <main>
+      {categorySlug === "hao-info" && (
+        <aside className="supplies-sidebar">
+          <p className="supplies-sidebar-title">おすすめグッズ</p>
+          {supplies.map((s) => (
+            <a key={s.id} href={s.href} target="_blank" rel="nofollow sponsored noopener" className="supplies-card">
+              <img src={s.img} alt={s.label} className="supplies-card-img" />
+              <div className="supplies-card-label">{s.label}</div>
+              <div className="supplies-card-category">{s.category}</div>
+            </a>
+          ))}
+        </aside>
+      )}
       <div className="container">
         <header>
           <Link href="/board" className="back-link">← コミュニティに戻る</Link>
