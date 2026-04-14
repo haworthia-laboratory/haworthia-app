@@ -3218,20 +3218,15 @@ header h1 {
   width: 100% !important;
   max-width: 100% !important;
 }
-.column-affiliate-item td,
-.shop-links-wrap td {
-  width: auto !important;
-  max-width: 100%;
-}
 
-/* アフィリエイト画像を統一サイズ（コンパクト120px）に制限 */
+/* アフィリエイト画像を統一サイズ（120px）に固定 */
 .column-affiliate-item img,
 .shop-links-wrap img {
+  width: 120px !important;
+  height: 120px !important;
   max-width: 120px !important;
   max-height: 120px !important;
-  width: auto !important;
-  height: auto !important;
-  object-fit: cover;
+  object-fit: cover !important;
 }
 
 /* ホーム セクションラベル */
