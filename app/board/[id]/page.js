@@ -145,12 +145,12 @@ export default function CategoryPage() {
           return (
             <aside className="supplies-sidebar">
               <div className="supplies-main-row">
-                <div className="supplies-care-section">
-                  <p className="supplies-group-label">{careGroup.label}</p>
-                  <div className="supplies-care-row">
-                    {careGroup.items.length > 3 && (
-                      <button className="supplies-arrow" onClick={() => handleSlide("care", -1)}>‹</button>
-                    )}
+                <div className="supplies-care-row">
+                  {careGroup.items.length > 3 && (
+                    <button className="supplies-arrow" onClick={() => handleSlide("care", -1)}>‹</button>
+                  )}
+                  <div className="supplies-track-wrap">
+                    <p className="supplies-group-label">{careGroup.label}</p>
                     <div
                       className="supplies-group-track"
                       ref={el => { trackRefs.current["care"] = el; }}
@@ -163,15 +163,15 @@ export default function CategoryPage() {
                         </a>
                       ))}
                     </div>
-                    {careGroup.items.length > 3 && (
-                      <button className="supplies-arrow" onClick={() => handleSlide("care", 1)}>›</button>
-                    )}
                   </div>
+                  {careGroup.items.length > 3 && (
+                    <button className="supplies-arrow" onClick={() => handleSlide("care", 1)}>›</button>
+                  )}
                 </div>
                 {setGroup && (
                   <div className="supplies-set-section">
                     <p className="supplies-group-label">{setGroup.label}</p>
-                    <div className="supplies-set-track">
+                    <div className="supplies-set-cards">
                       {setGroup.items.map(s => (
                         <a key={s.id} href={s.href} target="_blank" rel="nofollow sponsored noopener" className="supplies-card">
                           <img src={s.img} alt={s.label} className="supplies-card-img" />
@@ -180,9 +180,6 @@ export default function CategoryPage() {
                         </a>
                       ))}
                     </div>
-                    {setGroup.items.length > 1 && (
-                      <p className="supplies-set-hint">← スワイプ</p>
-                    )}
                   </div>
                 )}
               </div>
