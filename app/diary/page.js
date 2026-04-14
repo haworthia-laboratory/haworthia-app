@@ -465,7 +465,7 @@ export default function DiaryPage() {
 
         {/* 株一覧 */}
         <div className="diary-section-title">
-          登録株
+          登録個体 –Registered Specimens–
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <div className="plant-sort-group">
               <button
