@@ -3994,6 +3994,18 @@ header h1 {
 }
 .supplies-sidebar::-webkit-scrollbar { display: none; }
 .supplies-sidebar-title { display: none; }
+.supplies-card-wrap {
+  display: contents;
+}
+.supplies-section-label {
+  flex-shrink: 0;
+  writing-mode: vertical-rl;
+  font-size: 0.58rem;
+  color: #8aaa8c;
+  letter-spacing: 0.08em;
+  align-self: center;
+  padding: 0 0.1rem;
+}
 .supplies-card {
   flex-shrink: 0;
   display: flex;
@@ -4051,6 +4063,14 @@ header h1 {
     letter-spacing: 0.06em;
     text-align: center;
     margin-bottom: 0.2rem;
+  }
+  .supplies-card-wrap { display: contents; }
+  .supplies-section-label {
+    writing-mode: horizontal-tb;
+    font-size: 0.62rem;
+    text-align: center;
+    padding: 0.4rem 0 0.1rem;
+    color: #8aaa8c;
   }
   .supplies-card { width: auto; }
   .supplies-card-img { width: 72px; height: 72px; }

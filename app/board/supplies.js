@@ -2,19 +2,12 @@
 export const supplies = [
   {
     id: "soil",
+    sectionLabel: "お世話グッズ",
     label: "ハオルチアの土",
     category: "用土",
     img: "https://thumbnail.image.rakuten.co.jp/@0_mall/ishidaseikaen/cabinet/youhin/202008_imgp8401sq.jpg?_ex=300x300",
     href: "https://hb.afl.rakuten.co.jp/ichiba/52bd72cd.c4b3f01a.52bd72ce.168cdedb/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fishidaseikaen%2Fbs-135%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIzMDB4MzAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D",
     price: "¥5,500",
-  },
-  {
-    id: "set",
-    label: "おまかせ12種セット",
-    category: "まとめ買い",
-    img: "https://thumbnail.image.rakuten.co.jp/@0_mall/luz-shop/cabinet/syouhin/haworthia/hawo-set/ark21.jpg?_ex=300x300",
-    href: "https://hb.afl.rakuten.co.jp/ichiba/52bd776f.cc3feb23.52bd7770.edb900f7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fluz-shop%2F10000311%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIzMDB4MzAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D",
-    price: "¥4,980",
   },
   {
     id: "magamp",
@@ -39,5 +32,14 @@ export const supplies = [
     img: "https://hbb.afl.rakuten.co.jp/hgb/52d23f1f.443de0fe.52d23f20.2faa89a3/?me_id=1396011&item_id=10000585&pc=https%3A%2F%2Fthumbnail.image.rakuten.co.jp%2F%400_mall%2Fgreenaid%2Fcabinet%2F260401%2F09851_01_p.jpg%3F_ex%3D240x240&s=240x240&t=picttext",
     href: "https://hb.afl.rakuten.co.jp/ichiba/0f8c802b.261637ef.0f8c802c.4401dfec/?pc=https%3A%2F%2Fproduct.rakuten.co.jp%2Fproduct%2F-%2F5a14348ab04cc66d88616fbb3736b708%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjAsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjoxLCJhbXAiOmZhbHNlfQ%3D%3D",
     price: "",
+  },
+  {
+    id: "set",
+    sectionLabel: "出会いを楽しむ",
+    label: "おまかせ12種セット",
+    category: "まとめ買い",
+    img: "https://thumbnail.image.rakuten.co.jp/@0_mall/luz-shop/cabinet/syouhin/haworthia/hawo-set/ark21.jpg?_ex=300x300",
+    href: "https://hb.afl.rakuten.co.jp/ichiba/52bd776f.cc3feb23.52bd7770.edb900f7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fluz-shop%2F10000311%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIzMDB4MzAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D",
+    price: "¥4,980",
   },
 ];

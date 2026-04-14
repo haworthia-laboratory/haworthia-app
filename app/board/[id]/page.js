@@ -114,13 +114,15 @@ export default function CategoryPage() {
 
         {categorySlug === "hao-info" && (
           <aside className="supplies-sidebar">
-            <p className="supplies-sidebar-title">おすすめグッズ</p>
             {supplies.map((s) => (
-              <a key={s.id} href={s.href} target="_blank" rel="nofollow sponsored noopener" className="supplies-card">
-                <img src={s.img} alt={s.label} className="supplies-card-img" />
-                <div className="supplies-card-label">{s.label}</div>
-                <div className="supplies-card-category">{s.category}</div>
-              </a>
+              <div key={s.id} className="supplies-card-wrap">
+                {s.sectionLabel && <p className="supplies-section-label">{s.sectionLabel}</p>}
+                <a href={s.href} target="_blank" rel="nofollow sponsored noopener" className="supplies-card">
+                  <img src={s.img} alt={s.label} className="supplies-card-img" />
+                  <div className="supplies-card-label">{s.label}</div>
+                  <div className="supplies-card-category">{s.category}</div>
+                </a>
+              </div>
             ))}
           </aside>
         )}
