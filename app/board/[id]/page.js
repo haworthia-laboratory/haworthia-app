@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { supabase } from "../../../lib/supabase";
@@ -41,8 +41,29 @@ export default function CategoryPage() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const trackRefs = useRef({});
 
   const categoryName = CATEGORIES[categorySlug] || "コミュニティ";
+
+  // supplies をsectionLabelでグループ化
+  const supplyGroups = [];
+  supplies.forEach(s => {
+    if (s.sectionLabel) {
+      supplyGroups.push({ label: s.sectionLabel, items: [s] });
+    } else if (supplyGroups.length > 0) {
+      supplyGroups[supplyGroups.length - 1].items.push(s);
+    }
+  });
+
+  const handleSlide = (label) => {
+    const el = trackRefs.current[label];
+    if (!el) return;
+    const cardEl = el.querySelector(".supplies-card");
+    const cardW = cardEl ? cardEl.offsetWidth + 10 : 86;
+    const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
+    if (atEnd) el.scrollTo({ left: 0, behavior: "smooth" });
+    else el.scrollBy({ left: cardW, behavior: "smooth" });
+  };
 
   useEffect(() => {
     if (!supabase) return;
@@ -114,14 +135,26 @@ export default function CategoryPage() {
 
         {categorySlug === "hao-info" && (
           <aside className="supplies-sidebar">
-            {supplies.map((s) => (
-              <div key={s.id} className="supplies-card-wrap">
-                {s.sectionLabel && <p className="supplies-section-label">{s.sectionLabel}</p>}
-                <a href={s.href} target="_blank" rel="nofollow sponsored noopener" className="supplies-card">
-                  <img src={s.img} alt={s.label} className="supplies-card-img" />
-                  <div className="supplies-card-label">{s.label}</div>
-                  <div className="supplies-card-category">{s.category}</div>
-                </a>
+            {supplyGroups.map((group) => (
+              <div key={group.label} className="supplies-group">
+                <p className="supplies-group-label">{group.label}</p>
+                <div className="supplies-group-row">
+                  <div
+                    className="supplies-group-track"
+                    ref={el => { trackRefs.current[group.label] = el; }}
+                  >
+                    {group.items.map(s => (
+                      <a key={s.id} href={s.href} target="_blank" rel="nofollow sponsored noopener" className="supplies-card">
+                        <img src={s.img} alt={s.label} className="supplies-card-img" />
+                        <div className="supplies-card-label">{s.label}</div>
+                        <div className="supplies-card-category">{s.category}</div>
+                      </a>
+                    ))}
+                  </div>
+                  {group.items.length > 3 && (
+                    <button className="supplies-arrow" onClick={() => handleSlide(group.label)}>›</button>
+                  )}
+                </div>
               </div>
             ))}
           </aside>
