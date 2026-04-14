@@ -106,23 +106,24 @@ export default function CategoryPage() {
 
   return (
     <main>
-      {categorySlug === "hao-info" && (
-        <aside className="supplies-sidebar">
-          <p className="supplies-sidebar-title">おすすめグッズ</p>
-          {supplies.map((s) => (
-            <a key={s.id} href={s.href} target="_blank" rel="nofollow sponsored noopener" className="supplies-card">
-              <img src={s.img} alt={s.label} className="supplies-card-img" />
-              <div className="supplies-card-label">{s.label}</div>
-              <div className="supplies-card-category">{s.category}</div>
-            </a>
-          ))}
-        </aside>
-      )}
       <div className="container">
         <header>
           <Link href="/board" className="back-link">← コミュニティに戻る</Link>
           <h1 style={{ marginTop: "0.8rem" }}>{categoryName}</h1>
         </header>
+
+        {categorySlug === "hao-info" && (
+          <aside className="supplies-sidebar">
+            <p className="supplies-sidebar-title">おすすめグッズ</p>
+            {supplies.map((s) => (
+              <a key={s.id} href={s.href} target="_blank" rel="nofollow sponsored noopener" className="supplies-card">
+                <img src={s.img} alt={s.label} className="supplies-card-img" />
+                <div className="supplies-card-label">{s.label}</div>
+                <div className="supplies-card-category">{s.category}</div>
+              </a>
+            ))}
+          </aside>
+        )}
 
         {categorySlug !== "hao-info" && (
           <div style={{ marginBottom: "1rem", textAlign: "right" }}>
