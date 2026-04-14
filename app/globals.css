@@ -4056,6 +4056,21 @@ header h1 {
   color: #8aaa8c;
   text-align: center;
 }
+.supplies-set-track {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  width: 68px;
+}
+.supplies-set-track::-webkit-scrollbar { display: none; }
+.supplies-set-hint {
+  font-size: 0.5rem;
+  color: #b0c8b2;
+  letter-spacing: 0.03em;
+  margin-top: 0.1rem;
+}
 .supplies-arrow {
   flex-shrink: 0;
   background: rgba(74,138,76,0.12);

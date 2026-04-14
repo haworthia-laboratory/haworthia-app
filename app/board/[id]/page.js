@@ -171,13 +171,18 @@ export default function CategoryPage() {
                 {setGroup && (
                   <div className="supplies-set-section">
                     <p className="supplies-group-label">{setGroup.label}</p>
-                    {setGroup.items.map(s => (
-                      <a key={s.id} href={s.href} target="_blank" rel="nofollow sponsored noopener" className="supplies-card">
-                        <img src={s.img} alt={s.label} className="supplies-card-img" />
-                        <div className="supplies-card-label">{s.label}</div>
-                        <div className="supplies-card-category">{s.category}</div>
-                      </a>
-                    ))}
+                    <div className="supplies-set-track">
+                      {setGroup.items.map(s => (
+                        <a key={s.id} href={s.href} target="_blank" rel="nofollow sponsored noopener" className="supplies-card">
+                          <img src={s.img} alt={s.label} className="supplies-card-img" />
+                          <div className="supplies-card-label">{s.label}</div>
+                          <div className="supplies-card-category">{s.category}</div>
+                        </a>
+                      ))}
+                    </div>
+                    {setGroup.items.length > 1 && (
+                      <p className="supplies-set-hint">← スワイプ</p>
+                    )}
                   </div>
                 )}
               </div>
