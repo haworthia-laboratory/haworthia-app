@@ -8,6 +8,13 @@ import { supabase } from "../../lib/supabase";
 
 function today() { return new Date().toISOString().slice(0, 10); }
 
+function generateSpecimenId(plants) {
+  const dateStr = today().replace(/-/g, "");
+  const prefix = `HW-${dateStr}-`;
+  const count = plants.filter(p => p.name?.startsWith(prefix)).length;
+  return `${prefix}${String(count + 1).padStart(3, "0")}`;
+}
+
 const emptyEntryForm = () => ({ date: today(), plantId: "", note: "", photos: [] });
 const emptyPlantForm = () => ({ name: "", speciesIds: [], acquiredDate: today(), acquiredType: "purchase", memo: "", photos: [] });
 
@@ -108,7 +115,7 @@ export default function DiaryPage() {
   // ---- 株 CRUD ----
   const openNewPlant = () => {
     setEditingPlantId(null);
-    setPlantForm(emptyPlantForm());
+    setPlantForm({ ...emptyPlantForm(), name: generateSpecimenId(plants) });
     setPlantSpeciesQuery("");
     setShowPlantForm(true);
   };
