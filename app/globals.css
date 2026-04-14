@@ -3979,21 +3979,6 @@ header h1 {
   text-decoration: underline;
 }
 
-/* 運営セレクト アフィリエイトリンク画像の統一 */
-.shop-link-html > div {
-  width: 100% !important;
-  max-width: 100% !important;
-}
-.shop-link-html td:first-child {
-  width: 140px !important;
-}
-.shop-link-html td:first-child img {
-  width: 130px !important;
-  height: 130px !important;
-  object-fit: cover;
-  border-radius: 0.4rem;
-}
-
 /* おすすめグッズサイドバー */
 .supplies-sidebar {
   padding: 0.6rem 1.5rem;

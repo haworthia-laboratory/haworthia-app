@@ -247,7 +247,7 @@ export default function CategoryPage() {
                       <Link href={`/zukan/${id}`} style={{ color: "inherit", textDecoration: "none" }}>{name}</Link>
                     </div>
                     {links.map((link, i) => (
-                      <div key={i} className="shop-link-html" dangerouslySetInnerHTML={{ __html: link.html }} />
+                      <div key={i} dangerouslySetInnerHTML={{ __html: link.html }} />
                     ))}
                   </div>
                 ))}
