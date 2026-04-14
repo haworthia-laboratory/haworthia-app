@@ -4104,3 +4104,84 @@ header h1 {
   .supplies-set-cards { flex-direction: column; }
   .supplies-arrow { display: none; }
 }
+
+/* ===== 開花記録 ===== */
+.flowering-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  border: 1.5px solid #d4a8b8;
+  background: transparent;
+  color: #a06880;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.flowering-toggle-btn.active {
+  background: linear-gradient(135deg, #f8d4e0, #f0c0d0);
+  border-color: #c08090;
+  color: #804050;
+  font-weight: 600;
+}
+
+.flowering-history-card {
+  background: linear-gradient(135deg, rgba(255,240,245,0.8), rgba(255,248,252,0.9));
+  border: 1px solid rgba(220,160,180,0.4);
+  border-radius: 1rem;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.2rem;
+}
+.flowering-history-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #a06878;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.04em;
+}
+.flowering-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.flowering-history-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #6a5060;
+}
+.flowering-history-item.this-year {
+  font-weight: 600;
+  color: #a04060;
+}
+.flowering-history-badge {
+  font-size: 0.7rem;
+  background: #f0c0d0;
+  color: #804050;
+  padding: 0.1rem 0.5rem;
+  border-radius: 1rem;
+}
+.flowering-history-hint {
+  font-size: 0.72rem;
+  color: #b09098;
+}
+.flowering-history-compare {
+  margin-top: 0.6rem;
+  font-size: 0.78rem;
+  color: #b08090;
+  border-top: 1px solid rgba(220,160,180,0.3);
+  padding-top: 0.5rem;
+}
+
+.timeline-flowering-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-size: 0.72rem;
+  background: linear-gradient(135deg, #f8d4e0, #f0c0d0);
+  color: #804050;
+  padding: 0.1rem 0.5rem;
+  border-radius: 1rem;
+  font-weight: 600;
+}

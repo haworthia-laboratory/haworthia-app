@@ -7,7 +7,7 @@ import { species } from "../../zukan/data";
 import { supabase } from "../../../lib/supabase";
 
 function today() { return new Date().toISOString().slice(0, 10); }
-const emptyEntryForm = () => ({ date: today(), note: "", photos: [] });
+const emptyEntryForm = () => ({ date: today(), note: "", photos: [], isFlowering: false });
 
 const ACQUIRED_TYPES = [
   { id: "purchase", label: "購入" },
@@ -80,7 +80,7 @@ export default function PlantTimelinePage() {
 
   const openEdit = (entry) => {
     setEditingId(entry.id);
-    setForm({ date: entry.date, note: entry.note || "", photos: entry.photos || [] });
+    setForm({ date: entry.date, note: entry.note || "", photos: entry.photos || [], isFlowering: entry.is_flowering || false });
     setError("");
     setShowForm(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -135,6 +135,7 @@ export default function PlantTimelinePage() {
       species_name: plant?.species_name || null,
       note: form.note,
       photos: form.photos,
+      is_flowering: form.isFlowering || false,
     };
     if (supabase) {
       if (!editingId) {
@@ -203,6 +204,15 @@ export default function PlantTimelinePage() {
   const acquiredLabel = ACQUIRED_TYPES.find(t => t.id === plant?.acquired_type)?.label || "";
   const sp = plant?.species_id ? species.find(s => s.id === plant.species_id) : null;
 
+  // 開花履歴
+  const floweringEntries = entries
+    .filter(e => e.is_flowering)
+    .sort((a, b) => b.date.localeCompare(a.date));
+  const thisYear = new Date().getFullYear().toString();
+  const lastYear = (new Date().getFullYear() - 1).toString();
+  const thisYearFlowering = floweringEntries.find(e => e.date.startsWith(thisYear));
+  const lastYearFlowering = floweringEntries.find(e => e.date.startsWith(lastYear));
+
   if (loading) return (
     <main><div className="container">
       <Link href="/diary" className="back-link">← 成長日記に戻る</Link>
@@ -261,6 +271,35 @@ export default function PlantTimelinePage() {
           </div>
         </header>
 
+        {/* 開花履歴 */}
+        {floweringEntries.length > 0 && (
+          <div className="flowering-history-card">
+            <div className="flowering-history-title">🌸 開花履歴</div>
+            <div className="flowering-history-list">
+              {floweringEntries.map(e => {
+                const year = e.date.slice(0, 4);
+                const mmdd = e.date.slice(5).replace("-", "/");
+                const isThisYear = year === thisYear;
+                const isLastYear = year === lastYear;
+                return (
+                  <div key={e.id} className={`flowering-history-item${isThisYear ? " this-year" : ""}`}>
+                    <span className="flowering-history-date">{year}.{mmdd}</span>
+                    {isThisYear && <span className="flowering-history-badge">今年</span>}
+                    {isLastYear && !thisYearFlowering && (
+                      <span className="flowering-history-hint">去年はこの時期</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            {lastYearFlowering && !thisYearFlowering && (
+              <div className="flowering-history-compare">
+                去年は {lastYearFlowering.date.slice(5).replace("-", "/")} に開花
+              </div>
+            )}
+          </div>
+        )}
+
         {/* 記録フォーム */}
         {showForm && (
           <div className="diary-form-card">
@@ -293,6 +332,15 @@ export default function PlantTimelinePage() {
               <textarea className="diary-textarea" placeholder="今日の様子、気づいたこと..."
                 value={form.note} onChange={e => setForm(f => ({ ...f, note: e.target.value }))} />
             </div>
+            <div className="diary-form-row">
+              <button
+                type="button"
+                className={`flowering-toggle-btn${form.isFlowering ? " active" : ""}`}
+                onClick={() => setForm(f => ({ ...f, isFlowering: !f.isFlowering }))}
+              >
+                🌸 {form.isFlowering ? "開花記録として保存" : "開花記録にする"}
+              </button>
+            </div>
             {error && <div className="diary-error">{error}</div>}
             <div style={{ display: "flex", gap: "0.6rem" }}>
               <button className="diary-save-btn" style={{ flex: 1 }} onClick={save}>
@@ -318,7 +366,10 @@ export default function PlantTimelinePage() {
               {idx < entries.length - 1 && <div className="timeline-line" />}
               <div className="timeline-content">
                 <div className="timeline-header">
-                  <div className="timeline-date">{entry.date.replace(/-/g, ".")}</div>
+                  <div className="timeline-date">
+                    {entry.date.replace(/-/g, ".")}
+                    {entry.is_flowering && <span className="timeline-flowering-badge">🌸 開花</span>}
+                  </div>
                   <div style={{ display: "flex", gap: "0.5rem" }}>
                     <button className="diary-edit-btn" onClick={() => openEdit(entry)}>編集</button>
                     <button className="diary-delete-btn" onClick={() => setDeleteConfirm({ id: entry.id, label: entry.date.replace(/-/g, ".") + "の記録" })}>×</button>
