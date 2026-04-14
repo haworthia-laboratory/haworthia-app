@@ -3064,7 +3064,7 @@ export const species = [
     lightDesc: "1,000〜4,000 lux程度の明るい半日陰が適切。強光で葉焼け・退色しやすい。",
     breeding: null,
     price: { normal: "1,000〜5,000円", nishiki: null, noribana: null },
-    gallery: ["/images/shizukuishi-top.webp"],
+    gallery: ["/images/shizukuishi-top.webp", "/images/shizukuishi-side.webp"],
   },
   {
     id: "lockwoodii",
