@@ -55,14 +55,20 @@ export default function CategoryPage() {
     }
   });
 
-  const handleSlide = (label) => {
+  const handleSlide = (label, dir = 1) => {
     const el = trackRefs.current[label];
     if (!el) return;
     const cardEl = el.querySelector(".supplies-card");
-    const cardW = cardEl ? cardEl.offsetWidth + 10 : 86;
-    const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
-    if (atEnd) el.scrollTo({ left: 0, behavior: "smooth" });
-    else el.scrollBy({ left: cardW, behavior: "smooth" });
+    const cardW = cardEl ? cardEl.offsetWidth + 8 : 76;
+    if (dir === -1) {
+      const atStart = el.scrollLeft <= 0;
+      if (atStart) el.scrollTo({ left: el.scrollWidth, behavior: "smooth" });
+      else el.scrollBy({ left: -cardW, behavior: "smooth" });
+    } else {
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
+      if (atEnd) el.scrollTo({ left: 0, behavior: "smooth" });
+      else el.scrollBy({ left: cardW, behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
@@ -142,6 +148,9 @@ export default function CategoryPage() {
                 <div className="supplies-care-section">
                   <p className="supplies-group-label">{careGroup.label}</p>
                   <div className="supplies-care-row">
+                    {careGroup.items.length > 3 && (
+                      <button className="supplies-arrow" onClick={() => handleSlide("care", -1)}>‹</button>
+                    )}
                     <div
                       className="supplies-group-track"
                       ref={el => { trackRefs.current["care"] = el; }}
@@ -155,7 +164,7 @@ export default function CategoryPage() {
                       ))}
                     </div>
                     {careGroup.items.length > 3 && (
-                      <button className="supplies-arrow" onClick={() => handleSlide("care")}>›</button>
+                      <button className="supplies-arrow" onClick={() => handleSlide("care", 1)}>›</button>
                     )}
                   </div>
                 </div>

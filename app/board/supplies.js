@@ -2,7 +2,7 @@
 export const supplies = [
   {
     id: "soil",
-    sectionLabel: "お世話グッズ",
+    sectionLabel: "おすすめお世話グッズ",
     label: "ハオルチアの土",
     category: "用土",
     img: "https://thumbnail.image.rakuten.co.jp/@0_mall/ishidaseikaen/cabinet/youhin/202008_imgp8401sq.jpg?_ex=300x300",
