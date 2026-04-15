@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "../lib/supabase";
 import { IconDiary, IconLight, IconZukan, IconDiagnose, IconColumn, IconGallery, IconBoard } from "./components/Icons";
+import { species } from "./zukan/data";
 
 function HaworthiaIcon() {
   return (
@@ -147,6 +148,11 @@ function LightIcon() {
   );
 }
 
+// 日付ベースで毎日変わるピックアップ（画像ありのみ）
+const withGallery = species.filter(s => s.gallery?.length > 0);
+const todaySeed = new Date().getDate() + new Date().getMonth() * 31;
+const pickupSpecies = [0, 1, 2].map(i => withGallery[(todaySeed + i * 17) % withGallery.length]);
+
 export default function Home() {
   const [lightResult, setLightResult] = useState(null);
   const lightInputRef = useRef(null);
@@ -230,6 +236,18 @@ export default function Home() {
               <span className="home-login-banner-arrow">›</span>
             </Link>
           )}
+
+          {/* 今日のピックアップ */}
+          <div className="home-section-label">今日のピックアップ</div>
+          <div className="home-pickup-grid">
+            {pickupSpecies.map(sp => (
+              <Link key={sp.id} href={`/zukan/${sp.id}`} className="home-pickup-card">
+                <img src={sp.gallery[0]} alt={sp.name} className="home-pickup-img" />
+                <div className="home-pickup-name">{sp.name}</div>
+                <div className="home-pickup-group">{sp.group}</div>
+              </Link>
+            ))}
+          </div>
 
           {/* 記録する */}
           <div className="home-section-label">記録する</div>

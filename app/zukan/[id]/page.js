@@ -168,8 +168,12 @@ export default function SpeciesPage({ params }) {
           </>
         )}
 
-        <Link href="/diary" className="zukan-link" style={{ marginBottom: "0.6rem" }}>
-          成長日記を記録する
+        <Link
+          href={`/diary?addSpecies=${s.id}&speciesName=${encodeURIComponent(s.name)}`}
+          className="zukan-link"
+          style={{ marginBottom: "0.6rem", background: "linear-gradient(135deg, rgba(90,138,92,0.12), rgba(120,168,122,0.08))", fontWeight: "600" }}
+        >
+          ＋ この品種を日記に追加
         </Link>
         <Link href="/gallery" className="zukan-link" style={{ marginBottom: "2rem", background: "rgba(90,138,92,0.06)", color: "#5a8a5c" }}>
           みんなのギャラリーを見る
