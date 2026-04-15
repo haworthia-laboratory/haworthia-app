@@ -37,7 +37,7 @@ export default function GlobalMenu() {
         <div className="global-menu-overlay" onClick={() => setOpen(false)}>
           <nav className="global-menu-drawer" onClick={(e) => e.stopPropagation()}>
             <div className="global-menu-header">
-              <span className="global-menu-title">ハオルチア研究室</span>
+              <Link href="/" className="global-menu-title" onClick={() => setOpen(false)}>ハオルチア研究室</Link>
               <button className="global-menu-close" onClick={() => setOpen(false)}>✕</button>
             </div>
             <ul className="global-menu-list">
