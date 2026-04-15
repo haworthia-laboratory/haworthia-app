@@ -1164,6 +1164,12 @@ header h1 {
   font-size: 1rem;
   margin-top: 0.05rem;
 }
+.light-howto-illust {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
 .light-drop-area {
   border: 2px dashed rgba(90,138,92,0.3);
   border-radius: 16px;

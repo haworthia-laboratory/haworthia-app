@@ -358,6 +358,66 @@ export default function Home() {
                   </div>
                 </div>
 
+                {/* 撮り方イラスト */}
+                <div className="light-howto-illust">
+                  <svg viewBox="0 0 280 148" width="100%" xmlns="http://www.w3.org/2000/svg" style={{ maxWidth: 280 }}>
+                    {/* 背景 */}
+                    <rect width="280" height="148" rx="10" fill="rgba(248,246,242,0.9)"/>
+
+                    {/* 窓枠 */}
+                    <rect x="12" y="18" width="58" height="76" rx="3" fill="rgba(190,220,245,0.25)" stroke="#9a8e84" strokeWidth="1.4"/>
+                    <line x1="12" y1="56" x2="70" y2="56" stroke="#9a8e84" strokeWidth="1" opacity="0.55"/>
+                    <line x1="41" y1="18" x2="41" y2="94" stroke="#9a8e84" strokeWidth="1" opacity="0.55"/>
+                    {/* 窓枠上部 */}
+                    <rect x="8" y="14" width="66" height="6" rx="2" fill="rgba(160,148,136,0.2)" stroke="#9a8e84" strokeWidth="1"/>
+                    {/* 太陽（窓の外） */}
+                    <circle cx="41" cy="37" r="9" fill="rgba(220,200,130,0.35)" stroke="#c8b870" strokeWidth="1.2"/>
+                    {[0,60,120,180,240,300].map((a,i) => {
+                      const r=Math.PI*a/180;
+                      return <line key={i} x1={41+11.5*Math.cos(r)} y1={37+11.5*Math.sin(r)} x2={41+14.5*Math.cos(r)} y2={37+14.5*Math.sin(r)} stroke="#c8b870" strokeWidth="1.1" strokeLinecap="round" opacity="0.7"/>;
+                    })}
+
+                    {/* 光の筋 */}
+                    <line x1="70" y1="38" x2="130" y2="52" stroke="#c8b870" strokeWidth="1.8" strokeLinecap="round" opacity="0.35"/>
+                    <line x1="70" y1="50" x2="130" y2="60" stroke="#c8b870" strokeWidth="2.2" strokeLinecap="round" opacity="0.4"/>
+                    <line x1="70" y1="64" x2="130" y2="68" stroke="#c8b870" strokeWidth="1.8" strokeLinecap="round" opacity="0.35"/>
+                    <line x1="70" y1="78" x2="130" y2="76" stroke="#c8b870" strokeWidth="1.2" strokeLinecap="round" opacity="0.22"/>
+
+                    {/* 棚・窓辺の台 */}
+                    <rect x="90" y="96" width="178" height="9" rx="2.5" fill="rgba(160,148,136,0.22)" stroke="#9a8e84" strokeWidth="1.2"/>
+
+                    {/* 白い紙 */}
+                    <rect x="142" y="74" width="66" height="22" rx="2.5" fill="rgba(255,255,255,0.95)" stroke="#9a8e84" strokeWidth="1.3"/>
+                    <rect x="147" y="79" width="12" height="3.5" rx="1" fill="rgba(220,200,140,0.3)"/>
+                    {/* 紙ラベル */}
+                    <text x="175" y="90" textAnchor="middle" fontSize="7.5" fill="#a89e94" fontFamily="sans-serif" letterSpacing="0.3">白い紙</text>
+
+                    {/* スマートフォン */}
+                    <rect x="161" y="30" width="28" height="40" rx="5" fill="rgba(100,92,82,0.18)" stroke="#9a8e84" strokeWidth="1.4"/>
+                    {/* カメラレンズ */}
+                    <circle cx="175" cy="38" r="5" fill="rgba(60,70,80,0.22)" stroke="#8a9ea8" strokeWidth="1"/>
+                    <circle cx="175" cy="38" r="2.5" fill="rgba(50,80,110,0.2)" stroke="#8ab0c0" strokeWidth="0.7"/>
+                    <circle cx="173.5" cy="36.5" r="0.8" fill="rgba(255,255,255,0.6)"/>
+                    {/* 画面 */}
+                    <rect x="164" y="45" width="22" height="18" rx="1.5" fill="rgba(200,220,240,0.2)" stroke="#b0a898" strokeWidth="0.8"/>
+
+                    {/* 撮影方向の矢印（カメラ→紙） */}
+                    <line x1="175" y1="70" x2="175" y2="78" stroke="#9a8e84" strokeWidth="1.3" strokeLinecap="round" strokeDasharray="2.5,2"/>
+                    <polyline points="171,75 175,80 179,75" fill="none" stroke="#9a8e84" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+
+                    {/* フラッシュなしアイコン */}
+                    <g transform="translate(222,42)">
+                      <circle cx="0" cy="0" r="10" fill="rgba(248,246,242,0.9)" stroke="#c07070" strokeWidth="1.2"/>
+                      <polygon points="1,-6 -2,0 1.5,0 -1.5,6 2.5,0 -1,0 2,-6" fill="rgba(200,170,60,0.45)" stroke="#c8a830" strokeWidth="0.7"/>
+                      <line x1="-7" y1="-7" x2="7" y2="7" stroke="#c07070" strokeWidth="1.6" strokeLinecap="round"/>
+                    </g>
+                    <text x="222" y="58" textAnchor="middle" fontSize="7" fill="#c07070" fontFamily="sans-serif">フラッシュOFF</text>
+
+                    {/* 自然光ラベル */}
+                    <text x="41" y="112" textAnchor="middle" fontSize="7.5" fill="#c8a830" fontFamily="sans-serif">自然光</text>
+                  </svg>
+                </div>
+
                 <div
                   className={`light-drop-area${lightDragOver ? " drag-over" : ""}`}
                   onClick={() => lightInputRef.current.click()}
