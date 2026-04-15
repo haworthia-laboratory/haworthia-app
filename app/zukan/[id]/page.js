@@ -41,6 +41,12 @@ export default function SpeciesPage({ params }) {
 
   const allGallery = [...(s.gallery || []).slice(1), ...userGallery];
 
+  // 似た品種：同じgroupから画像あり優先で最大4件
+  const related = species
+    .filter(sp => sp.id !== s.id && sp.group === s.group)
+    .sort((a, b) => (b.gallery?.length || 0) - (a.gallery?.length || 0))
+    .slice(0, 4);
+
   return (
     <main>
       <div className="container">
@@ -163,6 +169,24 @@ export default function SpeciesPage({ params }) {
             <div className="shop-links-wrap" style={{ marginBottom: "1.5rem" }}>
               {sShopLinks.map((link, i) => (
                 <div key={i} dangerouslySetInnerHTML={{ __html: link.html }} style={{ marginBottom: "0.8rem" }} />
+              ))}
+            </div>
+          </>
+        )}
+
+        {related.length > 0 && (
+          <>
+            <div className="detail-section-title">似た品種</div>
+            <div className="related-species-grid">
+              {related.map(sp => (
+                <Link key={sp.id} href={`/zukan/${sp.id}`} className="related-species-card">
+                  {sp.gallery?.[0]
+                    ? <img src={sp.gallery[0]} alt={sp.name} className="related-species-img" />
+                    : <div className="related-species-placeholder">🌿</div>
+                  }
+                  <div className="related-species-name">{sp.name}</div>
+                  <div className="related-species-type">{sp.type}</div>
+                </Link>
               ))}
             </div>
           </>
