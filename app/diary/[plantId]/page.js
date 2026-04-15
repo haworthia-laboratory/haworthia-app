@@ -261,6 +261,9 @@ export default function PlantTimelinePage() {
                   ? <Link href={`/zukan/${plant.species_id}`} className="plant-header-species">{plant.species_name}</Link>
                   : <div className="plant-header-species">{plant.species_name}</div>
               )}
+              {plant.specimen_id && (
+                <div className="plant-header-specimen-id">{plant.specimen_id}</div>
+              )}
               {plant.acquired_date && (
                 <div className="plant-header-meta">
                   {acquiredLabel} {plant.acquired_date.replace(/-/g, ".")}

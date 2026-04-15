@@ -8,15 +8,21 @@ import { supabase } from "../../lib/supabase";
 
 function today() { return new Date().toISOString().slice(0, 10); }
 
-function generateSpecimenId(plants) {
+async function generateSpecimenId() {
   const dateStr = today().replace(/-/g, "");
   const prefix = `HW-${dateStr}-`;
-  const count = plants.filter(p => p.name?.startsWith(prefix)).length;
-  return `${prefix}${String(count + 1).padStart(3, "0")}`;
+  if (supabase) {
+    const { count } = await supabase
+      .from("plants")
+      .select("id", { count: "exact", head: true })
+      .like("specimen_id", `${prefix}%`);
+    return `${prefix}${String((count || 0) + 1).padStart(3, "0")}`;
+  }
+  return `${prefix}001`;
 }
 
 const emptyEntryForm = () => ({ date: today(), plantId: "", note: "", photos: [] });
-const emptyPlantForm = () => ({ name: "", speciesIds: [], acquiredDate: today(), acquiredType: "purchase", memo: "", photos: [] });
+const emptyPlantForm = () => ({ name: "", speciesIds: [], acquiredDate: today(), acquiredType: "purchase", memo: "", photos: [], specimenId: "" });
 
 const ACQUIRED_TYPES = [
   { id: "purchase", label: "購入–Purchase–" },
@@ -113,9 +119,10 @@ export default function DiaryPage() {
   };
 
   // ---- 株 CRUD ----
-  const openNewPlant = () => {
+  const openNewPlant = async () => {
     setEditingPlantId(null);
-    setPlantForm({ ...emptyPlantForm(), name: generateSpecimenId(plants) });
+    const specimenId = await generateSpecimenId();
+    setPlantForm({ ...emptyPlantForm(), specimenId });
     setPlantSpeciesQuery("");
     setShowPlantForm(true);
   };
@@ -150,6 +157,7 @@ export default function DiaryPage() {
       acquired_date: plantForm.acquiredDate || null,
       acquired_type: plantForm.acquiredType || null,
       memo: plantForm.memo || null,
+      ...(!editingPlantId && plantForm.specimenId ? { specimen_id: plantForm.specimenId } : {}),
     };
 
     if (supabase) {
@@ -491,6 +499,12 @@ export default function DiaryPage() {
 
         {showPlantForm && (
           <div className="diary-form-card">
+            {!editingPlantId && plantForm.specimenId && (
+              <div className="diary-form-row">
+                <label className="diary-form-label">個体ID</label>
+                <div className="specimen-id-display">{plantForm.specimenId}</div>
+              </div>
+            )}
             <div className="diary-form-row">
               <label className="diary-form-label">個体名</label>
               <input
@@ -700,6 +714,7 @@ export default function DiaryPage() {
                 </div>
                 <div className="diary-individual-info">
                   <div className="diary-individual-name">{plant.name}</div>
+                  {plant.specimen_id && <div className="diary-individual-specimen-id">{plant.specimen_id}</div>}
                   {plant.species_name && (
                     plant.species_id
                       ? <Link href={`/zukan/${plant.species_id}`} className="diary-individual-species diary-species-link" onClick={e => e.stopPropagation()}>{plant.species_name} →</Link>
