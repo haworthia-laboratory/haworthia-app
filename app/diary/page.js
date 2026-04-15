@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { species } from "../zukan/data";
 import { supabase } from "../../lib/supabase";
 
@@ -34,7 +34,6 @@ const ACQUIRED_TYPES = [
 
 export default function DiaryPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [entries, setEntries] = useState([]);
   const [plants, setPlants] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -103,8 +102,9 @@ export default function DiaryPage() {
       }
     };
     init().then(async () => {
-      const addSpeciesId = searchParams.get("addSpecies");
-      const addSpeciesName = searchParams.get("speciesName");
+      const sp = new URLSearchParams(window.location.search);
+      const addSpeciesId = sp.get("addSpecies");
+      const addSpeciesName = sp.get("speciesName");
       if (addSpeciesId) {
         const specimenId = await generateSpecimenId();
         setPlantForm(f => ({ ...f, speciesIds: [addSpeciesId], specimenId }));
