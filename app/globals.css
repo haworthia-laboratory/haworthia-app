@@ -1093,6 +1093,107 @@ header h1 {
   background: rgba(92, 82, 72, 0.05);
 }
 
+/* 照度チェック モーダル */
+.light-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  animation: fadeIn 0.2s ease;
+}
+.light-modal {
+  background: #fff;
+  border-radius: 24px 24px 0 0;
+  width: 100%;
+  max-width: 540px;
+  padding: 1.4rem 1.2rem 2.2rem;
+  box-shadow: 0 -4px 32px rgba(0,0,0,0.12);
+  animation: slideUp 0.25s ease;
+}
+@keyframes slideUp {
+  from { transform: translateY(60px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.light-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.light-modal-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #3a5c3c;
+}
+.light-modal-close {
+  background: rgba(90,138,92,0.08);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 0.85rem;
+  color: #5a8a5c;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.light-modal-tips {
+  background: rgba(240,250,242,0.7);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.light-modal-tip-row {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  font-size: 0.78rem;
+  color: #3a5c3c;
+  line-height: 1.6;
+}
+.light-modal-tip-icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+  margin-top: 0.05rem;
+}
+.light-drop-area {
+  border: 2px dashed rgba(90,138,92,0.3);
+  border-radius: 16px;
+  padding: 2rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+.light-drop-area:hover,
+.light-drop-area.drag-over {
+  background: rgba(90,138,92,0.06);
+  border-color: #5a8a5c;
+}
+.light-drop-icon { font-size: 2rem; }
+.light-drop-text { font-size: 0.88rem; color: #5a8a5c; font-weight: 600; }
+.light-drop-sub  { font-size: 0.72rem; color: #aaa; }
+.light-drop-btn  {
+  margin-top: 0.2rem;
+  background: #5a8a5c;
+  color: #fff;
+  border-radius: 20px;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
 .light-result {
   margin-top: 1rem;
   animation: fadeIn 0.4s ease;

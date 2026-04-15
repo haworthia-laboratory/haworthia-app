@@ -185,6 +185,8 @@ const todayTrivia = TRIVIA[todaySeed % TRIVIA.length];
 
 export default function Home() {
   const [lightResult, setLightResult] = useState(null);
+  const [showLightModal, setShowLightModal] = useState(false);
+  const [lightDragOver, setLightDragOver] = useState(false);
   const lightInputRef = useRef(null);
   const [session, setSession] = useState(undefined); // undefined=未確認, null=未ログイン
   const [nickname, setNickname] = useState("");
@@ -204,8 +206,7 @@ export default function Home() {
     });
   }, []);
 
-  const measureLight = (e) => {
-    const file = e.target.files[0];
+  const processLightFile = (file) => {
     if (!file) return;
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -228,11 +229,16 @@ export default function Home() {
         else if (brightness > 80) level = { label: "普通", desc: "もう少し明るい場所が理想的です", bar: 50, guide: "耐陰性の高い品種（宝草・シンビフォルミスなど）なら育てられますが、窓に近づけるとより元気に育ちます。" };
         else level = { label: "足りない", desc: "光が不足しています。窓辺に移動しましょう", bar: 25, guide: "この明るさでは多くの品種が徒長してしまいます。できるだけ窓辺に移動するか、植物育成ライトの使用を検討してみてください。" };
         setLightResult(level);
-        e.target.value = "";
+        setShowLightModal(false);
       };
       img.src = reader.result;
     };
     reader.readAsDataURL(file);
+  };
+
+  const measureLight = (e) => {
+    processLightFile(e.target.files[0]);
+    e.target.value = "";
   };
 
   return (
@@ -298,7 +304,7 @@ export default function Home() {
             </div>
             <div className="home-nav-arrow">›</div>
           </Link>
-          <div className="home-nav-card home-nav-card--light" onClick={() => lightInputRef.current.click()} style={{ cursor: "pointer" }}>
+          <div className="home-nav-card home-nav-card--light" onClick={() => setShowLightModal(true)} style={{ cursor: "pointer" }}>
             <div className="home-nav-icon"><IconLight size={48} /></div>
             <div className="home-nav-body">
               <div className="home-nav-title">照度チェック</div>
@@ -307,6 +313,49 @@ export default function Home() {
             <div className="home-nav-arrow">›</div>
           </div>
           <input ref={lightInputRef} type="file" accept="image/*" onChange={measureLight} style={{ display: "none" }} />
+
+          {showLightModal && (
+            <div className="light-modal-overlay" onClick={() => setShowLightModal(false)}>
+              <div className="light-modal" onClick={e => e.stopPropagation()}>
+                <div className="light-modal-header">
+                  <span className="light-modal-title">📷 照度チェック</span>
+                  <button className="light-modal-close" onClick={() => setShowLightModal(false)}>✕</button>
+                </div>
+
+                <div className="light-modal-tips">
+                  <div className="light-modal-tip-row">
+                    <span className="light-modal-tip-icon">🌿</span>
+                    <span>ハオルチアを置く予定の場所を撮影してください。植物の写真ではなく<strong>置き場所そのもの</strong>を写すと正確に計測できます。</span>
+                  </div>
+                  <div className="light-modal-tip-row">
+                    <span className="light-modal-tip-icon">📄</span>
+                    <span><strong>白い紙を置いて撮影</strong>すると精度が上がります。白は光を均一に反射するため、明るさの基準として最適です。黒い背景は光を吸収してしまい、実際より暗く判定されることがあります。</span>
+                  </div>
+                  <div className="light-modal-tip-row">
+                    <span className="light-modal-tip-icon">☀️</span>
+                    <span>フラッシュはオフにして、自然光の状態で撮影してください。</span>
+                  </div>
+                </div>
+
+                <div
+                  className={`light-drop-area${lightDragOver ? " drag-over" : ""}`}
+                  onClick={() => lightInputRef.current.click()}
+                  onDragOver={e => { e.preventDefault(); setLightDragOver(true); }}
+                  onDragLeave={() => setLightDragOver(false)}
+                  onDrop={e => {
+                    e.preventDefault();
+                    setLightDragOver(false);
+                    processLightFile(e.dataTransfer.files[0]);
+                  }}
+                >
+                  <div className="light-drop-icon">🖼️</div>
+                  <div className="light-drop-text">ここに写真をドロップ</div>
+                  <div className="light-drop-sub">または</div>
+                  <div className="light-drop-btn">ファイルを選ぶ</div>
+                </div>
+              </div>
+            </div>
+          )}
           {lightResult && (
             <div className="light-result">
               <div className="light-result-label">{lightResult.label}</div>
