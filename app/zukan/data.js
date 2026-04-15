@@ -22,7 +22,7 @@ export const species = [
       nishiki: "数万〜10万円+（非常に稀）",
       noribana: null,
     },
-    gallery: [],
+    gallery: ["/images/kyu-korisato-top.webp", "/images/kyu-korisato-side.webp"],
   },
   {
     id: "shin-korisato",
