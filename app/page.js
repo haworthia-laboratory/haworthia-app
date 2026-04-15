@@ -324,15 +324,36 @@ export default function Home() {
 
                 <div className="light-modal-tips">
                   <div className="light-modal-tip-row">
-                    <span className="light-modal-tip-icon">🌿</span>
+                    <span className="light-modal-tip-icon">
+                      <svg viewBox="0 0 32 32" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16,28 Q16,18 10,12 Q14,10 18,14 Q20,8 16,4 Q24,6 24,14 Q28,12 26,18 Q24,24 16,28 Z" fill="rgba(160,148,136,0.18)" stroke="#9a8e84" strokeWidth="1.4" strokeLinejoin="round"/>
+                        <path d="M16,28 Q14,22 10,18" fill="none" stroke="#b8aca0" strokeWidth="0.9" strokeLinecap="round" opacity="0.6"/>
+                      </svg>
+                    </span>
                     <span>ハオルチアを置く予定の場所を撮影してください。植物の写真ではなく<strong>置き場所そのもの</strong>を写すと正確に計測できます。</span>
                   </div>
                   <div className="light-modal-tip-row">
-                    <span className="light-modal-tip-icon">📄</span>
+                    <span className="light-modal-tip-icon">
+                      <svg viewBox="0 0 32 32" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="3" width="20" height="26" rx="2" fill="rgba(160,148,136,0.18)" stroke="#9a8e84" strokeWidth="1.4"/>
+                        <line x1="10" y1="10" x2="22" y2="10" stroke="#b8aca0" strokeWidth="1" strokeLinecap="round" opacity="0.7"/>
+                        <line x1="10" y1="14" x2="22" y2="14" stroke="#b8aca0" strokeWidth="1" strokeLinecap="round" opacity="0.7"/>
+                        <line x1="10" y1="18" x2="18" y2="18" stroke="#b8aca0" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
+                        <rect x="10" y="22" width="6" height="4" rx="1" fill="rgba(220,210,190,0.35)" stroke="#c8b870" strokeWidth="0.8"/>
+                      </svg>
+                    </span>
                     <span><strong>白い紙を置いて撮影</strong>すると精度が上がります。白は光を均一に反射するため、明るさの基準として最適です。黒い背景は光を吸収してしまい、実際より暗く判定されることがあります。</span>
                   </div>
                   <div className="light-modal-tip-row">
-                    <span className="light-modal-tip-icon">☀️</span>
+                    <span className="light-modal-tip-icon">
+                      <svg viewBox="0 0 32 32" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="16" cy="16" r="5.5" fill="rgba(220,200,140,0.28)" stroke="#c8b870" strokeWidth="1.4"/>
+                        {[0,45,90,135,180,225,270,315].map((a, i) => {
+                          const rad = a * Math.PI / 180;
+                          return <line key={i} x1={16 + 7.5*Math.cos(rad)} y1={16 + 7.5*Math.sin(rad)} x2={16 + 10.5*Math.cos(rad)} y2={16 + 10.5*Math.sin(rad)} stroke="#c8b870" strokeWidth="1.2" strokeLinecap="round" opacity="0.8"/>;
+                        })}
+                      </svg>
+                    </span>
                     <span>フラッシュはオフにして、自然光の状態で撮影してください。</span>
                   </div>
                 </div>
@@ -348,7 +369,13 @@ export default function Home() {
                     processLightFile(e.dataTransfer.files[0]);
                   }}
                 >
-                  <div className="light-drop-icon">🖼️</div>
+                  <svg viewBox="0 0 48 48" width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="8" width="40" height="32" rx="4" fill="rgba(160,148,136,0.15)" stroke="#9a8e84" strokeWidth="1.6"/>
+                    <circle cx="13" cy="17" r="3" fill="rgba(200,178,138,0.35)" stroke="#b8a878" strokeWidth="1"/>
+                    <polyline points="4,34 14,22 22,30 30,20 44,34" fill="none" stroke="#b8aca0" strokeWidth="1.4" strokeLinejoin="round"/>
+                    <line x1="24" y1="22" x2="24" y2="38" stroke="#9a8e84" strokeWidth="1.4" strokeLinecap="round" opacity="0.5"/>
+                    <polyline points="19,27 24,22 29,27" fill="none" stroke="#9a8e84" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" opacity="0.5"/>
+                  </svg>
                   <div className="light-drop-text">ここに写真をドロップ</div>
                   <div className="light-drop-sub">または</div>
                   <div className="light-drop-btn">ファイルを選ぶ</div>
