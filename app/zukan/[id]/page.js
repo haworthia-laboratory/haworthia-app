@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { species } from "../data";
 import { shopLinks } from "../shop-links";
 import { notFound } from "next/navigation";
@@ -11,6 +11,7 @@ export default function SpeciesPage({ params }) {
   const s = species.find((sp) => sp.id === params.id);
   const sShopLinks = shopLinks[params.id] || [];
   const [userGallery, setUserGallery] = useState([]);
+  const [galleryPage, setGalleryPage] = useState(0);
 
   useEffect(() => {
     const allIds = [params.id, ...(s?.mergedFrom || [])];
@@ -150,13 +151,40 @@ export default function SpeciesPage({ params }) {
 
         <div className="detail-section-title">ギャラリー</div>
         <div className="gallery-wrap">
-          {allGallery.length > 0 ? (
-            <div className="gallery-grid">
-              {allGallery.map((src, i) => (
-                <img key={i} src={src} alt={`${s.name} ${i + 1}`} className="gallery-img" />
-              ))}
-            </div>
-          ) : (
+          {allGallery.length > 0 ? (() => {
+            const perPage = 2;
+            const totalPages = Math.ceil(allGallery.length / perPage);
+            const pageImgs = allGallery.slice(galleryPage * perPage, galleryPage * perPage + perPage);
+            return (
+              <div className="gallery-carousel">
+                <button
+                  className="gallery-carousel-arrow left"
+                  onClick={() => setGalleryPage(p => Math.max(0, p - 1))}
+                  disabled={galleryPage === 0}
+                  aria-label="前へ"
+                >&#8249;</button>
+                <div className="gallery-carousel-track">
+                  {pageImgs.map((src, i) => (
+                    <img key={galleryPage * perPage + i} src={src} alt={`${s.name} ${galleryPage * perPage + i + 1}`} className="gallery-img" />
+                  ))}
+                  {pageImgs.length === 1 && <div className="gallery-carousel-placeholder" />}
+                </div>
+                <button
+                  className="gallery-carousel-arrow right"
+                  onClick={() => setGalleryPage(p => Math.min(totalPages - 1, p + 1))}
+                  disabled={galleryPage >= totalPages - 1}
+                  aria-label="次へ"
+                >&#8250;</button>
+                {totalPages > 1 && (
+                  <div className="gallery-carousel-dots">
+                    {Array.from({ length: totalPages }).map((_, i) => (
+                      <span key={i} className={`gallery-carousel-dot${i === galleryPage ? " active" : ""}`} onClick={() => setGalleryPage(i)} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })() : (
             <div className="gallery-empty">
               <p>写真はまだありません</p>
             </div>
