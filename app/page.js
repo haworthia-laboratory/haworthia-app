@@ -326,8 +326,14 @@ export default function Home() {
                   <div className="light-modal-tip-row">
                     <span className="light-modal-tip-icon">
                       <svg viewBox="0 0 32 32" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16,28 Q16,18 10,12 Q14,10 18,14 Q20,8 16,4 Q24,6 24,14 Q28,12 26,18 Q24,24 16,28 Z" fill="rgba(160,148,136,0.18)" stroke="#9a8e84" strokeWidth="1.4" strokeLinejoin="round"/>
-                        <path d="M16,28 Q14,22 10,18" fill="none" stroke="#b8aca0" strokeWidth="0.9" strokeLinecap="round" opacity="0.6"/>
+                        {/* 茎 */}
+                        <path d="M16,30 Q16,20 13,16" fill="none" stroke="#5a8a5c" strokeWidth="1.5" strokeLinecap="round"/>
+                        {/* 左の葉 */}
+                        <path d="M13,16 Q6,12 7,5 Q13,8 13,16 Z" fill="rgba(90,138,92,0.55)" stroke="#4a7a4c" strokeWidth="1" strokeLinejoin="round"/>
+                        {/* 右の葉 */}
+                        <path d="M13,16 Q20,10 20,4 Q14,8 13,16 Z" fill="rgba(110,160,112,0.5)" stroke="#4a7a4c" strokeWidth="1" strokeLinejoin="round"/>
+                        {/* 芽の先 */}
+                        <path d="M13,16 Q15,10 16,6 Q14,10 13,16 Z" fill="rgba(140,190,142,0.45)" stroke="#5a9a5c" strokeWidth="0.8"/>
                       </svg>
                     </span>
                     <span>ハオルチアを置く予定の場所を撮影してください。植物の写真ではなく<strong>置き場所そのもの</strong>を写すと正確に計測できます。</span>
@@ -335,11 +341,12 @@ export default function Home() {
                   <div className="light-modal-tip-row">
                     <span className="light-modal-tip-icon">
                       <svg viewBox="0 0 32 32" width="22" height="22" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="6" y="3" width="20" height="26" rx="2" fill="rgba(160,148,136,0.18)" stroke="#9a8e84" strokeWidth="1.4"/>
-                        <line x1="10" y1="10" x2="22" y2="10" stroke="#b8aca0" strokeWidth="1" strokeLinecap="round" opacity="0.7"/>
-                        <line x1="10" y1="14" x2="22" y2="14" stroke="#b8aca0" strokeWidth="1" strokeLinecap="round" opacity="0.7"/>
-                        <line x1="10" y1="18" x2="18" y2="18" stroke="#b8aca0" strokeWidth="1" strokeLinecap="round" opacity="0.5"/>
-                        <rect x="10" y="22" width="6" height="4" rx="1" fill="rgba(220,210,190,0.35)" stroke="#c8b870" strokeWidth="0.8"/>
+                        {/* 白い紙：折り目あり・光沢感 */}
+                        <rect x="5" y="4" width="22" height="26" rx="2" fill="rgba(255,255,255,0.98)" stroke="#c0b8b0" strokeWidth="1.3"/>
+                        {/* 折り目（右上コーナー） */}
+                        <path d="M19,4 L27,12 L19,12 Z" fill="rgba(210,204,196,0.4)" stroke="#c0b8b0" strokeWidth="0.9"/>
+                        {/* 光沢ハイライト */}
+                        <rect x="8" y="7" width="7" height="2" rx="1" fill="rgba(255,255,255,0.9)" opacity="0.7"/>
                       </svg>
                     </span>
                     <span><strong>白い紙を置いて撮影</strong>すると精度が上がります。白は光を均一に反射するため、明るさの基準として最適です。黒い背景は光を吸収してしまい、実際より暗く判定されることがあります。</span>
