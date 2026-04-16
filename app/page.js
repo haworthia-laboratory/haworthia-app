@@ -365,63 +365,67 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* 撮り方イラスト */}
+                {/* 撮り方イラスト（正確な構図：窓＝左、紙＝中央、カメラ＝右斜め上） */}
                 <div className="light-howto-illust">
-                  <svg viewBox="0 0 280 148" width="100%" xmlns="http://www.w3.org/2000/svg" style={{ maxWidth: 280 }}>
+                  <svg viewBox="0 0 300 155" width="100%" xmlns="http://www.w3.org/2000/svg" style={{ maxWidth: 300 }}>
                     {/* 背景 */}
-                    <rect width="280" height="148" rx="10" fill="rgba(248,246,242,0.9)"/>
+                    <rect width="300" height="155" rx="10" fill="rgba(248,246,242,0.92)"/>
 
-                    {/* 窓枠 */}
-                    <rect x="12" y="18" width="58" height="76" rx="3" fill="rgba(190,220,245,0.25)" stroke="#9a8e84" strokeWidth="1.4"/>
-                    <line x1="12" y1="56" x2="70" y2="56" stroke="#9a8e84" strokeWidth="1" opacity="0.55"/>
-                    <line x1="41" y1="18" x2="41" y2="94" stroke="#9a8e84" strokeWidth="1" opacity="0.55"/>
-                    {/* 窓枠上部 */}
-                    <rect x="8" y="14" width="66" height="6" rx="2" fill="rgba(160,148,136,0.2)" stroke="#9a8e84" strokeWidth="1"/>
-                    {/* 太陽（窓の外） */}
-                    <circle cx="41" cy="37" r="9" fill="rgba(220,200,130,0.35)" stroke="#c8b870" strokeWidth="1.2"/>
-                    {[0,60,120,180,240,300].map((a,i) => {
-                      const r=Math.PI*a/180;
-                      return <line key={i} x1={41+11.5*Math.cos(r)} y1={37+11.5*Math.sin(r)} x2={41+14.5*Math.cos(r)} y2={37+14.5*Math.sin(r)} stroke="#c8b870" strokeWidth="1.1" strokeLinecap="round" opacity="0.7"/>;
-                    })}
+                    {/* ===== 窓（左）===== */}
+                    <rect x="10" y="18" width="56" height="76" rx="3" fill="rgba(190,225,250,0.28)" stroke="#9a8e84" strokeWidth="1.4"/>
+                    <line x1="10" y1="56" x2="66" y2="56" stroke="#9a8e84" strokeWidth="1" opacity="0.5"/>
+                    <line x1="38" y1="18" x2="38" y2="94" stroke="#9a8e84" strokeWidth="1" opacity="0.5"/>
+                    <rect x="6" y="13" width="64" height="7" rx="2" fill="rgba(160,148,136,0.2)" stroke="#9a8e84" strokeWidth="1"/>
+                    {/* 太陽 */}
+                    <circle cx="25" cy="38" r="8.5" fill="rgba(220,200,130,0.38)" stroke="#c8b870" strokeWidth="1.2"/>
+                    {[0,60,120,180,240,300].map((a,i)=>{const r=Math.PI*a/180;return <line key={i} x1={25+11*Math.cos(r)} y1={38+11*Math.sin(r)} x2={25+14*Math.cos(r)} y2={38+14*Math.sin(r)} stroke="#c8b870" strokeWidth="1.1" strokeLinecap="round" opacity="0.75"/>;})}
+                    <text x="38" y="112" textAnchor="middle" fontSize="7.5" fill="#b89830" fontFamily="sans-serif">自然光</text>
 
-                    {/* 光の筋 */}
-                    <line x1="70" y1="38" x2="130" y2="52" stroke="#c8b870" strokeWidth="1.8" strokeLinecap="round" opacity="0.35"/>
-                    <line x1="70" y1="50" x2="130" y2="60" stroke="#c8b870" strokeWidth="2.2" strokeLinecap="round" opacity="0.4"/>
-                    <line x1="70" y1="64" x2="130" y2="68" stroke="#c8b870" strokeWidth="1.8" strokeLinecap="round" opacity="0.35"/>
-                    <line x1="70" y1="78" x2="130" y2="76" stroke="#c8b870" strokeWidth="1.2" strokeLinecap="round" opacity="0.22"/>
+                    {/* ===== 光の筋（窓→紙へ水平に）===== */}
+                    {/* 光はカメラを避けて紙に届く（カメラは右側にある） */}
+                    <line x1="66" y1="52" x2="118" y2="52" stroke="#c8b870" strokeWidth="2" strokeLinecap="round" opacity="0.5"/>
+                    <line x1="66" y1="63" x2="118" y2="63" stroke="#c8b870" strokeWidth="2.4" strokeLinecap="round" opacity="0.55"/>
+                    <line x1="66" y1="74" x2="118" y2="74" stroke="#c8b870" strokeWidth="2" strokeLinecap="round" opacity="0.45"/>
+                    {/* 矢印先端 */}
+                    <polyline points="114,48 119,52 114,56" fill="none" stroke="#c8b870" strokeWidth="1.3" strokeLinecap="round" opacity="0.7"/>
+                    <polyline points="114,59 119,63 114,67" fill="none" stroke="#c8b870" strokeWidth="1.3" strokeLinecap="round" opacity="0.75"/>
+                    <polyline points="114,70 119,74 114,78" fill="none" stroke="#c8b870" strokeWidth="1.3" strokeLinecap="round" opacity="0.65"/>
 
-                    {/* 棚・窓辺の台 */}
-                    <rect x="90" y="96" width="178" height="9" rx="2.5" fill="rgba(160,148,136,0.22)" stroke="#9a8e84" strokeWidth="1.2"/>
+                    {/* ===== 台・棚 ===== */}
+                    <rect x="86" y="97" width="205" height="8" rx="2.5" fill="rgba(160,148,136,0.22)" stroke="#9a8e84" strokeWidth="1.2"/>
 
-                    {/* 白い紙 */}
-                    <rect x="142" y="74" width="66" height="22" rx="2.5" fill="rgba(255,255,255,0.95)" stroke="#9a8e84" strokeWidth="1.3"/>
-                    <rect x="147" y="79" width="12" height="3.5" rx="1" fill="rgba(220,200,140,0.3)"/>
-                    {/* 紙ラベル */}
-                    <text x="175" y="90" textAnchor="middle" fontSize="7.5" fill="#a89e94" fontFamily="sans-serif" letterSpacing="0.3">白い紙</text>
+                    {/* ===== 白い紙（台の上・中央）===== */}
+                    <rect x="108" y="78" width="58" height="19" rx="2" fill="rgba(255,255,255,0.98)" stroke="#c0b8b0" strokeWidth="1.3"/>
+                    {/* 折り目 */}
+                    <path d="M152,78 L166,78 L166,92" fill="none" stroke="#d0c8c0" strokeWidth="0.9" opacity="0.5"/>
+                    <text x="137" y="92" textAnchor="middle" fontSize="7.5" fill="#a89e94" fontFamily="sans-serif">白い紙</text>
 
-                    {/* スマートフォン */}
-                    <rect x="161" y="30" width="28" height="40" rx="5" fill="rgba(100,92,82,0.18)" stroke="#9a8e84" strokeWidth="1.4"/>
-                    {/* カメラレンズ */}
-                    <circle cx="175" cy="38" r="5" fill="rgba(60,70,80,0.22)" stroke="#8a9ea8" strokeWidth="1"/>
-                    <circle cx="175" cy="38" r="2.5" fill="rgba(50,80,110,0.2)" stroke="#8ab0c0" strokeWidth="0.7"/>
-                    <circle cx="173.5" cy="36.5" r="0.8" fill="rgba(255,255,255,0.6)"/>
-                    {/* 画面 */}
-                    <rect x="164" y="45" width="22" height="18" rx="1.5" fill="rgba(200,220,240,0.2)" stroke="#b0a898" strokeWidth="0.8"/>
-
-                    {/* 撮影方向の矢印（カメラ→紙） */}
-                    <line x1="175" y1="70" x2="175" y2="78" stroke="#9a8e84" strokeWidth="1.3" strokeLinecap="round" strokeDasharray="2.5,2"/>
-                    <polyline points="171,75 175,80 179,75" fill="none" stroke="#9a8e84" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-
-                    {/* フラッシュなしアイコン */}
-                    <g transform="translate(222,42)">
-                      <circle cx="0" cy="0" r="10" fill="rgba(248,246,242,0.9)" stroke="#c07070" strokeWidth="1.2"/>
-                      <polygon points="1,-6 -2,0 1.5,0 -1.5,6 2.5,0 -1,0 2,-6" fill="rgba(200,170,60,0.45)" stroke="#c8a830" strokeWidth="0.7"/>
-                      <line x1="-7" y1="-7" x2="7" y2="7" stroke="#c07070" strokeWidth="1.6" strokeLinecap="round"/>
+                    {/* ===== スマホ（右側・横向き・左端のレンズが紙に向く）===== */}
+                    {/* rotate(18) で左端（カメラ側）が少し下がり、紙に向く */}
+                    <g transform="translate(222,62) rotate(18)">
+                      {/* 本体 */}
+                      <rect x="-30" y="-13" width="60" height="26" rx="5" fill="rgba(100,92,82,0.18)" stroke="#9a8e84" strokeWidth="1.4"/>
+                      {/* カメラレンズ（左端） */}
+                      <circle cx="-23" cy="0" r="5.5" fill="rgba(55,65,78,0.25)" stroke="#8a9ea8" strokeWidth="1"/>
+                      <circle cx="-23" cy="0" r="2.8" fill="rgba(45,75,108,0.22)" stroke="#8ab0c0" strokeWidth="0.7"/>
+                      <circle cx="-24.5" cy="-1.5" r="0.9" fill="rgba(255,255,255,0.65)"/>
+                      {/* 画面 */}
+                      <rect x="-13" y="-9" width="36" height="18" rx="2" fill="rgba(200,220,240,0.18)" stroke="#b0a898" strokeWidth="0.8"/>
                     </g>
-                    <text x="222" y="58" textAnchor="middle" fontSize="7" fill="#c07070" fontFamily="sans-serif">フラッシュOFF</text>
 
-                    {/* 自然光ラベル */}
-                    <text x="41" y="112" textAnchor="middle" fontSize="7.5" fill="#c8a830" fontFamily="sans-serif">自然光</text>
+                    {/* カメラレンズから紙へ向かう点線矢印 */}
+                    {/* レンズ位置（rotate(18)後の(-23,0)＋translate(222,62)） */}
+                    {/* cos(18)≈0.951, sin(18)≈0.309 → (-23*0.951-0*0.309+222, -23*(-0.309)+0*0.951+62) = (200.1, 69.1) */}
+                    <line x1="200" y1="69" x2="163" y2="82" stroke="#9a8e84" strokeWidth="1.3" strokeLinecap="round" strokeDasharray="3,2.5"/>
+                    <polyline points="167,79 162,83 167,86" fill="none" stroke="#9a8e84" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+
+                    {/* ===== フラッシュOFFバッジ ===== */}
+                    <g transform="translate(261,38)">
+                      <circle cx="0" cy="0" r="10" fill="rgba(250,248,245,0.95)" stroke="#c07070" strokeWidth="1.3"/>
+                      <polygon points="1,-5.5 -2,0 1.5,0 -1.5,5.5 2.5,0 -1,0 2,-5.5" fill="rgba(200,170,60,0.45)" stroke="#c8a830" strokeWidth="0.7"/>
+                      <line x1="-7" y1="-7" x2="7" y2="7" stroke="#c07070" strokeWidth="1.7" strokeLinecap="round"/>
+                    </g>
+                    <text x="261" y="54" textAnchor="middle" fontSize="6.5" fill="#c07070" fontFamily="sans-serif">フラッシュOFF</text>
                   </svg>
                 </div>
 
