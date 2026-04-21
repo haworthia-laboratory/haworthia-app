@@ -146,7 +146,7 @@ export const species = [
       nishiki: "5,000〜50,000円",
       noribana: "10,000〜100,000円+",
     },
-    gallery: [],
+    gallery: ["/images/hikaru-obtusa-top.webp"],
   },
   {
     id: "murasaki-obtusa",
@@ -173,7 +173,7 @@ export const species = [
       nishiki: "3,000〜30,000円",
       noribana: "10,000〜80,000円+",
     },
-    gallery: [],
+    gallery: ["/images/murasaki-obtusa-top.webp"],
   },
   {
     id: "suichuu-getsu",
@@ -348,7 +348,7 @@ export const species = [
       nishiki: "10,000〜80,000円+",
       noribana: "20,000〜数十万円",
     },
-    gallery: [],
+    gallery: ["/images/truncata-top.webp"],
   },
   {
     id: "maughanii",
@@ -376,7 +376,7 @@ export const species = [
       nishiki: "10,000〜100,000円+",
       noribana: "30,000〜数十万円",
     },
-    gallery: [],
+    gallery: ["/images/maughanii-top.webp"],
   },
   {
     id: "emelyae",
@@ -1079,7 +1079,7 @@ export const species = [
       nishiki: "1,000〜8,000円",
       noribana: "3,000〜15,000円",
     },
-    gallery: [],
+    gallery: ["/images/fasciata-top.webp"],
   },
   {
     id: "attenuata",
@@ -3350,7 +3350,7 @@ export const species = [
     lightDesc: "2,000〜6,000 lux程度の明るい半日陰。",
     breeding: null,
     price: { normal: "500〜3,000円", nishiki: "3,000〜30,000円", noribana: null },
-    gallery: [],
+    gallery: ["/images/obtusa-top.webp","/images/obtusa-side.webp"],
   },
   {
     id: "maruba-murasaki-lens",
