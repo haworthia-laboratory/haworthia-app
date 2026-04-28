@@ -198,7 +198,7 @@ export const species = [
       nishiki: null,
       noribana: "10,000〜50,000円+",
     },
-    gallery: [],
+    gallery: ["/images/suichuu-getsu-top.webp"],
   },
   {
     id: "nortieri",
@@ -1327,7 +1327,7 @@ export const species = [
       nishiki: "5,000〜50,000円",
       noribana: null,
     },
-    gallery: [],
+    gallery: ["/images/picta-top.webp"],
   },
   {
     id: "splendens",
@@ -1549,7 +1549,7 @@ export const species = [
       nishiki: "5,000〜50,000円",
       noribana: null,
     },
-    gallery: [],
+    gallery: ["/images/obtusa-gyokuro-top.webp"],
   },
   {
     id: "cooperii-hybrid-tenshi",
@@ -3284,7 +3284,7 @@ export const species = [
       isNishiki: false,
       nishiki: "800〜5,000円",
     },
-    gallery: [],
+    gallery: ["/images/takarakusa-top.webp"],
   },
   {
     id: "blue-lens",
