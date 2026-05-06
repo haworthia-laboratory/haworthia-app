@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { columns } from "./data";
 
 const CATEGORY_CLASS = {
@@ -12,6 +14,7 @@ const CATEGORY_CLASS = {
 };
 
 const CATEGORY_ORDER = ["育て方", "豆知識", "品種紹介", "楽しみ方", "品種図鑑"];
+const PINNED = { "育て方": "hajimete-no-haworthia" };
 
 function ColumnCard({ col }) {
   return (
@@ -24,15 +27,59 @@ function ColumnCard({ col }) {
   );
 }
 
-export default function ColumnPage() {
+function ColumnPageInner() {
+  const searchParams = useSearchParams();
+  const activeCat = searchParams.get("cat");
+
+  if (activeCat) {
+    const items = columns.filter((c) => c.category === activeCat);
+    const pinned = PINNED[activeCat];
+    const sorted = pinned
+      ? [...items.filter((c) => c.slug === pinned), ...items.filter((c) => c.slug !== pinned)]
+      : items;
+
+    return (
+      <div>
+        <Link href="/column" className="column-back-link">← コラム一覧に戻る</Link>
+        <div className="column-section-label" style={{ marginBottom: "1rem" }}>{activeCat}</div>
+        <div className="column-list">
+          {sorted.map((col) => <ColumnCard key={col.slug} col={col} />)}
+        </div>
+      </div>
+    );
+  }
+
   const grouped = CATEGORY_ORDER.reduce((acc, cat) => {
     const items = columns.filter((c) => c.category === cat);
-    if (items.length > 0) acc[cat] = items;
+    if (items.length === 0) return acc;
+    const pinned = PINNED[cat];
+    const sorted = pinned
+      ? [...items.filter((c) => c.slug === pinned), ...items.filter((c) => c.slug !== pinned)]
+      : items;
+    acc[cat] = sorted;
     return acc;
   }, {});
 
-  const [featured, ...rest] = Object.entries(grouped);
+  return (
+    <div>
+      {Object.entries(grouped).map(([cat, items]) => (
+        <div key={cat} className="column-section">
+          <div className="column-section-header">
+            <div className="column-section-label">{cat}</div>
+            {items.length > 1 && (
+              <Link href={`/column?cat=${encodeURIComponent(cat)}`} className="column-section-more">
+                一覧を見る（{items.length}件）→
+              </Link>
+            )}
+          </div>
+          <ColumnCard col={items[0]} />
+        </div>
+      ))}
+    </div>
+  );
+}
 
+export default function ColumnPage() {
   return (
     <main>
       <div className="container">
@@ -42,28 +89,9 @@ export default function ColumnPage() {
           <h1 style={{ marginTop: "0.8rem" }}>コラム</h1>
           <p className="subtitle">ハオルチアのある暮らし</p>
         </div>
-
-        {/* 育て方：フル幅 */}
-        {featured && (
-          <div className="column-section column-section--featured">
-            <div className="column-section-label" style={{ color: "#4a8a4c" }}>{featured[0]}</div>
-            <div className="column-list">
-              {featured[1].map((col) => <ColumnCard key={col.slug} col={col} />)}
-            </div>
-          </div>
-        )}
-
-        {/* その他：2列グリッド */}
-        <div className="column-sub-grid">
-          {rest.map(([cat, items]) => (
-            <div key={cat} className="column-section">
-              <div className={`column-section-label ${CATEGORY_CLASS[cat] || ""}`} style={{ background: "none", padding: 0, fontSize: "0.75rem" }}>{cat}</div>
-              <div className="column-list">
-                {items.map((col) => <ColumnCard key={col.slug} col={col} />)}
-              </div>
-            </div>
-          ))}
-        </div>
+        <Suspense>
+          <ColumnPageInner />
+        </Suspense>
       </div>
     </main>
   );
