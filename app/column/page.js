@@ -14,7 +14,7 @@ const CATEGORY_CLASS = {
   "品種図鑑": "column-card-category--zukan",
 };
 
-const CATEGORY_ORDER = ["育て方", "豆知識", "品種紹介", "楽しみ方", "品種図鑑"];
+const CATEGORY_ORDER = ["育て方", "品種紹介", "豆知識", "楽しみ方", "品種図鑑"];
 const PINNED = { "育て方": "hajimete-no-haworthia" };
 
 function sortByPin(items, cat) {
@@ -23,9 +23,9 @@ function sortByPin(items, cat) {
   return [...items.filter((c) => c.slug === pinned), ...items.filter((c) => c.slug !== pinned)];
 }
 
-function ColumnCard({ col }) {
+function ColumnCard({ col, featured }) {
   return (
-    <Link href={`/column/${col.slug}`} className="column-card">
+    <Link href={`/column/${col.slug}`} className={`column-card${featured ? " column-card--featured" : ""}`}>
       <div className={`column-card-category ${CATEGORY_CLASS[col.category] || ""}`}>{col.category}</div>
       <div className="column-card-title">{col.title}</div>
       <div className="column-card-lead">{col.lead}</div>
@@ -105,7 +105,7 @@ function ColumnPageInner() {
               </Link>
             )}
           </div>
-          <ColumnCard col={featuredEntry[1][0]} />
+          <ColumnCard col={featuredEntry[1][0]} featured />
         </div>
       )}
 

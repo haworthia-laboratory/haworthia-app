@@ -3228,23 +3228,25 @@ header h1 {
 }
 
 /* コラム一覧 */
+/* ── コラム一覧 ─────────────────────────── */
+
 .column-list {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1rem;
   margin-top: 0.5rem;
 }
 
 .column-section {
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .column-section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.7rem;
-  padding-bottom: 0.4rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.45rem;
   border-bottom: 1px solid rgba(160,184,162,0.25);
 }
 
@@ -3256,16 +3258,22 @@ header h1 {
 }
 
 .column-section-more {
-  font-size: 0.65rem;
-  color: #7a9a7c;
+  font-size: 0.62rem;
+  color: #5a8a5c;
   text-decoration: none;
   letter-spacing: 0.03em;
   white-space: nowrap;
+  padding: 3px 12px;
+  border: 1px solid rgba(90,138,92,0.3);
+  border-radius: 20px;
+  background: rgba(90,138,92,0.04);
+  transition: background 0.18s, color 0.18s;
 }
 
 .column-section-more:hover {
-  color: #4a8a4c;
-  text-decoration: underline;
+  background: rgba(90,138,92,0.12);
+  color: #3a6a3c;
+  text-decoration: none;
 }
 
 .column-back-link {
@@ -3273,13 +3281,51 @@ header h1 {
   font-size: 0.7rem;
   color: #7a9a7c;
   text-decoration: none;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.4rem;
 }
 
 .column-back-link:hover {
   color: #4a8a4c;
   text-decoration: underline;
 }
+
+/* ── カード（メイン・一覧用） ─────────────── */
+
+.column-card {
+  display: block;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.6);
+  border-radius: 20px;
+  padding: 1.2rem 1.4rem;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.column-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.column-card:hover .column-card-title {
+  color: #1e2e20;
+}
+
+/* フィーチャードカード（育て方トップ） */
+.column-card--featured {
+  padding: 1.5rem 1.8rem;
+  background: rgba(255,255,255,0.75);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+}
+
+.column-card--featured:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+}
+
+/* ── サブグリッド（田の字） ──────────────── */
 
 .column-sub-grid {
   display: grid;
@@ -3288,57 +3334,72 @@ header h1 {
 }
 
 .column-cell {
-  background: rgba(255,255,255,0.7);
-  border-radius: 12px;
-  padding: 0.8rem;
-  border: 1px solid rgba(160,184,162,0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.6);
+  border-radius: 20px;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
   display: flex;
   flex-direction: column;
 }
 
 .column-hcard {
   display: block;
-  background: rgba(248,252,248,0.9);
-  border-radius: 8px;
-  padding: 0.65rem 0.8rem;
+  background: rgba(248,252,248,0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 0.7rem 0.85rem;
   text-decoration: none;
-  border: 1px solid rgba(160,184,162,0.15);
+  border: 1px solid rgba(255,255,255,0.5);
   margin-top: 0.7rem;
   flex: 1;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .column-hcard:hover {
-  box-shadow: 0 2px 8px rgba(90,138,92,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(90,138,92,0.1);
+}
+
+.column-hcard:hover .column-hcard-title {
+  color: #1e2e20;
 }
 
 .column-hcard-title {
   font-size: 0.75rem;
-  color: #2c4a2d;
+  color: #2f3a34;
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 1.55;
   margin-bottom: 0.35rem;
+  transition: color 0.18s;
 }
 
 .column-hcard-date {
   font-size: 0.6rem;
   color: #a0b8a2;
+  opacity: 0.6;
 }
+
+/* ── カルーセルナビ ──────────────────────── */
 
 .column-cell-nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  margin-top: 0.6rem;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
 }
 
 .column-cell-nav-btn {
   background: none;
   border: 1px solid rgba(160,184,162,0.5);
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  font-size: 0.65rem;
+  width: 44px;
+  height: 44px;
+  font-size: 0.75rem;
   color: #7a9a7c;
   cursor: pointer;
   display: flex;
@@ -3346,11 +3407,14 @@ header h1 {
   justify-content: center;
   padding: 0;
   line-height: 1;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .column-cell-nav-btn:hover {
-  background: rgba(90,138,92,0.08);
+  background: rgba(90,138,92,0.1);
   color: #4a8a4c;
+  border-color: rgba(90,138,92,0.4);
 }
 
 .column-cell-nav-count {
@@ -3358,21 +3422,10 @@ header h1 {
   color: #a0b8a2;
   min-width: 28px;
   text-align: center;
+  opacity: 0.7;
 }
 
-.column-card {
-  display: block;
-  background: rgba(255,255,255,0.7);
-  border-radius: 16px;
-  padding: 1.2rem 1.4rem;
-  text-decoration: none;
-  border: 1px solid rgba(160,184,162,0.2);
-  transition: box-shadow 0.2s;
-}
-
-.column-card:hover {
-  box-shadow: 0 4px 16px rgba(90,138,92,0.1);
-}
+/* ── タイポグラフィ ──────────────────────── */
 
 .column-card-category {
   display: inline-block;
@@ -3410,24 +3463,41 @@ header h1 {
 }
 
 .column-card-title {
-  font-size: 0.95rem;
-  color: #2c4a2d;
-  font-weight: 500;
+  font-size: 1rem;
+  color: #2f3a34;
+  font-weight: 600;
   line-height: 1.6;
   margin-bottom: 0.5rem;
+  transition: color 0.18s;
 }
 
 .column-card-lead {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: #5a6a5a;
-  line-height: 1.7;
-  margin-bottom: 0.6rem;
+  line-height: 1.75;
+  margin-bottom: 0.65rem;
 }
 
 .column-card-date {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   color: #a0b8a2;
   letter-spacing: 0.05em;
+  opacity: 0.6;
+}
+
+@media (max-width: 480px) {
+  .column-sub-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .column-card--featured {
+    padding: 1.2rem 1.4rem;
+  }
+
+  .column-cell-nav-btn {
+    width: 44px;
+    height: 44px;
+  }
 }
 
 /* コラム詳細 */
