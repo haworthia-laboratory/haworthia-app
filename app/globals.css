@@ -3292,31 +3292,19 @@ header h1 {
   border-radius: 12px;
   padding: 0.8rem;
   border: 1px solid rgba(160,184,162,0.2);
-}
-
-.column-hscroll {
   display: flex;
-  overflow-x: auto;
-  gap: 0.6rem;
-  margin-top: 0.7rem;
-  padding-bottom: 4px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.column-hscroll::-webkit-scrollbar {
-  display: none;
+  flex-direction: column;
 }
 
 .column-hcard {
-  min-width: 82%;
-  flex-shrink: 0;
   display: block;
   background: rgba(248,252,248,0.9);
   border-radius: 8px;
   padding: 0.65rem 0.8rem;
   text-decoration: none;
   border: 1px solid rgba(160,184,162,0.15);
+  margin-top: 0.7rem;
+  flex: 1;
 }
 
 .column-hcard:hover {
@@ -3334,6 +3322,42 @@ header h1 {
 .column-hcard-date {
   font-size: 0.6rem;
   color: #a0b8a2;
+}
+
+.column-cell-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+.column-cell-nav-btn {
+  background: none;
+  border: 1px solid rgba(160,184,162,0.5);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 0.65rem;
+  color: #7a9a7c;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+
+.column-cell-nav-btn:hover {
+  background: rgba(90,138,92,0.08);
+  color: #4a8a4c;
+}
+
+.column-cell-nav-count {
+  font-size: 0.6rem;
+  color: #a0b8a2;
+  min-width: 28px;
+  text-align: center;
 }
 
 .column-card {

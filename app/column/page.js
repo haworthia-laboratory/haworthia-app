@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { columns } from "./data";
@@ -34,22 +35,34 @@ function ColumnCard({ col }) {
 }
 
 function CategoryCell({ cat, items }) {
+  const [idx, setIdx] = useState(0);
+  const col = items[idx];
+
   return (
     <div className="column-cell">
       <div className="column-section-header">
         <div className={`column-card-category ${CATEGORY_CLASS[cat] || ""}`} style={{ marginBottom: 0 }}>{cat}</div>
-        <Link href={`/column?cat=${encodeURIComponent(cat)}`} className="column-section-more">
-          一覧 →
-        </Link>
+        <Link href={`/column?cat=${encodeURIComponent(cat)}`} className="column-section-more">一覧 →</Link>
       </div>
-      <div className="column-hscroll">
-        {items.map((col) => (
-          <Link key={col.slug} href={`/column/${col.slug}`} className="column-hcard">
-            <div className="column-hcard-title">{col.title}</div>
-            <div className="column-hcard-date">{col.date.replace(/-/g, ".")}</div>
-          </Link>
-        ))}
-      </div>
+
+      <Link href={`/column/${col.slug}`} className="column-hcard">
+        <div className="column-hcard-title">{col.title}</div>
+        <div className="column-hcard-date">{col.date.replace(/-/g, ".")}</div>
+      </Link>
+
+      {items.length > 1 && (
+        <div className="column-cell-nav">
+          <button
+            className="column-cell-nav-btn"
+            onClick={(e) => { e.preventDefault(); setIdx((idx - 1 + items.length) % items.length); }}
+          >←</button>
+          <span className="column-cell-nav-count">{idx + 1} / {items.length}</span>
+          <button
+            className="column-cell-nav-btn"
+            onClick={(e) => { e.preventDefault(); setIdx((idx + 1) % items.length); }}
+          >→</button>
+        </div>
+      )}
     </div>
   );
 }
@@ -82,7 +95,6 @@ function ColumnPageInner() {
 
   return (
     <div>
-      {/* 育て方：フル幅・1件フィーチャー */}
       {featuredEntry && (
         <div className="column-section">
           <div className="column-section-header">
@@ -97,7 +109,6 @@ function ColumnPageInner() {
         </div>
       )}
 
-      {/* 豆知識以下：2列グリッド＋横スクロール */}
       {restEntries.length > 0 && (
         <div className="column-sub-grid">
           {restEntries.map(([cat, items]) => (
