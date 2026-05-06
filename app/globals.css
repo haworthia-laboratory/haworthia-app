@@ -3281,6 +3281,61 @@ header h1 {
   text-decoration: underline;
 }
 
+.column-sub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.column-cell {
+  background: rgba(255,255,255,0.7);
+  border-radius: 12px;
+  padding: 0.8rem;
+  border: 1px solid rgba(160,184,162,0.2);
+}
+
+.column-hscroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.6rem;
+  margin-top: 0.7rem;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.column-hscroll::-webkit-scrollbar {
+  display: none;
+}
+
+.column-hcard {
+  min-width: 82%;
+  flex-shrink: 0;
+  display: block;
+  background: rgba(248,252,248,0.9);
+  border-radius: 8px;
+  padding: 0.65rem 0.8rem;
+  text-decoration: none;
+  border: 1px solid rgba(160,184,162,0.15);
+}
+
+.column-hcard:hover {
+  box-shadow: 0 2px 8px rgba(90,138,92,0.1);
+}
+
+.column-hcard-title {
+  font-size: 0.75rem;
+  color: #2c4a2d;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-bottom: 0.35rem;
+}
+
+.column-hcard-date {
+  font-size: 0.6rem;
+  color: #a0b8a2;
+}
+
 .column-card {
   display: block;
   background: rgba(255,255,255,0.7);

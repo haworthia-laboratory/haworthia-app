@@ -16,6 +16,12 @@ const CATEGORY_CLASS = {
 const CATEGORY_ORDER = ["育て方", "豆知識", "品種紹介", "楽しみ方", "品種図鑑"];
 const PINNED = { "育て方": "hajimete-no-haworthia" };
 
+function sortByPin(items, cat) {
+  const pinned = PINNED[cat];
+  if (!pinned) return items;
+  return [...items.filter((c) => c.slug === pinned), ...items.filter((c) => c.slug !== pinned)];
+}
+
 function ColumnCard({ col }) {
   return (
     <Link href={`/column/${col.slug}`} className="column-card">
@@ -27,17 +33,34 @@ function ColumnCard({ col }) {
   );
 }
 
+function CategoryCell({ cat, items }) {
+  return (
+    <div className="column-cell">
+      <div className="column-section-header">
+        <div className={`column-card-category ${CATEGORY_CLASS[cat] || ""}`} style={{ marginBottom: 0 }}>{cat}</div>
+        <Link href={`/column?cat=${encodeURIComponent(cat)}`} className="column-section-more">
+          一覧 →
+        </Link>
+      </div>
+      <div className="column-hscroll">
+        {items.map((col) => (
+          <Link key={col.slug} href={`/column/${col.slug}`} className="column-hcard">
+            <div className="column-hcard-title">{col.title}</div>
+            <div className="column-hcard-date">{col.date.replace(/-/g, ".")}</div>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ColumnPageInner() {
   const searchParams = useSearchParams();
   const activeCat = searchParams.get("cat");
 
   if (activeCat) {
     const items = columns.filter((c) => c.category === activeCat);
-    const pinned = PINNED[activeCat];
-    const sorted = pinned
-      ? [...items.filter((c) => c.slug === pinned), ...items.filter((c) => c.slug !== pinned)]
-      : items;
-
+    const sorted = sortByPin(items, activeCat);
     return (
       <div>
         <Link href="/column" className="column-back-link">← コラム一覧に戻る</Link>
@@ -51,30 +74,37 @@ function ColumnPageInner() {
 
   const grouped = CATEGORY_ORDER.reduce((acc, cat) => {
     const items = columns.filter((c) => c.category === cat);
-    if (items.length === 0) return acc;
-    const pinned = PINNED[cat];
-    const sorted = pinned
-      ? [...items.filter((c) => c.slug === pinned), ...items.filter((c) => c.slug !== pinned)]
-      : items;
-    acc[cat] = sorted;
+    if (items.length > 0) acc[cat] = sortByPin(items, cat);
     return acc;
   }, {});
 
+  const [featuredEntry, ...restEntries] = Object.entries(grouped);
+
   return (
     <div>
-      {Object.entries(grouped).map(([cat, items]) => (
-        <div key={cat} className="column-section">
+      {/* 育て方：フル幅・1件フィーチャー */}
+      {featuredEntry && (
+        <div className="column-section">
           <div className="column-section-header">
-            <div className="column-section-label">{cat}</div>
-            {items.length > 1 && (
-              <Link href={`/column?cat=${encodeURIComponent(cat)}`} className="column-section-more">
-                一覧を見る（{items.length}件）→
+            <div className="column-section-label">{featuredEntry[0]}</div>
+            {featuredEntry[1].length > 1 && (
+              <Link href={`/column?cat=${encodeURIComponent(featuredEntry[0])}`} className="column-section-more">
+                一覧を見る（{featuredEntry[1].length}件）→
               </Link>
             )}
           </div>
-          <ColumnCard col={items[0]} />
+          <ColumnCard col={featuredEntry[1][0]} />
         </div>
-      ))}
+      )}
+
+      {/* 豆知識以下：2列グリッド＋横スクロール */}
+      {restEntries.length > 0 && (
+        <div className="column-sub-grid">
+          {restEntries.map(([cat, items]) => (
+            <CategoryCell key={cat} cat={cat} items={items} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
