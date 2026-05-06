@@ -3337,19 +3337,6 @@ header h1 {
   flex-shrink: 0;
 }
 
-/* アイテム有バッジ */
-.column-shop-badge {
-  font-size: 0.55rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: #3a7a4a;
-  background: rgba(80,160,100,0.12);
-  border: 1px solid rgba(80,160,100,0.25);
-  border-radius: 20px;
-  padding: 2px 8px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
 
 /* ── サブグリッド（田の字） ──────────────── */
 

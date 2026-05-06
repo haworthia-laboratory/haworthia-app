@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense } from "react";
 import { columns } from "./data";
 
@@ -24,28 +24,47 @@ function sortByPin(items, cat) {
   return [...items.filter((c) => c.slug === pinned), ...items.filter((c) => c.slug !== pinned)];
 }
 
-function ColumnCard({ col, featured }) {
-  const hasShop = col.shopHtml && col.shopHtml.length > 0;
+function ColumnCard({ col, featured, listHref }) {
+  const router = useRouter();
+  if (!featured) {
+    return (
+      <Link href={`/column/${col.slug}`} className="column-card">
+        <div className={`column-card-category ${CATEGORY_CLASS[col.category] || ""}`}>{col.category}</div>
+        <div className="column-card-title">{col.title}</div>
+        <div className="column-card-lead">{col.lead}</div>
+        <div className="column-card-date">{col.date.replace(/-/g, ".")}</div>
+      </Link>
+    );
+  }
   return (
-    <Link href={`/column/${col.slug}`} className={`column-card${featured ? " column-card--featured" : ""}`}>
+    <div
+      className="column-card column-card--featured"
+      onClick={() => router.push(`/column/${col.slug}`)}
+      style={{ cursor: "pointer" }}
+    >
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "0.5rem" }}>
         <div className={`column-card-category ${CATEGORY_CLASS[col.category] || ""}`}>{col.category}</div>
-        {hasShop && <span className="column-shop-badge">アイテム有</span>}
+        {listHref && (
+          <Link
+            href={listHref}
+            className="column-section-more"
+            onClick={(e) => e.stopPropagation()}
+          >一覧を見る →</Link>
+        )}
       </div>
       <div className="column-card-title">{col.title}</div>
       <div className="column-card-lead">{col.lead}</div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div className="column-card-date">{col.date.replace(/-/g, ".")}</div>
-        {featured && <span className="column-card-arrow">→</span>}
+        <span className="column-card-arrow">→</span>
       </div>
-    </Link>
+    </div>
   );
 }
 
 function CategoryCell({ cat, items, prominent }) {
   const [idx, setIdx] = useState(0);
   const col = items[idx];
-  const hasShop = col.shopHtml && col.shopHtml.length > 0;
 
   return (
     <div className={`column-cell${prominent ? " column-cell--prominent" : ""}`}>
@@ -55,7 +74,6 @@ function CategoryCell({ cat, items, prominent }) {
       </div>
 
       <Link href={`/column/${col.slug}`} className="column-hcard">
-        {hasShop && <span className="column-shop-badge" style={{ marginBottom: "0.4rem", display: "inline-block" }}>アイテム有</span>}
         <div className="column-hcard-title">{col.title}</div>
         <div className="column-hcard-date">{col.date.replace(/-/g, ".")}</div>
       </Link>
@@ -109,13 +127,12 @@ function ColumnPageInner() {
         <div className="column-section">
           <div className="column-section-header">
             <div className="column-section-label">{featuredEntry[0]}</div>
-            {featuredEntry[1].length > 1 && (
-              <Link href={`/column?cat=${encodeURIComponent(featuredEntry[0])}`} className="column-section-more">
-                一覧を見る（{featuredEntry[1].length}件）→
-              </Link>
-            )}
           </div>
-          <ColumnCard col={featuredEntry[1][0]} featured />
+          <ColumnCard
+            col={featuredEntry[1][0]}
+            featured
+            listHref={`/column?cat=${encodeURIComponent(featuredEntry[0])}`}
+          />
         </div>
       )}
 
