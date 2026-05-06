@@ -6,121 +6,107 @@ export const columns = [
     category: "育て方",
     thumbnail: null,
     lead: "育てやすくて、宝石みたいに美しい。そんなハオルチアとの出会いを大切にしてほしいから、一株目の選び方をご紹介します。",
-    body: `みなさん こんにちは。
-
+    body: `みなさん、こんにちは。
 ハオルチア研究室へようこそ。
 
+ハオルチアは、
+「育てる」というより、
+少しずつ理解していくような感覚に近い植物です。
 
+光の当たり方や時間帯で表情が変わり、
+同じ株でも、日によって少し違って見えます。
 
-突然ですが、多肉植物を育てたいと思ったとき、
+その変化を見ているうちに、
+「このくらいの光が好きなんだな」とか、
+「今は水を控えたほうがよさそうだな」とか、
+少しずつ分かってくるようになります。
 
-何を基準に選びますか？
+だからこそ最初の一株は、
+その変化に気づきやすい、扱いやすい品種を選ぶことが大切です。
 
+今回は、ハオルチア初心者さんに向けて
+安心して始められる一株の選び方と、
+おすすめの品種をご紹介します。
 
+## はじめてでも扱いやすい理由
 
-かわいさ、価格、育てやすさ……
+ハオルチアは直射日光が苦手で、
+室内の明るい場所でも育てることができます。
 
-いろんな理由があると思います。
+強い光を当てなくても、
+葉の透明な部分（いわゆる"窓"）に光が入り、
+やわらかく表情が変わります。
 
+この「無理をしなくても変化が見える」という点が、
+はじめて育てる人にとって扱いやすい理由のひとつです。
 
-
-今回は、そんなハオルチア初心者さんへ向けて
-
-「一株目」に選んでほしい品種と
-
-選ぶときのポイントをご紹介します。
-
-
-
-## 初心者さんにおすすめしたい理由
-
-ハオルチアは、直射日光が苦手な植物です。
-
-
-
-「え、植物なのに？」と思うかもしれませんが、
-
-これがむしろ初心者さんにとってはうれしいポイント。
-
-
-
-室内の明るい窓辺に置いておくだけで
-
-すくすく育ってくれるんです。
-
-
-
-ベランダや庭がなくても大丈夫。
-
-忙しい毎日の中でも、育てやすい植物です。
-
-
+ただ、正直に言うと
+夏の高温多湿はやや苦手で、
+環境によっては管理に少し気を使う場面もあります。
 
 ## 一株目の選び方
 
-### 丈夫な原種から始めよう
+### 原種から始める
 
-はじめての一株は、原種がおすすめです。
+はじめての一株には、原種がおすすめです。
 
+交配種や選抜個体は見た目の個性が強い反面、
+品種ごとのクセがあり、最初は変化の読み方に少し慣れが必要なこともあります。
 
+原種は比較的安定していて、
+日々の変化を素直に見せてくれます。
 
-交配種や選抜個体はとても美しいですが、
+### 葉の状態を見る
 
-管理がやや繊細なことも。
+購入するときは、葉の状態を確認します。
 
+張りがあり、ふっくらしているものは状態がよく、
+観察もしやすい個体です。
 
-
-原種は環境への適応力が高く、
-
-多少の失敗にも耐えてくれます。
-
-
-
-### 葉がしっかりしているものを選ぶ
-
-購入するときは、葉の状態を確認しましょう。
-
-
-
-しっかりと張りがあって、
-
-ふっくらとしているものが健康な証。
-
-
-
-逆に、葉がしわしわになっているものは
-
-水分不足のサインかもしれません。
-
-
+逆に、しわが目立つものは
+すでにバランスを崩している可能性があります。
 
 ## おすすめの一株目
 
-シンビフォルミスやレツーサは、
+見た目の好みも大切ですが、
+「変化が見えやすいかどうか」も基準になります。
 
-育てやすさと美しさを兼ね備えた原種です。
+シンビフォルミスは、葉先の"窓"が大きく、
+光の入り方がわかりやすい品種です。
 
+上から光を当てたときに、
+葉先だけがほんのり明るく抜けるように見えて、
+株全体がやわらかく光っているような印象になります。
 
+強い光でなくても反応が見えるので、
+室内でも変化を感じやすいのが特徴です。
 
-価格もリーズナブルで、
+レツーサは、ややシャープな葉と透明感のある窓が特徴で、
+少し覗き込むようにすると、奥まで光が入り込んでいるのが見えます。
 
-ホームセンターでも手に入ることがあります。
+この"中をのぞく感覚"が、
+ハオルチアらしさだと思っています。
 
+## 観察しながら、少しずつ分かってくる
 
+最初のうちは、
+変化があるのかどうかもよく分からないかもしれません。
 
-まずはお気軽に、一株目を迎えてみてください。
+それでも毎日見ていると、
+ほんの少しの違いに気づくようになります。
 
-きっと、ハオルチアのある暮らしが好きになるはずです。
+光の強さ、葉の張り、水のタイミング。
+そういったものが少しずつ繋がっていく感覚があります。
 
+ハオルチアは、
+そうやって理解を重ねていく植物です。
 
-
-今日も素敵な貴方に、ぴったりの一株が見つかりますように。
-
-
+まずは一株、手元で観察してみてください。
 
 ハオルチア研究室`,
     relatedSpecies: ["cymbiformis", "retusa"],
-    shopHtml: ["<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td><div style=\"border:1px solid #95a5a6;border-radius:.75rem;background-color:#FFFFFF;width:100%;max-width:480px;margin:0px;padding:5px;text-align:center;overflow:hidden;\"><table><tr><td style=\"width:120px;min-width:120px\"><a href=\"https://hb.afl.rakuten.co.jp/ichiba/52bd776f.cc3feb23.52bd7770.edb900f7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fluz-shop%2F10000311%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIzMDB4MzAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D\" target=\"_blank\" rel=\"nofollow sponsored noopener\" style=\"word-wrap:break-word;\"><img src=\"https://thumbnail.image.rakuten.co.jp/@0_mall/luz-shop/cabinet/syouhin/haworthia/hawo-set/ark21.jpg?_ex=300x300\" border=\"0\" border=\"0\" style=\"margin:2px;width:120px;height:120px;object-fit:cover;\" alt=\"[商品価格に関しましては、リンクが作成された時点と現時点で情報が変更されている場合がございます。]\" title=\"[商品価格に関しましては、リンクが作成された時点と現時点で情報が変更されている場合がございます。]\"></a></td><td style=\"vertical-align:top;padding:4px 8px;text-align:left;\"><p style=\"font-size:11px;line-height:1.5em;margin:0 0 4px;\"><a href=\"https://hb.afl.rakuten.co.jp/ichiba/52bd776f.cc3feb23.52bd7770.edb900f7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fluz-shop%2F10000311%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIzMDB4MzAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D\" target=\"_blank\" rel=\"nofollow sponsored noopener\" style=\"word-wrap:break-word;\">ハオルチア 12種12鉢セット｜大容量 コレクション 品種ラベル付｜2寸ポット 多肉植物 観葉植物｜luz</a><br><span >価格：4,980円（税込、送料無料)</span> <span style=\"color:#BBB\">(2026/4/11時点)</span></p><div style=\"margin:15px;\"><a href=\"https://hb.afl.rakuten.co.jp/ichiba/52bd776f.cc3feb23.52bd7770.edb900f7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fluz-shop%2F10000311%2F%3Fscid%3Daf_pc_bbtn&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIzMDB4MzAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ==\" target=\"_blank\" rel=\"nofollow sponsored noopener\" style=\"word-wrap:break-word;\"><div style=\"display:inline-block;background-color:#bf0000;color:#fff;font-size:12px;font-weight:500;line-height:28px;padding:0 16px;border-radius:14px;cursor:pointer;\"> 楽天で購入 </div></a></div></td></tr></table></div><br><p style=\"color:#000000;font-size:12px;line-height:1.4em;margin:5px;word-wrap:break-word\"></p></td></tr></table>"],
+    shopHtml: ["<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td><div style=\"border:1px solid #95a5a6;border-radius:.75rem;background-color:#FFFFFF;width:100%;max-width:480px;margin:0px;padding:5px;text-align:center;overflow:hidden;\"><table><tr><td style=\"width:120px;min-width:120px\"><a href=\"https://hb.afl.rakuten.co.jp/ichiba/52bd776f.cc3feb23.52bd7770.edb900f7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fluz-shop%2F10000311%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIzMDB4MzAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D\" target=\"_blank\" rel=\"nofollow sponsored noopener\" style=\"word-wrap:break-word;\"><img src=\"https://thumbnail.image.rakuten.co.jp/@0_mall/luz-shop/cabinet/syouhin/haworthia/hawo-set/ark21.jpg?_ex=300x300\" border=\"0\" style=\"margin:2px;width:120px;height:120px;object-fit:cover;\" alt=\"[商品価格に関しましては、リンクが作成された時点と現時点で情報が変更されている場合がございます。]\" title=\"[商品価格に関しましては、リンクが作成された時点と現時点で情報が変更されている場合がございます。]\"></a></td><td style=\"vertical-align:top;padding:4px 8px;text-align:left;\"><p style=\"font-size:11px;line-height:1.5em;margin:0 0 4px;\"><a href=\"https://hb.afl.rakuten.co.jp/ichiba/52bd776f.cc3feb23.52bd7770.edb900f7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fluz-shop%2F10000311%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIzMDB4MzAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D\" target=\"_blank\" rel=\"nofollow sponsored noopener\" style=\"word-wrap:break-word;\">ハオルチア 12種12鉢セット｜大容量 コレクション 品種ラベル付｜2寸ポット 多肉植物 観葉植物｜luz</a><br><span >価格：4,980円（税込、送料無料)</span> <span style=\"color:#BBB\">(2026/4/11時点)</span></p><div style=\"margin:15px;\"><a href=\"https://hb.afl.rakuten.co.jp/ichiba/52bd776f.cc3feb23.52bd7770.edb900f7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fluz-shop%2F10000311%2F%3Fscid%3Daf_pc_bbtn&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIzMDB4MzAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ==\" target=\"_blank\" rel=\"nofollow sponsored noopener\" style=\"word-wrap:break-word;\"><div style=\"display:inline-block;background-color:#bf0000;color:#fff;font-size:12px;font-weight:500;line-height:28px;padding:0 16px;border-radius:14px;cursor:pointer;\"> 楽天で購入 </div></a></div></td></tr></table></div><br><p style=\"color:#000000;font-size:12px;line-height:1.4em;margin:5px;word-wrap:break-word\"></p></td></tr></table>",
+    "<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td><div style=\"border:1px solid #95a5a6;border-radius:.75rem;background-color:#FFFFFF;width:100%;max-width:480px;margin:0px;padding:5px;text-align:center;overflow:hidden;\"><table><tr><td style=\"width:120px;min-width:120px\"><a href=\"https://hb.afl.rakuten.co.jp/ichiba/52bd72cd.c4b3f01a.52bd72ce.168cdedb/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fishidaseikaen%2Fbs-135%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIzMDB4MzAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D\" target=\"_blank\" rel=\"nofollow sponsored noopener\" style=\"word-wrap:break-word;\"><img src=\"https://thumbnail.image.rakuten.co.jp/@0_mall/ishidaseikaen/cabinet/youhin/202008_imgp8401sq.jpg?_ex=300x300\" border=\"0\" style=\"margin:2px;width:120px;height:120px;object-fit:cover;\" alt=\"[商品価格に関しましては、リンクが作成された時点と現時点で情報が変更されている場合がございます。]\" title=\"[商品価格に関しましては、リンクが作成された時点と現時点で情報が変更されている場合がございます。]\"></a></td><td style=\"vertical-align:top;padding:4px 8px;text-align:left;\"><p style=\"font-size:11px;line-height:1.5em;margin:0 0 4px;\"><a href=\"https://hb.afl.rakuten.co.jp/ichiba/52bd72cd.c4b3f01a.52bd72ce.168cdedb/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fishidaseikaen%2Fbs-135%2F&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIzMDB4MzAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D\" target=\"_blank\" rel=\"nofollow sponsored noopener\" style=\"word-wrap:break-word;\">多肉植物用「ハオルチアの土(ハオルシアの土)」1号(細粒)　18L×2袋 【長期肥料付】【軒下栽培向き】【用土・肥料】</a><br><span >価格：5,500円（税込、送料別)</span> <span style=\"color:#BBB\">(2026/4/11時点)</span></p><div style=\"margin:15px;\"><a href=\"https://hb.afl.rakuten.co.jp/ichiba/52bd72cd.c4b3f01a.52bd72ce.168cdedb/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fishidaseikaen%2Fbs-135%2F%3Fscid%3Daf_pc_bbtn&link_type=picttext&ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIzMDB4MzAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ==\" target=\"_blank\" rel=\"nofollow sponsored noopener\" style=\"word-wrap:break-word;\"><div style=\"display:inline-block;background-color:#bf0000;color:#fff;font-size:12px;font-weight:500;line-height:28px;padding:0 16px;border-radius:14px;cursor:pointer;\"> 楽天で購入 </div></a></div></td></tr></table></div><br><p style=\"color:#000000;font-size:12px;line-height:1.4em;margin:5px;word-wrap:break-word\"></p></td></tr></table>"],
   },
   {
     slug: "mado-no-himitsu",
