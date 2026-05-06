@@ -16,6 +16,7 @@ const CATEGORY_CLASS = {
 
 const CATEGORY_ORDER = ["育て方", "品種紹介", "豆知識", "楽しみ方", "品種図鑑"];
 const PINNED = { "育て方": "hajimete-no-haworthia" };
+const PROMINENT_CATS = ["品種紹介"];
 
 function sortByPin(items, cat) {
   const pinned = PINNED[cat];
@@ -24,28 +25,37 @@ function sortByPin(items, cat) {
 }
 
 function ColumnCard({ col, featured }) {
+  const hasShop = col.shopHtml && col.shopHtml.length > 0;
   return (
     <Link href={`/column/${col.slug}`} className={`column-card${featured ? " column-card--featured" : ""}`}>
-      <div className={`column-card-category ${CATEGORY_CLASS[col.category] || ""}`}>{col.category}</div>
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "0.5rem" }}>
+        <div className={`column-card-category ${CATEGORY_CLASS[col.category] || ""}`}>{col.category}</div>
+        {hasShop && <span className="column-shop-badge">アイテム有</span>}
+      </div>
       <div className="column-card-title">{col.title}</div>
       <div className="column-card-lead">{col.lead}</div>
-      <div className="column-card-date">{col.date.replace(/-/g, ".")}</div>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div className="column-card-date">{col.date.replace(/-/g, ".")}</div>
+        {featured && <span className="column-card-arrow">→</span>}
+      </div>
     </Link>
   );
 }
 
-function CategoryCell({ cat, items }) {
+function CategoryCell({ cat, items, prominent }) {
   const [idx, setIdx] = useState(0);
   const col = items[idx];
+  const hasShop = col.shopHtml && col.shopHtml.length > 0;
 
   return (
-    <div className="column-cell">
+    <div className={`column-cell${prominent ? " column-cell--prominent" : ""}`}>
       <div className="column-section-header">
         <div className={`column-card-category ${CATEGORY_CLASS[cat] || ""}`} style={{ marginBottom: 0 }}>{cat}</div>
         <Link href={`/column?cat=${encodeURIComponent(cat)}`} className="column-section-more">一覧 →</Link>
       </div>
 
       <Link href={`/column/${col.slug}`} className="column-hcard">
+        {hasShop && <span className="column-shop-badge" style={{ marginBottom: "0.4rem", display: "inline-block" }}>アイテム有</span>}
         <div className="column-hcard-title">{col.title}</div>
         <div className="column-hcard-date">{col.date.replace(/-/g, ".")}</div>
       </Link>
@@ -112,7 +122,12 @@ function ColumnPageInner() {
       {restEntries.length > 0 && (
         <div className="column-sub-grid">
           {restEntries.map(([cat, items]) => (
-            <CategoryCell key={cat} cat={cat} items={items} />
+            <CategoryCell
+              key={cat}
+              cat={cat}
+              items={items}
+              prominent={PROMINENT_CATS.includes(cat)}
+            />
           ))}
         </div>
       )}
