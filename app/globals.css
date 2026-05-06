@@ -3235,6 +3235,36 @@ header h1 {
   margin-top: 0.5rem;
 }
 
+.column-section {
+  margin-bottom: 1.6rem;
+}
+
+.column-section--featured {
+  margin-bottom: 2rem;
+}
+
+.column-section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #7a9a7c;
+  margin-bottom: 0.7rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(160,184,162,0.25);
+}
+
+.column-sub-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+@media (max-width: 480px) {
+  .column-sub-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .column-card {
   display: block;
   background: rgba(255,255,255,0.7);
