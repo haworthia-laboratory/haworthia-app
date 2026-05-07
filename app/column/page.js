@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense } from "react";
+import { Leaf, Shovel, Flower2, Lightbulb, Sparkles, BookOpen } from "lucide-react";
 import { columns } from "./data";
 
 const CATEGORY_CLASS = {
@@ -17,6 +18,14 @@ const CATEGORY_CLASS = {
 const CATEGORY_ORDER = ["育て方", "品種紹介", "豆知識", "楽しみ方", "品種図鑑"];
 const PINNED = { "育て方": "hajimete-no-haworthia" };
 const PROMINENT_CATS = ["品種紹介"];
+
+const CATEGORY_ICONS = {
+  "育て方": <><Leaf size={13} strokeWidth={2} /><Shovel size={13} strokeWidth={2} /></>,
+  "品種紹介": <Flower2 size={13} strokeWidth={2} />,
+  "豆知識": <Lightbulb size={13} strokeWidth={2} />,
+  "楽しみ方": <Sparkles size={13} strokeWidth={2} />,
+  "品種図鑑": <BookOpen size={13} strokeWidth={2} />,
+};
 
 function sortByPin(items, cat) {
   const pinned = PINNED[cat];
@@ -69,7 +78,10 @@ function CategoryCell({ cat, items, prominent }) {
   return (
     <div className={`column-cell${prominent ? " column-cell--prominent" : ""}`}>
       <div className="column-section-header">
-        <div className={`column-card-category ${CATEGORY_CLASS[cat] || ""}`} style={{ marginBottom: 0 }}>{cat}</div>
+        <div className={`column-card-category ${CATEGORY_CLASS[cat] || ""}`} style={{ marginBottom: 0, display: "flex", alignItems: "center", gap: "4px" }}>
+          {CATEGORY_ICONS[cat]}
+          {cat}
+        </div>
         <Link href={`/column?cat=${encodeURIComponent(cat)}`} className="column-section-more">一覧 →</Link>
       </div>
 
@@ -126,7 +138,10 @@ function ColumnPageInner() {
       {featuredEntry && (
         <div className="column-section">
           <div className="column-section-header">
-            <div className="column-section-label">{featuredEntry[0]}</div>
+            <div className="column-section-label column-section-label--icons">
+              {CATEGORY_ICONS[featuredEntry[0]]}
+              {featuredEntry[0]}
+            </div>
           </div>
           <ColumnCard
             col={featuredEntry[1][0]}

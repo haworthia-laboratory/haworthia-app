@@ -3255,6 +3255,12 @@ header h1 {
   color: #7a9a7c;
 }
 
+.column-section-label--icons {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 .column-section-more {
   font-size: 0.62rem;
   color: #5a8a5c;
