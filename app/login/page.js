@@ -19,6 +19,10 @@ export default function LoginPage() {
       setError("メールアドレスを入力してください");
       return;
     }
+    if (!supabase) {
+      setError("Supabase が設定されていません");
+      return;
+    }
     setLoading(true);
     setError("");
     const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
