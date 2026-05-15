@@ -1453,7 +1453,7 @@ export const species = [
       nishiki: "8,000〜50,000円",
       noribana: null,
     },
-    gallery: [],
+    gallery: ["/images/wittebergensis-top.png", "/images/wittebergensis-side.png"],
   },
   {
     id: "glauca",
