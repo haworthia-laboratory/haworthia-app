@@ -57,7 +57,7 @@ export default function SpeciesPage({ params }) {
           <div className="detail-accent-bar" />
           <div className="detail-title-wrap">
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
-              <span className="zukan-type-badge">{s.type}</span>
+              <span className="zukan-type-badge" style={{ marginBottom: 0 }}>{s.type}</span>
               {s.difficulty && (() => {
                 const cls = { "初級": "difficulty-badge--shokyuu", "中級": "difficulty-badge--chukyuu", "上級": "difficulty-badge--jokyuu" };
                 const icon = { "初級": "🌱", "中級": "🌿", "上級": "🪴" };
