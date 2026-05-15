@@ -56,7 +56,14 @@ export default function SpeciesPage({ params }) {
         <div className="detail-header" style={{ "--accent": s.accent }}>
           <div className="detail-accent-bar" />
           <div className="detail-title-wrap">
-            <span className="zukan-type-badge">{s.type}</span>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+              <span className="zukan-type-badge">{s.type}</span>
+              {s.difficulty && (() => {
+                const cls = { "初級": "difficulty-badge--shokyuu", "中級": "difficulty-badge--chukyuu", "上級": "difficulty-badge--jokyuu" };
+                const icon = { "初級": "🌱", "中級": "🌿", "上級": "🪴" };
+                return <span className={`difficulty-badge ${cls[s.difficulty] || ""}`}>{icon[s.difficulty]}{s.difficulty}</span>;
+              })()}
+            </div>
             <h1 className="detail-name">{s.name}</h1>
             {s.yomi && <p className="detail-yomi">（{s.yomi}）</p>}
             {s.aliases?.length > 0 && <p className="detail-yomi">（別名：{s.aliases.join("/")}）</p>}

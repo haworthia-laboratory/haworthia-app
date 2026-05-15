@@ -41,6 +41,19 @@ function getColorGroup(s) {
   return s.colorGroup || "green";
 }
 
+const DIFFICULTY_LABEL = { "初級": "初級", "中級": "中級", "上級": "上級" };
+const DIFFICULTY_CLASS = { "初級": "difficulty-badge--shokyuu", "中級": "difficulty-badge--chukyuu", "上級": "difficulty-badge--jokyuu" };
+const DIFFICULTY_ICON  = { "初級": "🌱", "中級": "🌿", "上級": "🪴" };
+
+function DifficultyBadge({ difficulty }) {
+  if (!difficulty) return null;
+  return (
+    <span className={`difficulty-badge ${DIFFICULTY_CLASS[difficulty] || ""}`}>
+      {DIFFICULTY_ICON[difficulty]}{DIFFICULTY_LABEL[difficulty]}
+    </span>
+  );
+}
+
 function DropdownFilter({ id, label, options, value, onChange, colorDot, openDropdown, setOpenDropdown }) {
   const selected = options.find(o => o.id === value);
   const isActive = value !== "all";
@@ -291,9 +304,10 @@ export default function ZukanPage() {
               >
                 <div className="zukan-card-accent" />
                 <div className="zukan-card-body">
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.4rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.4rem", flexWrap: "wrap" }}>
                     <span className="zukan-type-badge" style={{ margin: 0 }}>{s.type}</span>
                     <span className="card-color-dot" style={{ background: COLOR_DOT_MAP[getColorGroup(s)] }} />
+                    <DifficultyBadge difficulty={s.difficulty} />
                     {s.isNew && <span className="new-badge">NEW</span>}
                   </div>
                   <div className="zukan-name">
@@ -364,7 +378,10 @@ export default function ZukanPage() {
                     </div>
                     {s.isNew && <span className="new-badge">NEW</span>}
                   </div>
-                  <div className="zukan-grid-scientific">{s.scientific}</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginTop: "0.25rem" }}>
+                    <div className="zukan-grid-scientific">{s.scientific}</div>
+                    <DifficultyBadge difficulty={s.difficulty} />
+                  </div>
                 </div>
                 <div className="zukan-grid-marks">
                   <button

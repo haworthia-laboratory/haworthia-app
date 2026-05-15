@@ -1,6 +1,7 @@
 export const species = [
   {
     id: "kyu-korisato",
+    difficulty: "中級",
     yomi: "きゅうこおりざとう",
     group: "軟葉系",
     colorGroup: "white",
@@ -26,6 +27,7 @@ export const species = [
   },
   {
     id: "shin-korisato",
+    difficulty: "中級",
     yomi: "しんこおりざとう",
     group: "軟葉系",
     colorGroup: "white",
@@ -51,6 +53,7 @@ export const species = [
   },
   {
     id: "seiun-no-mai",
+    difficulty: "中級",
     yomi: "せいうんのまい",
     group: "軟葉系",
     colorGroup: "green",
@@ -76,6 +79,7 @@ export const species = [
   },
   {
     id: "cymbiformis",
+    difficulty: "初級",
     yomi: "シンビフォルミス",
     group: "軟葉系",
     colorGroup: "green",
@@ -101,6 +105,7 @@ export const species = [
   },
   {
     id: "umbraticola",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ウンブラティコーラ",
@@ -125,6 +130,7 @@ export const species = [
   },
   {
     id: "hikaru-obtusa",
+    difficulty: "初級",
     group: "オブツーサ系",
     colorGroup: "green",
     name: "光オブツーサ",
@@ -150,6 +156,7 @@ export const species = [
   },
   {
     id: "murasaki-obtusa",
+    difficulty: "初級",
     group: "オブツーサ系",
     colorGroup: "purple",
     name: "紫オブツーサ（別名：OM）",
@@ -177,6 +184,7 @@ export const species = [
   },
   {
     id: "suichuu-getsu",
+    difficulty: "中級",
     group: "オブツーサ系",
     colorGroup: "white",
     name: "水中月",
@@ -202,6 +210,7 @@ export const species = [
   },
   {
     id: "nortieri",
+    difficulty: "上級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ノリピア",
@@ -226,6 +235,7 @@ export const species = [
   },
   {
     id: "cooperi-gracilis",
+    difficulty: "初級",
     group: "クーペリー系",
     colorGroup: "green",
     name: "クーペリー var.グラキリス",
@@ -250,6 +260,7 @@ export const species = [
   },
   {
     id: "turgida",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ツルギダ",
@@ -274,6 +285,7 @@ export const species = [
   },
   {
     id: "soubi",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "双眉",
@@ -300,6 +312,7 @@ export const species = [
   // ==================== 軟葉系 原種 ====================
   {
     id: "retusa",
+    difficulty: "初級",
     group: "軟葉系",
     colorGroup: "green",
     name: "レツーサ",
@@ -324,6 +337,7 @@ export const species = [
   },
   {
     id: "truncata",
+    difficulty: "上級",
     yomi: "トゥルンカータ",
     group: "万象・玉扇系",
     colorGroup: "green",
@@ -352,6 +366,7 @@ export const species = [
   },
   {
     id: "maughanii",
+    difficulty: "上級",
     yomi: "マウガニー",
     group: "万象・玉扇系",
     colorGroup: "green",
@@ -380,6 +395,7 @@ export const species = [
   },
   {
     id: "emelyae",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "エメルアエ",
@@ -404,6 +420,7 @@ export const species = [
   },
   {
     id: "pygmaea",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ピグマエア",
@@ -428,6 +445,7 @@ export const species = [
   },
   {
     id: "comptoniana",
+    difficulty: "中級",
     yomi: "コンプトニアナ",
     group: "コンプトニアナ系",
     colorGroup: "green",
@@ -453,6 +471,7 @@ export const species = [
   },
   {
     id: "bayeri",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ベイエリー",
@@ -477,6 +496,7 @@ export const species = [
   },
   {
     id: "magnifica",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "マグニフィカ",
@@ -501,6 +521,7 @@ export const species = [
   },
   {
     id: "mirabilis",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ミラビリス",
@@ -525,6 +546,7 @@ export const species = [
   },
   {
     id: "mutica",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ムティカ",
@@ -549,6 +571,7 @@ export const species = [
   },
   {
     id: "maraisii",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "マライシー",
@@ -573,6 +596,7 @@ export const species = [
   },
   {
     id: "correcta",
+    difficulty: "中級",
     group: "コンプトニアナ系",
     colorGroup: "green",
     name: "コレクタ",
@@ -597,6 +621,7 @@ export const species = [
   },
   {
     id: "springbokvlakensis",
+    difficulty: "上級",
     group: "軟葉系",
     colorGroup: "green",
     name: "スプリングボクブラケンシス",
@@ -621,6 +646,7 @@ export const species = [
   },
   {
     id: "tessellata",
+    difficulty: "初級",
     group: "硬葉系",
     colorGroup: "green",
     name: "テッセラータ（別名：竜鱗）",
@@ -648,6 +674,7 @@ export const species = [
   },
   {
     id: "arachnoidea",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "アラクノイデア",
@@ -672,6 +699,7 @@ export const species = [
   },
   {
     id: "cooperi-pilifera",
+    difficulty: "初級",
     group: "クーペリー系",
     colorGroup: "green",
     name: "クーペリー var.ピリフェラ",
@@ -696,6 +724,7 @@ export const species = [
   },
   {
     id: "cooperi-dielsiana",
+    difficulty: "中級",
     group: "クーペリー系",
     colorGroup: "green",
     name: "クーペリー var.ディエルシアナ",
@@ -720,6 +749,7 @@ export const species = [
   },
   {
     id: "cooperi-leightonii",
+    difficulty: "中級",
     group: "クーペリー系",
     colorGroup: "green",
     name: "クーペリー var.レイトニー",
@@ -744,6 +774,7 @@ export const species = [
   },
   {
     id: "cooperi-venusta",
+    difficulty: "中級",
     group: "クーペリー系",
     colorGroup: "red",
     name: "クーペリー var.ベヌスタ",
@@ -768,6 +799,7 @@ export const species = [
   },
   {
     id: "cooperi-doldii",
+    difficulty: "中級",
     group: "クーペリー系",
     colorGroup: "green",
     name: "クーペリー var.ドルディー",
@@ -792,6 +824,7 @@ export const species = [
   },
   {
     id: "cooperi-gordoniana",
+    difficulty: "中級",
     group: "クーペリー系",
     colorGroup: "green",
     name: "クーペリー var.ゴルドニアナ",
@@ -816,6 +849,7 @@ export const species = [
   },
   {
     id: "herbacea",
+    difficulty: "初級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ヘルバセア",
@@ -840,6 +874,7 @@ export const species = [
   },
   {
     id: "translucens",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "トランスルーセンス",
@@ -864,6 +899,7 @@ export const species = [
   },
   {
     id: "angustifolia",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "アングスティフォリア",
@@ -888,6 +924,7 @@ export const species = [
   },
   {
     id: "bolusii",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ボルシー",
@@ -912,6 +949,7 @@ export const species = [
   },
   {
     id: "blackbeardiana",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ブラックベアーディアナ",
@@ -936,6 +974,7 @@ export const species = [
   },
   {
     id: "serrata",
+    difficulty: "初級",
     group: "硬葉系",
     colorGroup: "green",
     name: "セラータ",
@@ -960,6 +999,7 @@ export const species = [
   },
   {
     id: "bruynsii",
+    difficulty: "上級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ブリュインシー",
@@ -984,6 +1024,7 @@ export const species = [
   },
   {
     id: "koelmaniorum",
+    difficulty: "初級",
     group: "硬葉系",
     colorGroup: "red",
     name: "コエルマニオルム",
@@ -1008,6 +1049,7 @@ export const species = [
   },
   {
     id: "nitidula",
+    difficulty: "初級",
     group: "硬葉系",
     colorGroup: "green",
     name: "ニティドゥラ",
@@ -1032,6 +1074,7 @@ export const species = [
   },
   {
     id: "floribunda",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "フロリブンダ",
@@ -1057,6 +1100,7 @@ export const species = [
   // ==================== 硬葉系 原種 ====================
   {
     id: "fasciata",
+    difficulty: "初級",
     yomi: "ファシアータ",
     group: "硬葉系",
     colorGroup: "green",
@@ -1083,6 +1127,7 @@ export const species = [
   },
   {
     id: "attenuata",
+    difficulty: "初級",
     yomi: "アッテヌアータ",
     group: "硬葉系",
     colorGroup: "green",
@@ -1108,6 +1153,7 @@ export const species = [
   },
   {
     id: "reinwardtii",
+    difficulty: "初級",
     group: "硬葉系",
     colorGroup: "green",
     name: "コアクタータ var.ライニーワルティー",
@@ -1132,6 +1178,7 @@ export const species = [
   },
   {
     id: "coarctata",
+    difficulty: "初級",
     group: "硬葉系",
     colorGroup: "green",
     name: "九輪塔",
@@ -1157,6 +1204,7 @@ export const species = [
   },
   {
     id: "viscosa",
+    difficulty: "初級",
     group: "硬葉系",
     colorGroup: "green",
     name: "ビスコーサ",
@@ -1181,6 +1229,7 @@ export const species = [
   },
   {
     id: "pumila",
+    difficulty: "初級",
     group: "硬葉系",
     colorGroup: "green",
     name: "プミラ（別名：大型万象/パールプランツ）",
@@ -1207,6 +1256,7 @@ export const species = [
   },
   {
     id: "maxima",
+    difficulty: "初級",
     group: "硬葉系",
     colorGroup: "green",
     name: "マキシマ",
@@ -1232,6 +1282,7 @@ export const species = [
   // ==================== 園芸種・交配種 ====================
   {
     id: "redbull",
+    difficulty: "初級",
     group: "オブツーサ系",
     colorGroup: "red",
     name: "レッドブル",
@@ -1256,6 +1307,7 @@ export const species = [
   },
   {
     id: "atrofusca-hybrid",
+    difficulty: "中級",
     group: "オブツーサ系",
     colorGroup: "purple",
     name: "アトロフスカ 交配種",
@@ -1280,6 +1332,7 @@ export const species = [
   },
   {
     id: "picta",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ピクタ",
@@ -1304,6 +1357,7 @@ export const species = [
   },
   {
     id: "splendens",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "purple",
     name: "スプレンデンス",
@@ -1328,6 +1382,7 @@ export const species = [
   },
   {
     id: "decipiens",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "デシピエンス",
@@ -1352,6 +1407,7 @@ export const species = [
   },
   {
     id: "chloracantha",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "クロラカンサ",
@@ -1376,6 +1432,7 @@ export const species = [
   },
   {
     id: "wittebergensis",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ウィッテベルゲンシス",
@@ -1400,6 +1457,7 @@ export const species = [
   },
   {
     id: "glauca",
+    difficulty: "初級",
     group: "硬葉系",
     colorGroup: "gray",
     name: "グラウカ",
@@ -1424,6 +1482,7 @@ export const species = [
   },
   {
     id: "obtusa-hybrid-star",
+    difficulty: "初級",
     group: "オブツーサ系",
     colorGroup: "green",
     name: "星の林",
@@ -1449,6 +1508,7 @@ export const species = [
   },
   {
     id: "obtusa-gyokuro",
+    difficulty: "中級",
     group: "オブツーサ系",
     colorGroup: "green",
     name: "玉露",
@@ -1474,6 +1534,7 @@ export const species = [
   },
   {
     id: "cooperii-hybrid-tenshi",
+    difficulty: "中級",
     group: "クーペリー系",
     colorGroup: "green",
     name: "天使の涙",
@@ -1499,6 +1560,7 @@ export const species = [
   },
   {
     id: "hybrid-kaguya",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "white",
     name: "かぐや",
@@ -1523,6 +1585,7 @@ export const species = [
   },
   {
     id: "hybrid-jupiter",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "blue",
     name: "ジュピター",
@@ -1547,6 +1610,7 @@ export const species = [
   },
   {
     id: "hybrid-snow-white",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "white",
     name: "スノーホワイト",
@@ -1571,6 +1635,7 @@ export const species = [
   },
   {
     id: "hybrid-murasaki-obtusa",
+    difficulty: "中級",
     group: "オブツーサ系",
     colorGroup: "purple",
     name: "紫絵巻",
@@ -1596,6 +1661,7 @@ export const species = [
   },
   {
     id: "hybrid-pink-gem",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "red",
     name: "ピンクジェム",
@@ -1620,6 +1686,7 @@ export const species = [
   },
   {
     id: "hybrid-neon",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "green",
     name: "ネオングリーン",
@@ -1644,6 +1711,7 @@ export const species = [
   },
   {
     id: "hybrid-silver-queen",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "gray",
     name: "シルバークイーン",
@@ -1668,6 +1736,7 @@ export const species = [
   },
   {
     id: "hybrid-golden-eye",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "green",
     name: "ゴールデンアイ",
@@ -1692,6 +1761,7 @@ export const species = [
   },
   {
     id: "hybrid-mermaid",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "blue",
     name: "マーメイド",
@@ -1716,6 +1786,7 @@ export const species = [
   },
   {
     id: "hybrid-emperor",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "green",
     name: "エンペラー",
@@ -1740,6 +1811,7 @@ export const species = [
   },
   {
     id: "hybrid-twilight",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "purple",
     name: "トワイライト",
@@ -1764,6 +1836,7 @@ export const species = [
   },
   {
     id: "hybrid-crystal-ball",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "blue",
     name: "クリスタルボール",
@@ -1788,6 +1861,7 @@ export const species = [
   },
   {
     id: "hybrid-bloody-mary",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "red",
     name: "ブラッディーマリー",
@@ -1812,6 +1886,7 @@ export const species = [
   },
   {
     id: "hybrid-universe",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "black",
     name: "ユニバース",
@@ -1836,6 +1911,7 @@ export const species = [
   },
   {
     id: "hybrid-akatsuki",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "red",
     name: "暁",
@@ -1861,6 +1937,7 @@ export const species = [
   },
   {
     id: "hybrid-fairy-castle",
+    difficulty: "上級",
     group: "交配種",
     colorGroup: "purple",
     name: "フェアリーキャッスル",
@@ -1885,6 +1962,7 @@ export const species = [
   },
   {
     id: "hybrid-blue-moon",
+    difficulty: "中級",
     group: "万象・玉扇系",
     colorGroup: "blue",
     name: "ブルームーン",
@@ -1909,6 +1987,7 @@ export const species = [
   },
   {
     id: "hybrid-white-ghost",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "white",
     name: "ホワイトゴースト",
@@ -1933,6 +2012,7 @@ export const species = [
   },
   {
     id: "hybrid-peacock",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "green",
     name: "孔雀",
@@ -1958,6 +2038,7 @@ export const species = [
   },
   {
     id: "hybrid-aurora",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "green",
     name: "オーロラ",
@@ -1982,6 +2063,7 @@ export const species = [
   },
   {
     id: "hybrid-milky-way",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "white",
     name: "天の川",
@@ -2007,6 +2089,7 @@ export const species = [
   },
   {
     id: "hybrid-yuki-no-hana",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "white",
     name: "雪の華",
@@ -2032,6 +2115,7 @@ export const species = [
   },
   {
     id: "hybrid-green-jade",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "green",
     name: "グリーンジェード",
@@ -2056,6 +2140,7 @@ export const species = [
   },
   {
     id: "hybrid-amber",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "red",
     name: "琥珀",
@@ -2081,6 +2166,7 @@ export const species = [
   },
   {
     id: "hybrid-moonstone",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "white",
     name: "ムーンストーン",
@@ -2105,6 +2191,7 @@ export const species = [
   },
   {
     id: "hybrid-violet-dream",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "purple",
     name: "バイオレットドリーム",
@@ -2129,6 +2216,7 @@ export const species = [
   },
   {
     id: "hybrid-opalescent",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "white",
     name: "オパレッセント",
@@ -2153,6 +2241,7 @@ export const species = [
   },
   {
     id: "hybrid-hakugyoku",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "white",
     name: "白玉",
@@ -2178,6 +2267,7 @@ export const species = [
   },
   {
     id: "hybrid-ryusui",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "blue",
     name: "流水",
@@ -2203,6 +2293,7 @@ export const species = [
   },
   {
     id: "hybrid-kinpu",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "green",
     name: "金風",
@@ -2228,6 +2319,7 @@ export const species = [
   },
   {
     id: "hybrid-sakura",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "red",
     name: "桜霞",
@@ -2253,6 +2345,7 @@ export const species = [
   },
   {
     id: "hybrid-natsu-no-yuki",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "white",
     name: "夏の雪",
@@ -2278,6 +2371,7 @@ export const species = [
   },
   {
     id: "hybrid-asagiri",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "gray",
     name: "朝霧",
@@ -2303,6 +2397,7 @@ export const species = [
   },
   {
     id: "hybrid-umi-no-hoshi",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "blue",
     name: "海の星",
@@ -2328,6 +2423,7 @@ export const species = [
   },
   {
     id: "dodson-ob1",
+    difficulty: "上級",
     isNew: true,
     yomi: "ドドソンむらさきオブツーサ",
     group: "オブツーサ系",
@@ -2356,6 +2452,7 @@ export const species = [
   },
   {
     id: "black-obtusa",
+    difficulty: "中級",
     isNew: true,
     yomi: "ブラックオブツーサ",
     group: "オブツーサ系",
@@ -2386,6 +2483,7 @@ export const species = [
   // ==================== 追加原種・園芸種 ====================
   {
     id: "boergeridii",
+    difficulty: "中級",
     group: "ボエルゲリー系",
     colorGroup: "green",
     name: "ボエルゲリー",
@@ -2406,6 +2504,7 @@ export const species = [
   },
   {
     id: "silviae",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "シルビアエ",
@@ -2426,6 +2525,7 @@ export const species = [
   },
   {
     id: "compta",
+    difficulty: "中級",
     group: "コンプトニアナ系",
     colorGroup: "green",
     name: "コンプタ",
@@ -2446,6 +2546,7 @@ export const species = [
   },
   {
     id: "badia",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "red",
     name: "バディア",
@@ -2466,6 +2567,7 @@ export const species = [
   },
   {
     id: "wimii",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ウィミー",
@@ -2486,6 +2588,7 @@ export const species = [
   },
   {
     id: "green-jem",
+    difficulty: "初級",
     group: "オブツーサ系",
     colorGroup: "green",
     name: "グリーンジェム",
@@ -2506,6 +2609,7 @@ export const species = [
   },
   {
     id: "nigra",
+    difficulty: "初級",
     group: "硬葉系",
     colorGroup: "black",
     name: "ニグラ",
@@ -2526,6 +2630,7 @@ export const species = [
   },
   {
     id: "shuten-doji",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "red",
     name: "酒呑童子",
@@ -2547,6 +2652,7 @@ export const species = [
   },
   {
     id: "kyubi",
+    difficulty: "中級",
     group: "クーペリー系",
     colorGroup: "green",
     name: "九尾狐",
@@ -2568,6 +2674,7 @@ export const species = [
   },
   {
     id: "hakujaden",
+    difficulty: "上級",
     group: "オブツーサ系",
     colorGroup: "green",
     name: "白蛇伝",
@@ -2589,6 +2696,7 @@ export const species = [
   },
   {
     id: "shiroko",
+    difficulty: "中級",
     group: "クーペリー系",
     colorGroup: "green",
     name: "白狐",
@@ -2610,6 +2718,7 @@ export const species = [
   },
   {
     id: "ura-hannya",
+    difficulty: "初級",
     group: "コンプトニアナ系",
     colorGroup: "green",
     name: "裏般若",
@@ -2631,6 +2740,7 @@ export const species = [
   },
   {
     id: "onigawara",
+    difficulty: "中級",
     group: "硬葉系",
     colorGroup: "black",
     name: "鬼瓦",
@@ -2652,6 +2762,7 @@ export const species = [
   },
   {
     id: "shikinjo",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "purple",
     name: "紫禁城",
@@ -2673,6 +2784,7 @@ export const species = [
   },
   {
     id: "sennyokou",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "仙女香",
@@ -2694,6 +2806,7 @@ export const species = [
   },
   {
     id: "hakuteijo",
+    difficulty: "中級",
     yomi: "はくていじょう",
     group: "交配種",
     colorGroup: "purple",
@@ -2715,6 +2828,7 @@ export const species = [
   },
   {
     id: "makai",
+    difficulty: "中級",
     group: "交配種",
     colorGroup: "black",
     name: "魔界",
@@ -2736,6 +2850,7 @@ export const species = [
   },
   {
     id: "benten-nishiki",
+    difficulty: "中級",
     group: "オブツーサ系",
     colorGroup: "green",
     name: "弁天錦",
@@ -2757,6 +2872,7 @@ export const species = [
   },
   {
     id: "hanadokei",
+    difficulty: "中級",
     group: "オブツーサ系",
     colorGroup: "green",
     name: "花時計",
@@ -2778,6 +2894,7 @@ export const species = [
   },
   {
     id: "hikawa-gyokuro",
+    difficulty: "上級",
     group: "オブツーサ系",
     colorGroup: "green",
     name: "氷川玉露",
@@ -2799,6 +2916,7 @@ export const species = [
   },
   {
     id: "ryujo",
+    difficulty: "上級",
     group: "万象・玉扇系",
     colorGroup: "green",
     name: "龍城",
@@ -2820,6 +2938,7 @@ export const species = [
   },
   {
     id: "hakugei",
+    difficulty: "中級",
     group: "コンプトニアナ系",
     colorGroup: "white",
     name: "白鯨",
@@ -2841,6 +2960,7 @@ export const species = [
   },
   {
     id: "yumedono",
+    difficulty: "中級",
     group: "オブツーサ系",
     colorGroup: "purple",
     name: "夢殿",
@@ -2862,6 +2982,7 @@ export const species = [
   },
   {
     id: "pilifera-nishiki",
+    difficulty: "中級",
     group: "クーペリー系",
     colorGroup: "white",
     name: "ピリフェラ錦",
@@ -2884,6 +3005,7 @@ export const species = [
   },
   {
     id: "heki-ruri",
+    difficulty: "上級",
     group: "オブツーサ系",
     colorGroup: "blue",
     name: "碧瑠璃",
@@ -2905,6 +3027,7 @@ export const species = [
   },
   {
     id: "hyoga",
+    difficulty: "中級",
     group: "オブツーサ系",
     colorGroup: "white",
     name: "氷河",
@@ -2926,6 +3049,7 @@ export const species = [
   },
   {
     id: "murakumo",
+    difficulty: "中級",
     group: "硬葉系",
     colorGroup: "green",
     name: "群雲",
@@ -2947,6 +3071,7 @@ export const species = [
   },
   {
     id: "suiran",
+    difficulty: "中級",
     yomi: "すいらん",
     group: "ボエルゲリー系",
     colorGroup: "green",
@@ -2968,6 +3093,7 @@ export const species = [
   },
   {
     id: "shizukuishi",
+    difficulty: "初級",
     yomi: "しずくいし",
     group: "オブツーサ系",
     colorGroup: "green",
@@ -2989,6 +3115,7 @@ export const species = [
   },
   {
     id: "lockwoodii",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "gray",
     name: "ロックウッディ",
@@ -3009,6 +3136,7 @@ export const species = [
   },
   {
     id: "lockwoodii-hakui",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "white",
     name: "白衣",
@@ -3030,6 +3158,7 @@ export const species = [
   },
   {
     id: "tsukikage",
+    difficulty: "中級",
     isNew: true,
     yomi: "つきかげ",
     group: "軟葉系",
@@ -3052,6 +3181,7 @@ export const species = [
   },
   {
     id: "deep-purple",
+    difficulty: "中級",
     isNew: true,
     yomi: "ディープパープル",
     group: "オブツーサ系",
@@ -3074,6 +3204,7 @@ export const species = [
   },
   {
     id: "obtusa-truncata",
+    difficulty: "中級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "green",
@@ -3095,6 +3226,7 @@ export const species = [
   },
   {
     id: "midori-suisho",
+    difficulty: "中級",
     isNew: true,
     yomi: "みどりすいしょう",
     group: "オブツーサ系",
@@ -3117,6 +3249,7 @@ export const species = [
   },
   {
     id: "haku-ojo",
+    difficulty: "中級",
     isNew: true,
     yomi: "はくおうじょう",
     group: "軟葉系",
@@ -3139,6 +3272,7 @@ export const species = [
   },
   {
     id: "shirayuki-emaki",
+    difficulty: "中級",
     isNew: true,
     yomi: "しらゆきえまき",
     group: "軟葉系",
@@ -3161,6 +3295,7 @@ export const species = [
   },
   {
     id: "ao-suisho",
+    difficulty: "中級",
     isNew: true,
     yomi: "あおすいしょう",
     group: "オブツーサ系",
@@ -3183,6 +3318,7 @@ export const species = [
   },
   {
     id: "takarakusa",
+    difficulty: "初級",
     isNew: true,
     yomi: "たからくさ",
     group: "軟葉系",
@@ -3209,6 +3345,7 @@ export const species = [
   },
   {
     id: "blue-lens",
+    difficulty: "中級",
     isNew: true,
     yomi: "ブルーレンズ",
     group: "軟葉系",
@@ -3231,6 +3368,7 @@ export const species = [
   },
   {
     id: "hula-dance",
+    difficulty: "中級",
     isNew: true,
     yomi: "フラダンス",
     group: "交配種",
@@ -3253,6 +3391,7 @@ export const species = [
   },
   {
     id: "obtusa",
+    difficulty: "初級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "green",
@@ -3275,6 +3414,7 @@ export const species = [
   },
   {
     id: "maruba-murasaki-lens",
+    difficulty: "中級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "purple",
@@ -3297,6 +3437,7 @@ export const species = [
   },
   {
     id: "tiger-pig",
+    difficulty: "中級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "green",
@@ -3318,6 +3459,7 @@ export const species = [
   },
   {
     id: "yukigesho",
+    difficulty: "中級",
     isNew: true,
     group: "軟葉系",
     colorGroup: "white",
@@ -3340,6 +3482,7 @@ export const species = [
   },
   {
     id: "red-flash",
+    difficulty: "中級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "red",
@@ -3361,6 +3504,7 @@ export const species = [
   },
   {
     id: "shiro-usagi",
+    difficulty: "中級",
     isNew: true,
     group: "軟葉系",
     colorGroup: "white",
@@ -3383,6 +3527,7 @@ export const species = [
   },
   {
     id: "kintaikyo",
+    difficulty: "中級",
     isNew: true,
     group: "軟葉系",
     colorGroup: "green",
@@ -3405,6 +3550,7 @@ export const species = [
   },
   {
     id: "hagoromo",
+    difficulty: "中級",
     isNew: true,
     group: "軟葉系",
     colorGroup: "green",
@@ -3427,6 +3573,7 @@ export const species = [
   },
   {
     id: "sakura-fubuki",
+    difficulty: "中級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "red",
@@ -3449,6 +3596,7 @@ export const species = [
   },
   {
     id: "olasonii-daruma",
+    difficulty: "上級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "green",
@@ -3473,6 +3621,7 @@ export const species = [
   },
   {
     id: "gyokuei",
+    difficulty: "中級",
     isNew: true,
     group: "軟葉系",
     colorGroup: "green",
@@ -3495,6 +3644,7 @@ export const species = [
   },
   {
     id: "shin-kotohime",
+    difficulty: "中級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "green",
@@ -3517,6 +3667,7 @@ export const species = [
   },
   {
     id: "akankotsu",
+    difficulty: "中級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "green",
@@ -3539,6 +3690,7 @@ export const species = [
   },
   {
     id: "juhoden",
+    difficulty: "中級",
     isNew: true,
     group: "軟葉系",
     colorGroup: "green",
@@ -3561,6 +3713,7 @@ export const species = [
   },
   {
     id: "galileo",
+    difficulty: "中級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "green",
@@ -3582,6 +3735,7 @@ export const species = [
   },
   {
     id: "black-magic",
+    difficulty: "中級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "black",
@@ -3603,6 +3757,7 @@ export const species = [
   },
   {
     id: "murasaki-botan",
+    difficulty: "中級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "purple",
@@ -3625,6 +3780,7 @@ export const species = [
   },
   {
     id: "jukou",
+    difficulty: "中級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "green",
@@ -3647,6 +3803,7 @@ export const species = [
   },
   {
     id: "mikaeri-bijin",
+    difficulty: "中級",
     isNew: true,
     group: "軟葉系",
     colorGroup: "green",
@@ -3669,6 +3826,7 @@ export const species = [
   },
   {
     id: "hakuseijo",
+    difficulty: "中級",
     isNew: true,
     group: "軟葉系",
     colorGroup: "white",
@@ -3691,6 +3849,7 @@ export const species = [
   },
   {
     id: "mirrorball",
+    difficulty: "中級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "green",
@@ -3712,6 +3871,7 @@ export const species = [
   },
   {
     id: "birin",
+    difficulty: "中級",
     isNew: true,
     group: "軟葉系",
     colorGroup: "green",
@@ -3734,6 +3894,7 @@ export const species = [
   },
   {
     id: "emerald-flash",
+    difficulty: "中級",
     isNew: true,
     group: "オブツーサ系",
     colorGroup: "green",
@@ -3755,6 +3916,7 @@ export const species = [
   },
   {
     id: "shion",
+    difficulty: "初級",
     yomi: "しおん",
     group: "軟葉系",
     colorGroup: "purple",
@@ -3776,6 +3938,7 @@ export const species = [
   },
   {
     id: "hanatsubaki",
+    difficulty: "中級",
     yomi: "はなつばき",
     group: "軟葉系",
     colorGroup: "green",
@@ -3797,6 +3960,7 @@ export const species = [
   },
   {
     id: "kikka-no-mai-nishiki",
+    difficulty: "上級",
     yomi: "きっかのまいにしき",
     group: "軟葉系",
     colorGroup: "white",
@@ -3818,6 +3982,7 @@ export const species = [
   },
   {
     id: "moe",
+    difficulty: "中級",
     yomi: "もえ",
     group: "軟葉系",
     colorGroup: "green",
@@ -3839,6 +4004,7 @@ export const species = [
   },
   {
     id: "michelle",
+    difficulty: "中級",
     yomi: "みっしぇる",
     group: "軟葉系",
     colorGroup: "green",
@@ -3860,6 +4026,7 @@ export const species = [
   },
   {
     id: "cherry-blossom",
+    difficulty: "中級",
     yomi: "ちぇりーぶろっさむ",
     group: "軟葉系",
     colorGroup: "purple",
@@ -3881,6 +4048,7 @@ export const species = [
   },
   {
     id: "son-goku",
+    difficulty: "中級",
     yomi: "そんごくう",
     group: "軟葉系",
     colorGroup: "green",
@@ -3902,6 +4070,7 @@ export const species = [
   },
   {
     id: "splendens-hybrid",
+    difficulty: "中級",
     yomi: "すぷれんでんすはいぶりっど",
     group: "軟葉系",
     colorGroup: "green",
@@ -3923,6 +4092,7 @@ export const species = [
   },
   {
     id: "red-lens-nishiki",
+    difficulty: "上級",
     yomi: "れっどれんずおぶつーさにしき",
     group: "軟葉系",
     colorGroup: "purple",
@@ -3944,6 +4114,7 @@ export const species = [
   },
   {
     id: "kegani",
+    difficulty: "中級",
     group: "軟葉系交配種",
     colorGroup: "green",
     name: "毛蟹",
@@ -3965,6 +4136,7 @@ export const species = [
   },
   {
     id: "gekkou-megami",
+    difficulty: "中級",
     group: "軟葉系交配種",
     colorGroup: "green",
     name: "月光女神",
@@ -3986,6 +4158,7 @@ export const species = [
   },
   {
     id: "kuro-zatou",
+    difficulty: "中級",
     group: "軟葉系交配種",
     colorGroup: "purple",
     name: "黒砂糖",
@@ -4007,6 +4180,7 @@ export const species = [
   },
   {
     id: "kuro-gitsune",
+    difficulty: "初級",
     group: "硬葉系",
     colorGroup: "dark",
     name: "黒狐",
@@ -4028,6 +4202,7 @@ export const species = [
   },
   {
     id: "davidii",
+    difficulty: "中級",
     group: "軟葉系",
     colorGroup: "green",
     name: "ダヴィディ",
@@ -4049,6 +4224,7 @@ export const species = [
   },
   {
     id: "hoshi-no-ouji",
+    difficulty: "初級",
     group: "硬葉系",
     colorGroup: "green",
     name: "星の王子",
@@ -4070,6 +4246,7 @@ export const species = [
   },
   {
     id: "ringo-hime",
+    difficulty: "中級",
     group: "軟葉系交配種",
     colorGroup: "green",
     name: "林檎姫",

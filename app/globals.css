@@ -2559,6 +2559,37 @@ header h1 {
   vertical-align: middle;
 }
 
+.difficulty-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 20px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.difficulty-badge--shokyuu {
+  background: rgba(80,160,100,0.12);
+  color: #3a7a4a;
+  border: 1px solid rgba(80,160,100,0.25);
+}
+
+.difficulty-badge--chukyuu {
+  background: rgba(180,140,40,0.12);
+  color: #8a6a10;
+  border: 1px solid rgba(180,140,40,0.25);
+}
+
+.difficulty-badge--jokyuu {
+  background: rgba(200,80,60,0.1);
+  color: #a03020;
+  border: 1px solid rgba(200,80,60,0.2);
+}
+
 .diary-individual-last {
   font-size: 0.7rem;
   color: #b0c4b1;
