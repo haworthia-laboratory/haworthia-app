@@ -18,10 +18,10 @@ export async function GET() {
 
   const publicPlantIds = publicPlants.map(p => p.id);
 
-  // 公開株のエントリを日付降順で取得（1枚目のみ）
+  // 公開株のエントリを日付降順で取得
   const { data: entries, error } = await supabase
     .from("diary_entries")
-    .select("plant_id, date, note, species_id, species_name, photos->0")
+    .select("plant_id, date, note, species_id, species_name, photos")
     .in("plant_id", publicPlantIds)
     .order("date", { ascending: false });
 
@@ -29,10 +29,11 @@ export async function GET() {
     return NextResponse.json([]);
   }
 
-  // 品種ごとに最新1件だけ残す
+  // 品種ごとに最新1件の最初の写真だけ残す
   const speciesMap = new Map();
   for (const entry of entries) {
-    const photo = entry["photos->0"] || entry.photos;
+    const photos = Array.isArray(entry.photos) ? entry.photos : [];
+    const photo = photos[0];
     if (!photo) continue;
     const key = entry.species_id || entry.species_name || entry.plant_id;
     if (!speciesMap.has(key)) {
