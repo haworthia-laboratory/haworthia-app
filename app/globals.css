@@ -3600,22 +3600,25 @@ header h1 {
 }
 
 .column-h2 {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #2c4a2d;
-  font-weight: 500;
-  margin-top: 2rem;
+  font-weight: 700;
+  margin-top: 2.4rem;
   margin-bottom: 0.8rem;
-  padding-bottom: 0.4rem;
+  padding: 0.5rem 0 0.5rem 0.8rem;
+  border-left: 3px solid #7ab57c;
   border-bottom: 1px solid rgba(160,184,162,0.3);
   letter-spacing: 0.05em;
 }
 
 .column-h3 {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #3a5a3c;
-  font-weight: 500;
-  margin-top: 1.4rem;
+  font-weight: 600;
+  margin-top: 1.6rem;
   margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid rgba(122,181,124,0.5);
 }
 
 .column-paragraph {
